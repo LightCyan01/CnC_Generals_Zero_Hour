@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{2871bd62-43e7-40fb-87b3-cc105621ee57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files">
+      <UniqueIdentifier>{d7e99871-b813-4a6a-97cf-8746f935680a}</UniqueIdentifier>
+      <Extensions>*.ini</Extensions>
+    </Filter>
+    <Filter Include="INI Files\Default">
+      <UniqueIdentifier>{a916dffa-5fd3-41c7-af3d-3b7883700f30}</UniqueIdentifier>
+      <Extensions>*.ini</Extensions>
+    </Filter>
+    <Filter Include="INI Files\MappedImages">
+      <UniqueIdentifier>{c8a72104-6a79-47e3-91c5-3b78db1f7718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Object">
+      <UniqueIdentifier>{82af0d4b-94ef-44ac-a539-28b451088f30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Object\America">
+      <UniqueIdentifier>{ef021223-5516-436f-8c69-3454c01bb8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Object\China">
+      <UniqueIdentifier>{23d0daa5-8c40-49bb-b28e-0f2856da8d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Object\GLA">
+      <UniqueIdentifier>{7bda0b6a-4a09-485e-ba69-82c013f1abdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Object\Challenge Mode">
+      <UniqueIdentifier>{6fd02b78-1232-46ac-a940-c851dba5e6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Object\Generals">
+      <UniqueIdentifier>{bc40d981-af7f-4373-88f8-a49e06fbfc8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI Files\Scripts">
+      <UniqueIdentifier>{a1da36c5-99cd-4e2b-86db-190f1a6c1793}</UniqueIdentifier>
+      <Extensions>*.ini</Extensions>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{03813d4f-f120-4072-8a4a-a3c1c84d696f}</UniqueIdentifier>
+      <Extensions>.wnd</Extensions>
+    </Filter>
+    <Filter Include="Window\Menu">
+      <UniqueIdentifier>{3d569bcc-0c43-465a-8fd2-a6019affa858}</UniqueIdentifier>
+      <Extensions>.wnd</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{6a5981c3-c5d0-42ab-9bb9-26dd06fbd58d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main\buildVersion.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\WinMain.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main\WinMain.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Run\Data\INI\AIData.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Animation2D.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Armor.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\AudioSettings.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Campaign.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\CommandButton.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\CommandMap.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\CommandMapDebug.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\CommandMapDemo.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\CommandSet.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\ControlBarResizer.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\ControlBarScheme.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Crate.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Credits.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\DamageFX.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\DrawGroupInfo.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Eva.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\FXList.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\GameData.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\GameDataDebug.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\GameLOD.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\GameLODPresets.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\English\HeaderTemplate.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\InGameUI.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\English\Language.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Locomotor.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MiscAudio.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Mouse.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Multiplayer.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Music.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\ObjectCreationList.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\ParticleSystem.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\PlayerTemplate.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Rank.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Roads.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Science.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\ShellMenuScheme.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\SoundEffects.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\SpecialPower.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Speech.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Terrain.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Upgrade.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Video.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Voice.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Water.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Weapon.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Weather.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Webpages.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\WindowTransitions.ini">
+      <Filter>INI Files</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\AIData.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\ButtonSets.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\CommandButton.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\ControlBarScheme.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Crate.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\FXList.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\GameData.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\multiplayer.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Music.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Object.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\ObjectCreationList.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\PlayerTemplate.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Roads.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Science.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\ShellMenuScheme.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\SoundEffects.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\SpecialPower.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Speech.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Terrain.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Upgrade.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Video.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Voice.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Water.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Weather.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Default\Webpages.ini">
+      <Filter>INI Files\Default</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\HandCreatedMappedImages.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\HandCreated\HandCreatedMappedImages.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SAControlBar512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SAUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SCGameUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SCGeneralsChallenge512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SCLogosUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SCShellUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SCSmShellUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SCUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SNControlBar512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SNUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SSUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SUControlBar512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\MappedImages\TextureSize_512\SUUserInterface512.INI">
+      <Filter>INI Files\MappedImages</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\CivilianBuilding.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\CivilianProp.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\CivilianUnit.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\FactionBuilding.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\FactionProp.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\FactionUnit.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\Hulk.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\NatureProp.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\NatureUnit.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\SpecialPowerObjects.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\System.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\TechBuildings.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\WeaponObjects.ini">
+      <Filter>INI Files\Object</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\AmericaAir.ini">
+      <Filter>INI Files\Object\America</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\AmericaCINEUnit.ini">
+      <Filter>INI Files\Object\America</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\AmericaInfantry.ini">
+      <Filter>INI Files\Object\America</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\AmericaMiscUnit.ini">
+      <Filter>INI Files\Object\America</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\AmericaVehicle.ini">
+      <Filter>INI Files\Object\America</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\ChinaAir.ini">
+      <Filter>INI Files\Object\China</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\ChinaCINEUnit.ini">
+      <Filter>INI Files\Object\China</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\ChinaInfantry.ini">
+      <Filter>INI Files\Object\China</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\ChinaMiscUnit.ini">
+      <Filter>INI Files\Object\China</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\ChinaVehicle.ini">
+      <Filter>INI Files\Object\China</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GLAAir.ini">
+      <Filter>INI Files\Object\GLA</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GLACINEUnit.ini">
+      <Filter>INI Files\Object\GLA</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GLAInfantry.ini">
+      <Filter>INI Files\Object\GLA</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GLAMiscUnit.ini">
+      <Filter>INI Files\Object\GLA</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GLAVehicle.ini">
+      <Filter>INI Files\Object\GLA</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GC_Chem_GLABuildings.ini">
+      <Filter>INI Files\Object\Challenge Mode</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GC_Chem_GLASystem.ini">
+      <Filter>INI Files\Object\Challenge Mode</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GC_Chem_GLAUnits.ini">
+      <Filter>INI Files\Object\Challenge Mode</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GC_Slth_GLABuildings.ini">
+      <Filter>INI Files\Object\Challenge Mode</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GC_Slth_GLASystem.ini">
+      <Filter>INI Files\Object\Challenge Mode</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\GC_Slth_GLAUnits.ini">
+      <Filter>INI Files\Object\Challenge Mode</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\AirforceGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\BossGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\ChemicalGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\DemoGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\InfantryGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\LaserGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\NukeGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\StealthGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\SuperWeaponGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\INI\Object\TankGeneral.ini">
+      <Filter>INI Files\Object\Generals</Filter>
+    </None>
+    <None Include="..\Run\Data\Scripts\Scripts.ini">
+      <Filter>INI Files\Scripts</Filter>
+    </None>
+    <None Include="..\Run\Window\ControlBar.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\ControlBarPopupDescription.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\Diplomacy.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\GeneralsExpPoints.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\GenPowersShortcutBarChina.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\GenPowersShortcutBarGLA.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\GenPowersShortcutBarUS.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\IMECandidateWindow.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\IMEStatusWindow.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\InGamePopupMessage.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\MOTD.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\ReplayControl.wnd">
+      <Filter>Window</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\BlankWindow.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\ChallengeMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\CRCMismatch.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\CreditsMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\Defeat.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\DifficultySelect.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\DisconnectScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\DownloadMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\EstablishConnectionsScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\GameInfoWindow.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\GameSpyGameOptionsMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\GameSpyLoadScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\GameSpyLoginProfile.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\GameSpyLoginQuick.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\LanGameOptionsMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\LanLobbyMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\LanMapSelectMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\LocalDefeat.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\MainMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\MapSelectMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\MapTransferScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\MessageBox.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\MultiplayerLoadScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\NetworkDirectConnect.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\ObserverQuit.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\OptionsMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupCommunicator.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupGameSpyCreateGame.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupHostGame.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupJoinGame.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupLadderDetails.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupLadderSelect.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupLocaleSelect.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupPlayerInfo.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupReplay.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\PopupSaveLoad.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\QuitMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\QuitMessageBox.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\QuitNoSave.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\RCBuddiesMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\RCBuddyRequestMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\RCGameDetailsMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\RCLocalPlayerMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\RCNonBuddiesMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\RCNoProfileMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\ReplayMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\SaveLoad.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\ScoreScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\ShellGameLoadScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\SinglePlayerLoadScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\SinglePlayerMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\SkirmishGameOptionsMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\SkirmishMapSelectMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\Victorious.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLBuddyOverlay.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLCustomLobby.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLLadderScreen.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLLoginMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLMapSelectMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLMessageWindow.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLQuickMatchMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLStatusMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Window\Menus\WOLWelcomeMenu.wnd">
+      <Filter>Window\Menu</Filter>
+    </None>
+    <None Include="..\Run\Data\Generals.str" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Main\Generals.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Main\Install_Final.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Main\RTS.RC">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Main\generatedVersion.h">
+      <Filter>Main</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

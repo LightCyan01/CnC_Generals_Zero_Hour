@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugW3D|Win32">
+      <Configuration>DebugW3D</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Internal|Win32">
+      <Configuration>Internal</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Win32">
+      <Configuration>Profile</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{5346FFD0-DC49-4E42-B45A-1AF382D48150}</ProjectGuid>
+    <SccProjectName>wwshade</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.35825.156</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">
+    <OutDir>.\Internal\</OutDir>
+    <IntDir>.\Internal\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">
+    <OutDir>.\DebugW3D\</OutDir>
+    <IntDir>.\DebugW3D\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
+    <OutDir>.\Profile\</OutDir>
+    <IntDir>.\Profile\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\wwsaveload;..\ww3d2;..\wwlib;..\wwmath;..\wwdebug;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WWDEBUG;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Debug/wwshade.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\Lib\WWShadeDebug.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug/wwshade.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\wwlib;..\wwdebug;..\wwmath;..\wwsaveload;..\ww3d2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINVER=0x400;WWDEBUG;NDEBUG;WIN32;_WINDOWS;_INTERNAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\Internal/wwshade.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Internal/</AssemblerListingLocation>
+      <ObjectFileName>.\Internal/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Internal/</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <BrowseInformationFile>.\Internal/</BrowseInformationFile>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\Lib\WWShadeInternal.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Internal/wwshade.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\wwsaveload;..\ww3d2;..\wwlib;..\wwmath;..\wwdebug;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_LIB;WWDEBUG;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\DebugW3D/wwshade.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\DebugW3D/</AssemblerListingLocation>
+      <ObjectFileName>.\DebugW3D/</ObjectFileName>
+      <ProgramDataBaseFileName>.\DebugW3D/</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\Lib\WWShadeDebugW3D.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\DebugW3D/wwshade.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\wwsaveload;..\ww3d2;..\wwlib;..\wwmath;..\wwdebug;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\Release/wwshade.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\Lib\WWShade.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release/wwshade.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Gh  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\DirectX\include;$(ProjectDir)DXSDK\INCLUDE;..\wwsaveload;..\ww3d2;..\wwlib;..\wwmath;..\wwdebug;../STLPORT;../../../../DXSDK/INCLUDE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\Profile/wwshade.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Profile/</AssemblerListingLocation>
+      <ObjectFileName>.\Profile/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Profile/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\Lib\WWShadeProfile.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Profile/wwshade.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="shd6bumpdiff.cpp" />
+    <ClCompile Include="shd6bumpspec.cpp" />
+    <ClCompile Include="shd7bumpdiff.cpp" />
+    <ClCompile Include="shd7bumpspec.cpp" />
+    <ClCompile Include="shd8bumpdiff.cpp" />
+    <ClCompile Include="shd8bumpspec.cpp" />
+    <ClCompile Include="shdbumpdiff.cpp" />
+    <ClCompile Include="shdbumpspec.cpp" />
+    <ClCompile Include="shdcubemap.cpp" />
+    <ClCompile Include="shddef.cpp" />
+    <ClCompile Include="shddeffactory.cpp" />
+    <ClCompile Include="shddefmanager.cpp" />
+    <ClCompile Include="shdforcelinks.cpp" />
+    <ClCompile Include="shdglossmask.cpp" />
+    <ClCompile Include="shdhwshader.cpp" />
+    <ClCompile Include="shdinterface.cpp" />
+    <ClCompile Include="shdlegacyw3d.cpp" />
+    <ClCompile Include="shdlib.cpp" />
+    <ClCompile Include="shdloader.cpp" />
+    <ClCompile Include="shdmesh.cpp" />
+    <ClCompile Include="shdrenderer.cpp" />
+    <ClCompile Include="shdsimple.cpp" />
+    <ClCompile Include="shdsubmesh.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="shd6bumpdiff.h" />
+    <ClInclude Include="shd6bumpdiff_constants.h" />
+    <ClInclude Include="shd6bumpspec.h" />
+    <ClInclude Include="shd6bumpspec_constants.h" />
+    <ClInclude Include="shd7bumpdiff.h" />
+    <ClInclude Include="shd7bumpdiff_constants.h" />
+    <ClInclude Include="shd7bumpspec.h" />
+    <ClInclude Include="shd7bumpspec_constants.h" />
+    <ClInclude Include="shd8bumpdiff.h" />
+    <ClInclude Include="shd8bumpdiff_constants.h" />
+    <ClInclude Include="shd8bumpspec.h" />
+    <ClInclude Include="shd8bumpspec_constants.h" />
+    <ClInclude Include="shdbumpdiff.h" />
+    <ClInclude Include="shdbumpspec.h" />
+    <ClInclude Include="shdclassids.h" />
+    <ClInclude Include="shdcubemap.h" />
+    <ClInclude Include="shddef.h" />
+    <ClInclude Include="shddeffactory.h" />
+    <ClInclude Include="shddefmanager.h" />
+    <ClInclude Include="shdforcelinks.h" />
+    <ClInclude Include="shdglossmask.h" />
+    <ClInclude Include="shdhwshader.h" />
+    <ClInclude Include="shdhw_constants.h" />
+    <ClInclude Include="shdinterface.h" />
+    <ClInclude Include="shdlegacyw3d.h" />
+    <ClInclude Include="shdloader.h" />
+    <ClInclude Include="shdmesh.h" />
+    <ClInclude Include="shdrenderer.h" />
+    <ClInclude Include="shdsimple.h" />
+    <ClInclude Include="shdsubmesh.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="shd6bumpdiff.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd6bumpspec.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd7bumpdiffpass0.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd7bumpdiffpass1.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd7bumpspecpass0.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd7bumpspecpass1.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8bumpdiff.psh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8bumpdiff.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8bumpspec.psh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8bumpspec.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8ssbumpdiff.psh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8ssbumpdiff.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8ssbumpspec.psh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="shd8ssbumpspec.vsh">
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugW3D|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Internal|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shdpp %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath)_code.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
