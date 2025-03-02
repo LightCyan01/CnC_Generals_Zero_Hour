@@ -1,4 +1,3 @@
-
 # Ignore RUNable folder
 [Rr]un
 
@@ -101,3 +100,9 @@ generatedVersion.h
 *.ncb
 *.opt
 *.plg
+
+# Ignore user-specific Visual Studio settings
+RTS.vcproj.JAYMIE-PC.Jaymie.user
+
+# Ignore Visual Studio temporary files and folders
+.vs/

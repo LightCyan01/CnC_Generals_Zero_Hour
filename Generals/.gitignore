@@ -94,3 +94,6 @@ BrowserDispatch.tlb
 *.opt
 *.plg
 *.aps
+
+# Ignore Visual Studio temporary files and folders
+.vs/
