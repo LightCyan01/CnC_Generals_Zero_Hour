@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                      $Author:: Hector_y                                                    $*
  *                                                                                             *
- *                    $Revision:: 5                                                           $*
+ *                     $Modtime:: 4/25/01 1:37p                                               $*
  *                                                                                             *
- * 06/27/02 KM Texture class abstraction																			*
+ *                    $Revision:: 4                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -65,9 +64,9 @@ class DX8PolygonRendererClass;
 typedef MultiListClass<DX8PolygonRendererClass>			DX8PolygonRendererList;
 typedef MultiListIterator<DX8PolygonRendererClass>		DX8PolygonRendererListIterator; 
 
-class TextureTrackerClass;
-typedef MultiListClass<TextureTrackerClass>				TextureTrackerList;
-typedef MultiListIterator<TextureTrackerClass>			TextureTrackerListIterator;
+class DX8TextureTrackerClass;
+typedef MultiListClass<DX8TextureTrackerClass>			DX8TextureTrackerList;
+typedef MultiListIterator<DX8TextureTrackerClass>		DX8TextureTrackerListIterator;
 
 
 #endif //DX8LIST_H

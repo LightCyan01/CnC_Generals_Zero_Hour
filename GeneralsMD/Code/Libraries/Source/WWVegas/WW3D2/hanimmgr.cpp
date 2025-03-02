@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* $Header: /Commando/Code/ww3d2/hanimmgr.cpp 3     1/16/02 9:51a Jani_p $ */
+/* $Header: /Commando/Code/ww3d2/hanimmgr.cpp 1     1/22/01 3:36p Greg_h $ */
 /*********************************************************************************************** 
  ***                            Confidential - Westwood Studios                              *** 
  *********************************************************************************************** 
@@ -27,9 +27,9 @@
  *                                                                                             * 
  *                       Author:: Greg_h                                                       * 
  *                                                                                             * 
- *                     $Modtime:: 1/16/02 9:49a                                               $* 
+ *                     $Modtime:: 1/08/01 10:04a                                              $* 
  *                                                                                             * 
- *                    $Revision:: 3                                                           $* 
+ *                    $Revision:: 1                                                           $* 
  *                                                                                             * 
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -55,7 +55,6 @@
 #include "chunkio.h"
 #include "wwmemlog.h"
 #include "w3dexclusionlist.h"
-#include "animatedsoundmgr.h"
 
 
 /*********************************************************************************************** 
@@ -93,7 +92,6 @@ HAnimManagerClass::HAnimManagerClass(void)
 HAnimManagerClass::~HAnimManagerClass(void)
 {
 	Free_All_Anims();
-	Reset_Missing();	// Jani: Deleting missing animations as well
 
 	delete AnimPtrTable;
 	AnimPtrTable = NULL;
@@ -385,7 +383,7 @@ void HAnimManagerClass::Create_Asset_List(DynamicVectorClass<StringClass> & excl
 		// File that this anim came from should be the name after the '.'
 		// Anims are named in the format: <skeleton>.<animname>
 		const char * anim_name = anim->Get_Name();
-		char * filename = strchr(anim_name,'.');
+		const char * filename = strchr(anim_name,'.');
 		if (filename != NULL) {	
 			exclusion_list.Add(StringClass(filename+1));
 		}
@@ -412,7 +410,7 @@ bool HAnimManagerClass::Add_Anim(HAnimClass *new_anim)
 	// Increment the refcount on the W3DNEW animation and add it to our table.
 	new_anim->Add_Ref ();
 	AnimPtrTable->Add( new_anim );
-	
+
 	return true;
 }
 

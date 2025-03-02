@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* $Header: /Commando/Code/ww3d2/motchan.cpp 6     11/29/01 1:07p Jani_p $ */
+/* $Header: /Commando/Code/ww3d2/motchan.cpp 3     5/05/01 7:10p Jani_p $ */
 /*********************************************************************************************** 
  ***                            Confidential - Westwood Studios                              *** 
  *********************************************************************************************** 
@@ -27,9 +27,9 @@
  *                                                                                             * 
  *                       Author:: Greg_h                                                       * 
  *                                                                                             * 
- *                     $Modtime:: 11/29/01 1:01p                                              $* 
+ *                     $Modtime:: 5/05/01 6:28p                                               $* 
  *                                                                                             * 
- *                    $Revision:: 6                                                           $* 
+ *                    $Revision:: 3                                                           $* 
  *                                                                                             * 
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -50,9 +50,7 @@
 #include "vector.h"
 #include "wwmath.h"
 #include "quat.h"
-#include "wwmath.h"
-//#include <stdio.h>
-//#include <Windows.h>
+
 // Static Table, for Adaptive Delta Decompressor
 #define FILTER_TABLE_SIZE (256)
 #define FILTER_TABLE_GEN_START (16)
@@ -79,6 +77,7 @@ static float filtertable[FILTER_TABLE_SIZE] = {
 };
 static bool table_valid = false; 
 
+
 /*********************************************************************************************** 
  * MotionChannelClass::MotionChannelClass -- constructor                                       * 
  *                                                                                             * 
@@ -97,10 +96,7 @@ MotionChannelClass::MotionChannelClass(void) :
 	VectorLen(0),
 	Data(NULL),
 	FirstFrame(-1),
-	LastFrame(-1),
-	CompressedData(NULL),
-	ValueScale(0.0f),
-	ValueOffset(0.0f)
+	LastFrame(-1)
 {
 }
 
@@ -135,10 +131,6 @@ MotionChannelClass::~MotionChannelClass(void)
  *=============================================================================================*/
 void MotionChannelClass::Free(void)
 {
-	if (CompressedData) {
-		delete[] CompressedData;
-		CompressedData=NULL;
-	}
 	if (Data) {
 		delete[] Data;
 		Data = NULL;
@@ -161,8 +153,8 @@ void MotionChannelClass::Free(void)
 bool MotionChannelClass::Load_W3D(ChunkLoadClass & cload)
 {
 	int size = cload.Cur_Chunk_Length();
-	// There was a bug in the exporter which saved too much data, so let's try and not load everything.
-	unsigned int saved_datasize = (size - sizeof(W3dAnimChannelStruct));
+	unsigned int datasize = (size - sizeof(W3dAnimChannelStruct));
+	unsigned int num_floats = (datasize / sizeof(float32)) + 1;
   
 	W3dAnimChannelStruct chan;
 	if (cload.Read(&chan,sizeof(W3dAnimChannelStruct)) != sizeof(W3dAnimChannelStruct)) {
@@ -175,23 +167,13 @@ bool MotionChannelClass::Load_W3D(ChunkLoadClass & cload)
 	Type 			 = chan.Flags;
 	PivotIdx   = chan.Pivot;
 
-	unsigned int num_floats = LastFrame-FirstFrame+1;//(datasize / sizeof(float32)) + 1;
-	num_floats*=VectorLen;
-	unsigned int datasize=(num_floats-1)*sizeof(float);
-
 	Data = MSGW3DNEWARRAY("MotionChannelClass::Data") float32[num_floats];
 	Data[0] = chan.Data[0];
 	
 	if (cload.Read(&(Data[1]),datasize) != datasize) {
 		Free();
 		return false;
-	}
-	// Skip over the extra data at the end of the chunk (saved by an error in the exporter)
-	if (saved_datasize-datasize>0) {
-		cload.Seek(saved_datasize-datasize);
-	}
-
-	Do_Data_Compression(datasize);
+	}	
 	return true;
 }
 
@@ -1271,59 +1253,5 @@ Quaternion AdaptiveDeltaMotionChannelClass::Get_QuatVector(float32 frame)
 
 } // Get_QuatVector
 
-//==========================================================================================
-void MotionChannelClass::
-Do_Data_Compression(int datasize)
-{
-return;
-	//Find Min_Max
-	float value_min=FLT_MAX;
-	float value_max=-FLT_MAX;
-	int count=datasize/sizeof(float);
-	for (int i=0;i<count;i++) {
-		float value=Data[i];
-		if (_isnan(value)) value=0.0f;
-		if (value>100000.0f) value=0.0f;
-		if (value<-100000.0f) value=0.0f;
-		Data[i]=value;
-
-		if (value_min > value) value_min = value;
-		if (value_max < value) value_max = value;
-	}
-	ValueOffset=value_min;
-	ValueScale=value_max-value_min;
-	// Can't compress if the range is too high
-	if (ValueScale>2000.0f) return;
-	if (Type==ANIM_CHANNEL_Q/* && ValueScale>3.0f*/) return;
-
-	WWASSERT(!CompressedData);
-	CompressedData=new unsigned short[count];
-	float inv_scale=0.0f;
-	if (ValueScale!=0.0f) {
-		inv_scale=1.0f/ValueScale;
-	}
-	inv_scale*=65535.0f;
-	for (i=0;i<count;++i) {
-		float value=Data[i];
-		value-=ValueOffset;
-		value*=inv_scale;
-		int ivalue=WWMath::Float_To_Int_Floor(value);
-		CompressedData[i]=unsigned short(ivalue);
-
-		float new_scale=ValueScale/65535.0f;
-		float new_value=int(CompressedData[i]);
-		float new_float = new_value*new_scale+ValueOffset;
-//			if (fabs(new_float-Data[i])>ValueScale/65536.0f) {
-//				int ii=0;
-//			}
-
-	}
-
-	delete[] Data;
-	Data=NULL;
-}
-
-
 
 // EOF - motchan.cpp
-

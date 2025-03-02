@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,11 @@
 #ifndef __DOWNLOADDEBUG_H_
 #define __DOWNLOADDEBUG_H_
 
-#ifdef  NDEBUG
+// BGC 3/27/03 - added this for disabling debug logging for "release" worldbuilder.
+// uncomment this line to remove logging from game spy code.
+//#define DISABLE_DEBUG_LOGGING
+
+#if defined(NDEBUG) || defined(DISABLE_DEBUG_LOGGING)
 #define DEBUG_LOG(exp) ((void)0)
 #else
 

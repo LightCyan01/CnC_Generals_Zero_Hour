@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             * 
  *                 Project Name : Command & Conquer                                            * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/wwlib/ramfile.h                              $* 
+ *                     $Archive:: /Commando/Library/RAMFILE.H                                 $* 
  *                                                                                             * 
- *                      $Author:: Ian_l                                                       $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 10/31/01 2:02p                                              $*
+ *                     $Modtime:: 7/22/97 11:37a                                              $*
  *                                                                                             * 
- *                    $Revision:: 2                                                           $*
+ *                    $Revision:: 1                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -62,7 +62,6 @@ class RAMFileClass : public FileClass
 		virtual unsigned long Get_Date_Time(void) {return(0);}
 		virtual bool Set_Date_Time(unsigned long ) {return(true);}
 		virtual void Error(int , int = false, char const * =NULL) {}
-		virtual void Bias(int start, int length=-1);
 
 		operator char const * () {return File_Name();}
 

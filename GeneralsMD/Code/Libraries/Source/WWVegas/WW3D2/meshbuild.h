@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,16 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/ww3d2/meshbuild.h                            $*
  *                                                                                             *
- *                   Org Author:: Greg_h                                                       *
+ *                       Author:: Greg_h                                                       *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 9:23a                                              $*
+ *                     $Modtime:: 1/08/01 10:04a                                              $*
  *                                                                                             *
- *                    $Revision:: 2                                                           $*
+ *                    $Revision:: 1                                                           $*
  *                                                                                             *
- * 
- * 06/27/02 KM Shader system MAX plugin updates                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -100,7 +96,7 @@ public:
 		STATE_MESH_PROCESSED,			// mesh builder has processed the mesh
 	
 		MAX_PASSES = 4,					// maximum number of material passes supported
-		MAX_STAGES = 8,					// maximum number of texture stages supported in a single pass
+		MAX_STAGES = 2,					// maximum number of texture stages supported in a single pass
 	};
 
 	/*
@@ -227,9 +223,6 @@ public:
 	*/
 	void							Compute_Bounding_Box(Vector3 * set_min,Vector3 * set_max);
 	void							Compute_Bounding_Sphere(Vector3 * set_center,float * set_radius);
-
-	// For per-pixel lighting KM
-	void							Compute_Tangent_Basis();
 
 	/*
 	** World information managment.  Used to give the mesh builder information

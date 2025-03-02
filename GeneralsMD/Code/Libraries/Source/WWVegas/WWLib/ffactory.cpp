@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,6 @@
 */
 SimpleFileFactoryClass		_DefaultFileFactory;
 FileFactoryClass *			_TheFileFactory = &_DefaultFileFactory;
-SimpleFileFactoryClass *			_TheSimpleFileFactory = &_DefaultFileFactory;
 
 RawFileFactoryClass		_DefaultWritingFileFactory;
 RawFileFactoryClass *			_TheWritingFileFactory = &_DefaultWritingFileFactory;

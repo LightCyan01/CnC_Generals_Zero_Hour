@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             * 
  *                      $Author:: Patrick                                                     $* 
  *                                                                                             * 
- *                     $Modtime:: 9/12/01 7:39p                                               $* 
+ *                     $Modtime:: 8/06/01 3:01p                                               $* 
  *                                                                                             * 
- *                    $Revision:: 4                                                           $* 
+ *                    $Revision:: 3                                                           $* 
  *                                                                                             * 
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -60,13 +60,6 @@ typedef struct
 
 } MIXFILE_DATA_HEADER;
 
-struct FileOffsetStruct {
-		bool operator== (const FileOffsetStruct &src)	{ return false; }
-		bool operator!= (const FileOffsetStruct &src)	{ return true; }
-
-		StringClass	Filename;
-		unsigned long Offset;
-};
 
 /*
 **
@@ -82,7 +75,6 @@ MixFileFactoryClass::MixFileFactoryClass( const char * mix_filename, FileFactory
 //	WWDEBUG_SAY(( "MixFileFactory( %s )\n", mix_filename ));
 	MixFilename	= mix_filename;
 	Factory		= factory;
-	FilenameList.Set_Growth_Step (1000);
 
 	// First, open the mix file
 	FileClass * file = factory->Get_File( mix_filename );
@@ -406,60 +398,6 @@ MixFileFactoryClass::Get_Temp_Filename (const char *path, StringClass &full_path
 	return retval;
 }
 
-
-//
-// Comparison function, used by Build_Ordered_Filename_List
-//
-int MixFileFactoryClass::File_Offset_Compare(const void * a, const void * b) 
-{
-	unsigned int OffsetA = ((FileOffsetStruct*)a)->Offset;
-	unsigned int OffsetB = ((FileOffsetStruct*)b)->Offset;
-	if ( OffsetA < OffsetB ) return -1;
-	if ( OffsetA > OffsetB ) return 1;
-	return 0;
-}
-
-
-//
-// Function builds a list of file names in the order that they are stored in the file
-//
-bool	MixFileFactoryClass::Build_Ordered_Filename_List (DynamicVectorClass<StringClass> &list)
-{
-	if (IsValid == false) {
-		return false;
-	}
-
-	// get list of filenames
-	DynamicVectorClass<StringClass> name_list;
-	if (!Build_Filename_List(name_list)) {
-		return false;
-	}
-
-	// associate offset with each name and add to list
-	DynamicVectorClass<FileOffsetStruct>	local_file_info;
-	local_file_info.Resize( name_list.Count());
-	for (int i = 0; i < name_list.Count(); ++i) {
-		// Here, we have to assume that the names in the list are in CRC order, just like FileInfo is.
-		FileOffsetStruct temp;
-		temp.Filename	= name_list[i];
-		temp.Offset		= FileInfo[i].Offset;
-		local_file_info.Add( temp );
-	}
-
-	// sort name/offset by offset
-	if (local_file_info.Count() > 1) {
-		qsort( &local_file_info[0], local_file_info.Count(), sizeof(local_file_info[0]), &File_Offset_Compare);
-	}
-
-	// add names to output parameter
-	list.Clear();
-	list.Resize( name_list.Count());
-	for (i = 0; i < local_file_info.Count(); ++i) {
-		list.Add(local_file_info[i].Filename);
-	}
-
-	return true;
-}
 
 /*
 **

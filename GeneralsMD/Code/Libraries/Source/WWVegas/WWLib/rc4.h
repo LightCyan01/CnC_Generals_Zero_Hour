@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,6 @@ public:
 	//
 	// Key length can be 0..256 bytes
 	// Key preparation takes about 0.015 Ms on a 1Ghz PC
-	// It's 3x faster if your keylen is 8 or 16 bytes!
 	//
 	void Prepare_Key(const unsigned char *key_data_ptr, int key_data_len);
 
@@ -52,18 +51,7 @@ public:
 	//
 	void RC4(unsigned char *buffer_ptr, int buffer_len);
 
-
- 	//
-	// Copy state & key
-	//
-	RC4Class &operator=(const RC4Class &other);
-
-
-	void Print_State(void);
-
 private:
-	void Prepare_Key_16bytes(const unsigned char *key_data_ptr);
-	void Prepare_Key_8bytes(const unsigned char *key_data_ptr);
 
 	struct RC4Key
 	{      

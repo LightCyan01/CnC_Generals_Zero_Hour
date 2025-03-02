@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             *
- *                    $Revision:: 6                                                           $*
+ *                     $Modtime:: 5/13/01 11:25a                                              $*
  *                                                                                             *
- * 06/27/02 KM Texture class abstraction																			*
+ *                    $Revision:: 5                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -108,7 +107,7 @@ public:
 
 protected:
 	
-	enum { MAX_TEX_STAGES = 8 };
+	enum { MAX_TEX_STAGES = 2 };
 
 	TextureClass *				Texture[MAX_TEX_STAGES];
 	ShaderClass					Shader;

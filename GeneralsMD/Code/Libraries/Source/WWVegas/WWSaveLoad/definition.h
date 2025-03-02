@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@
 
 #include "always.h"
 // SKB Remove because of G conflicts with CLASSID_?? 
-#include "definitionclassids.h"
+// #include "definitionclassids.h"
 #include "definitionmgr.h"
 #include "editable.h"
 #include "wwstring.h"
@@ -58,7 +58,7 @@ class ChunkLoadClass;
 //	DefinitionClass
 //
 //////////////////////////////////////////////////////////////////////////////////
-class DefinitionClass : public PersistClass, public EditableClass
+class DefinitionClass : public EditableClass
 {
 public:
 

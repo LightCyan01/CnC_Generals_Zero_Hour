@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -703,7 +703,7 @@ Quaternion Build_Quaternion(const Matrix3D & mat)
 	return q;
 }
 
-Quaternion Build_Quaternion(const Matrix3x3 & mat)
+Quaternion Build_Quaternion(const Matrix3 & mat)
 {
 	float tr,s;
 	int i,j,k;
@@ -747,7 +747,7 @@ Quaternion Build_Quaternion(const Matrix3x3 & mat)
 	return q;
 }
 
-Quaternion Build_Quaternion(const Matrix4x4 & mat)
+Quaternion Build_Quaternion(const Matrix4 & mat)
 {
 	float tr,s;
 	int i,j,k;
@@ -802,9 +802,9 @@ Quaternion Build_Quaternion(const Matrix4x4 & mat)
  * HISTORY:                                                                                    * 
  *   02/28/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-Matrix3x3 Build_Matrix3(const Quaternion & q)
+Matrix3	Build_Matrix3(const Quaternion & q)
 {
-	Matrix3x3 m;
+	Matrix3 m;
 
 	m[0][0] = (float)(1.0 - 2.0 * (q[1] * q[1] + q[2] * q[2]));
 	m[0][1] = (float)(2.0 * (q[0] * q[1] - q[2] * q[3]));
@@ -821,9 +821,9 @@ Matrix3x3 Build_Matrix3(const Quaternion & q)
 	return m;
 }
 
-Matrix4x4 Build_Matrix4(const Quaternion & q)
+Matrix4 Build_Matrix4(const Quaternion & q)
 {
-	Matrix4x4 m;
+	Matrix4 m;
 
 	// initialize the rotation sub-matrix
 	m[0][0] = (float)(1.0 - 2.0 * (q[1] * q[1] + q[2] * q[2]));

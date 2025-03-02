@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             *
  *                 Project Name : WWMath                                                       *
  *                                                                                             *
- *                     $Archive:: /Commando/Code/wwmath/cardinalspline.cpp                    $*
+ *                     $Archive:: /VSS_Sync/wwmath/cardinalspline.cpp                         $*
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 9/16/01 4:07p                                               $*
+ *                     $Modtime:: 6/13/01 2:18p                                               $*
  *                                                                                             *
- *                    $Revision:: 6                                                           $*
+ *                    $Revision:: 5                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -108,7 +108,6 @@ void CardinalSpline3DClass::Update_Tangents(void)
 			Tangents[0].InTangent.Set(0,0,0);
 			Tangents[0].OutTangent.Set(0,0,0);
 		}
-		return;
 	}
 
 	// First and Last Key: 

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,13 +24,11 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/wwsaveload/parameter.cpp                     $*
  *                                                                                             *
- *                   Org Author:: Patrick Smith                                                *
+ *                       Author:: Patrick Smith                                                *
  *                                                                                             *
- *                       Author:: Kenny Mitchell                                                *
+ *                     $Modtime:: 7/16/01 11:18a                                              $*
  *                                                                                             *
- *                     $Modtime:: 5/29/02 11:00a                                              $*
- *                                                                                             *
- *                    $Revision:: 33                                                          $*
+ *                    $Revision:: 32                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -105,11 +103,6 @@ ParameterClass::Construct (Type type, void *data, const char *name)
 
 		case TYPE_FILENAME:
 			new_param = W3DNEW FilenameParameterClass ((StringClass *)data);
-			new_param->Set_Name (name);
-			break;
-
-		case TYPE_TEXTURE_FILENAME:
-			new_param = new TextureFilenameParameterClass ((StringClass *)data);
 			new_param->Set_Name (name);
 			break;
 
@@ -404,53 +397,6 @@ FilenameParameterClass::Copy_Value (const ParameterClass &src)
 	return ;
 }
 
-//*******************************************************************************************//
-//
-//	Start of TextureFilenameParameterClass
-//
-//*******************************************************************************************//
-
-
-/////////////////////////////////////////////////////////////////////
-//
-//	TextureFilenameParameterClass
-//
-/////////////////////////////////////////////////////////////////////
-TextureFilenameParameterClass::TextureFilenameParameterClass (StringClass *string)
-:	FilenameParameterClass (string),
-	Show_Alpha(false),
-	Show_Texture(false)
-{	
-}
-
-
-/////////////////////////////////////////////////////////////////////
-//
-//	TextureFilenameParameterClass
-//
-/////////////////////////////////////////////////////////////////////
-TextureFilenameParameterClass::TextureFilenameParameterClass (const TextureFilenameParameterClass &src)
-:	FilenameParameterClass (src),
-	Show_Alpha(false),
-	Show_Texture(false)
-{
-}
-
-/////////////////////////////////////////////////////////////////////
-//
-//	Copy_Value
-//
-/////////////////////////////////////////////////////////////////////
-void TextureFilenameParameterClass::Copy_Value (const ParameterClass &src)
-{
-	if (src.Is_Type (ParameterClass::TYPE_TEXTURE_FILENAME)) 
-	{
-		Set_String (((FilenameParameterClass &)src).Get_String ());
-	}
-
-	StringParameterClass::Copy_Value (src);
-	return ;
-}
 
 
 //*******************************************************************************************//
@@ -906,7 +852,9 @@ const DefParameterClass &
 DefParameterClass::operator= (const DefParameterClass &src)
 {
 	m_Value = src.m_Value;
-	ParameterClass::operator= (src);
+//MW: Had to comment out next line to remove infinite loop warning on
+//latest VC++.
+//	DefParameterClass::operator= (src);
 	return *this;
 }
 

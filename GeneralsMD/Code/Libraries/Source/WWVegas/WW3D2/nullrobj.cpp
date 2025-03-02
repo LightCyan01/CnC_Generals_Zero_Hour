@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 12/01/01 12:18p                                             $*
+ *                     $Modtime:: 1/08/01 10:04a                                              $*
  *                                                                                             *
- *                    $Revision:: 2                                                           $*
+ *                    $Revision:: 1                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -80,13 +80,13 @@ void Null3DObjClass::Render(RenderInfoClass & rinfo)
 void Null3DObjClass::Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const
 {
    sphere.Center.Set(0,0,0);
-	sphere.Radius = 0.1f;
+	sphere.Radius = 0.0f;
 }
 
 void Null3DObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 {
 	box.Center.Set(0,0,0);
-	box.Extent.Set(0.1f,0.1f,0.1f);
+	box.Extent.Set(0,0,0);
 }
 
 /*

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -16,24 +16,21 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* $Header: /Commando/Code/ww3d2/rendobj.cpp 16    12/17/01 8:06p Byon_g $ */
+/* $Header: /VSS_Sync/ww3d2/rendobj.cpp 15    8/29/01 9:49p Vss_sync $ */
 /*********************************************************************************************** 
  ***                            Confidential - Westwood Studios                              *** 
  *********************************************************************************************** 
  *                                                                                             * 
  *                 Project Name : Commando / G 3D Engine                                       * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/ww3d2/rendobj.cpp                            $* 
+ *                     $Archive:: /VSS_Sync/ww3d2/rendobj.cpp                                 $* 
  *                                                                                             * 
- *                   Org Author:: Greg_h                                                       * 
+ *                       Author:: Greg_h                                                       * 
  *                                                                                             * 
- *                       Author : Kenny Mitchell                                               * 
+ *                     $Modtime:: 8/29/01 7:29p                                               $* 
  *                                                                                             * 
- *                     $Modtime:: 07/01/02 12:45p                                              $*
+ *                    $Revision:: 15                                                          $* 
  *                                                                                             * 
- *                    $Revision:: 17                                                          $* 
- *                                                                                             * 
- * 07/01/02 KM Coltype enum change to avoid MAX conflicts									   *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
  *   RenderObjClass::RenderObjClass -- constructor                                             * 
@@ -94,11 +91,6 @@
 #include "intersec.h"
 
 
-#ifdef _INTERNAL
-// for occasional debugging...
-//#pragma optimize("", off) 
-//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
-#endif
 
 // Definitions of static members:
 const float	RenderObjClass::AT_MIN_LOD = FLT_MAX;
@@ -119,7 +111,7 @@ Filename_From_Asset_Name (const char *asset_name)
 		//
 		// Do we need to strip off the model's suffix?
 		//
-		char *suffix = ::strchr (filename, '.');
+		char *suffix = (char *)::strchr(filename, '.');
 		if (suffix != NULL) {
 			suffix[0] = 0;
 		}
@@ -174,7 +166,6 @@ RenderObjClass::RenderObjClass(void) :
 	Scene(NULL),
 	Container(NULL),
 	User_Data(NULL),
-	RenderHook(NULL),
 	ObjectScale(1.0),
 	ObjectColor(0),
 	CachedBoundingSphere(Vector3(0,0,0),1.0f),
@@ -203,7 +194,6 @@ RenderObjClass::RenderObjClass(const RenderObjClass & src) :
 	Scene(NULL),
 	Container(NULL),
 	User_Data(NULL),
-	RenderHook(NULL),
 	ObjectScale(1.0),
 	ObjectColor(0),
 	CachedBoundingSphere(src.CachedBoundingSphere),
@@ -597,38 +587,21 @@ int RenderObjClass::Add_Sub_Object_To_Bone(RenderObjClass * subobj,const char * 
  * WARNINGS:                                                                                   *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   3/1/02     NH : Created.                                                                  *
+ *   3/4/99     NH : Created.                                                                  *
  *=============================================================================================*/
-int RenderObjClass::Remove_Sub_Objects_From_Bone(int boneindex)
+int RenderObjClass::Remove_Sub_Objects_From_Bone(const char * bname)
 {
-	int count = Get_Num_Sub_Objects_On_Bone(boneindex);
+	int boneidx = Get_Bone_Index(bname);
+	int count = Get_Num_Sub_Objects_On_Bone(boneidx);
 	int remove_count = 0;
 	for (int i = count-1; i >= 0; i--) {
-		RenderObjClass *robj = Get_Sub_Object_On_Bone(i, boneindex);
+		RenderObjClass *robj = Get_Sub_Object_On_Bone(i, boneidx);
 		if ( robj ) {
 			remove_count += Remove_Sub_Object(robj);
 			robj->Release_Ref();
 		}
 	}
 	return remove_count;
-}
-
-
-/***********************************************************************************************
- * RenderObjClass::Remove_Sub_Objects_From_Bone -- remove all objects from a named bone        *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   3/4/99     NH : Created.                                                                  *
- *=============================================================================================*/
-int RenderObjClass::Remove_Sub_Objects_From_Bone(const char * bname)
-{
-	return Remove_Sub_Objects_From_Bone(Get_Bone_Index(bname));
 }
 
 
@@ -982,7 +955,7 @@ bool RenderObjClass::Intersect(IntersectionClass *Intersection, IntersectionResu
 		lineseg.Set(* Intersection->RayLocation, end);
 
 		RayCollisionTestClass ray(lineseg, &castresult);
-		ray.CollisionType = COLL_TYPE_ALL;
+		ray.CollisionType = COLLISION_TYPE_ALL;
 
 		if (Cast_Ray(ray)) {
 			lineseg.Compute_Point(ray.Result->Fraction,&(Final_Result->Intersection));

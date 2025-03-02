@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -62,10 +62,10 @@ void MutexClass::Unlock()
 		//assert(0);
 	#else
 		WWASSERT(locked);
-		locked--;
 		int res=ReleaseMutex(handle);
 		res;	// silence compiler warnings
 		WWASSERT(res);
+		locked--;
 	#endif
 }
 
@@ -126,8 +126,8 @@ void CriticalSectionClass::Unlock()
 		//assert(0);
 	#else
 		WWASSERT(locked);
-		locked--;
 		LeaveCriticalSection((CRITICAL_SECTION*)handle);
+		locked--;
 	#endif
 }
 

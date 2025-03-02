@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -506,58 +506,17 @@ WW3DErrorType VertexMaterialClass::Load_W3D(ChunkLoadClass & cload)
 		Set_Name(name);
 	}
 
-	Parse_W3dVertexMaterialStruct(vmat);
-	Parse_Mapping_Args(vmat,mapping0_arg_buffer,mapping1_arg_buffer);
-
-	delete [] mapping0_arg_buffer;
-	mapping0_arg_buffer = NULL;
-
-	delete [] mapping1_arg_buffer;
-	mapping1_arg_buffer = NULL;
-
-	return WW3D_ERROR_OK;
-}
-
-void VertexMaterialClass::Parse_W3dVertexMaterialStruct(const W3dVertexMaterialStruct & vmat)
-{
-	Vector3 tmp;
-	W3dUtilityClass::Convert_Color(vmat.Ambient,&tmp);
-	Set_Ambient(tmp);
-	
-	W3dUtilityClass::Convert_Color(vmat.Diffuse,&tmp);
-	Set_Diffuse(tmp);
-	
-	W3dUtilityClass::Convert_Color(vmat.Specular,&tmp);
-	Set_Specular(tmp);
-
-	W3dUtilityClass::Convert_Color(vmat.Emissive,&tmp);
-	Set_Emissive(tmp);
-
-	Set_Shininess(vmat.Shininess);
-	Set_Opacity(vmat.Opacity);
-
-	if (vmat.Attributes & W3DVERTMAT_USE_DEPTH_CUE) {
-		Set_Flag(VertexMaterialClass::DEPTH_CUE,true);
-	}
-
-	if (vmat.Attributes & W3DVERTMAT_COPY_SPECULAR_TO_DIFFUSE) {
-		Set_Flag(VertexMaterialClass::COPY_SPECULAR_TO_DIFFUSE,true);
-	}
-}
-
-void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vmat,char * mapping0_arg_buffer,char * mapping1_arg_buffer)
-{
-	
 	// Read an INIClass from the mapping argument buffer - this will be used
 	// to initialize any special mappers used.
 	INIClass mapping0_arg_ini;
 	if (mapping0_arg_buffer) {
 
-		int mapping0_arg_len = strlen(mapping0_arg_buffer);
-	
 		char *extended_arg_buffer = MSGW3DNEWARRAY("VertexMaterialClassTemp") char[mapping0_arg_len + 10];
 		sprintf(extended_arg_buffer, "[Args]\n%s", mapping0_arg_buffer);
 		mapping0_arg_len = strlen(extended_arg_buffer) + 1;
+
+		delete [] mapping0_arg_buffer;
+		mapping0_arg_buffer = NULL;
 
 		BufferStraw map_arg_buf_straw((void *)extended_arg_buffer, mapping0_arg_len);
 
@@ -569,11 +528,12 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 	INIClass mapping1_arg_ini;
 	if (mapping1_arg_buffer) {
 
-		int mapping1_arg_len = strlen(mapping1_arg_buffer);
-
 		char *extended_arg_buffer = MSGW3DNEWARRAY("VertexMaterialClassTemp") char[mapping1_arg_len + 20];
 		sprintf(extended_arg_buffer, "[Args]\n%s", mapping1_arg_buffer);
 		mapping1_arg_len = strlen(extended_arg_buffer) + 1;
+
+		delete [] mapping1_arg_buffer;
+		mapping1_arg_buffer = NULL;
 
 		BufferStraw map_arg_buf_straw((void *)extended_arg_buffer, mapping1_arg_len);
 
@@ -581,6 +541,14 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 
 		delete [] extended_arg_buffer;
 		extended_arg_buffer = NULL;
+	}
+
+	if (vmat.Attributes & W3DVERTMAT_USE_DEPTH_CUE) {
+		Set_Flag(VertexMaterialClass::DEPTH_CUE,true);
+	}
+
+	if (vmat.Attributes & W3DVERTMAT_COPY_SPECULAR_TO_DIFFUSE) {
+		Set_Flag(VertexMaterialClass::COPY_SPECULAR_TO_DIFFUSE,true);
 	}
 
 	// Set up the vertex mapper.  If it is one of the simple
@@ -680,7 +648,7 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 
 		case W3DVERTMAT_STAGE0_MAPPING_WS_CLASSIC_ENV:
 			{
-				WSClassicEnvironmentMapperClass *mapper = NEW_REF(WSClassicEnvironmentMapperClass,(mapping0_arg_ini, "Args", 0));
+				WSClassicEnvironmentMapperClass *mapper = NEW_REF(WSClassicEnvironmentMapperClass,(0));
 				Set_Mapper(mapper,0);
 				mapper->Release_Ref();
 			}
@@ -688,7 +656,7 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 
 		case W3DVERTMAT_STAGE0_MAPPING_WS_ENVIRONMENT:
 			{
-				WSEnvironmentMapperClass *mapper = NEW_REF(WSEnvironmentMapperClass,(mapping0_arg_ini, "Args", 0));
+				WSEnvironmentMapperClass *mapper = NEW_REF(WSEnvironmentMapperClass,(0));
 				Set_Mapper(mapper,0);
 				mapper->Release_Ref();
 			}
@@ -739,25 +707,8 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 		}
 		break;
 
-		case W3DVERTMAT_STAGE0_MAPPING_GRID_WS_CLASSIC_ENV:
-			{
-				GridWSClassicEnvironmentMapperClass *mapper =
-					NEW_REF(GridWSClassicEnvironmentMapperClass,(mapping0_arg_ini, "Args", 0));
-				Set_Mapper(mapper,0);
-				mapper->Release_Ref();
-			}
-			break;
-
-		case W3DVERTMAT_STAGE0_MAPPING_GRID_WS_ENVIRONMENT:
-			{
-				GridWSEnvironmentMapperClass *mapper =
-					NEW_REF(GridWSEnvironmentMapperClass,(mapping0_arg_ini, "Args", 0));
-				Set_Mapper(mapper,0);
-				mapper->Release_Ref();
-			}
-			break;
-
 		default:
+				WWDEBUG_SAY(("Unsupported mapper in %s\n",name));
 			break;
 	}
 
@@ -857,7 +808,7 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 
 		case W3DVERTMAT_STAGE1_MAPPING_WS_CLASSIC_ENV:
 			{
-				WSClassicEnvironmentMapperClass *mapper = NEW_REF(WSClassicEnvironmentMapperClass,(mapping1_arg_ini, "Args", 1));
+				WSClassicEnvironmentMapperClass *mapper = NEW_REF(WSClassicEnvironmentMapperClass,(1));
 				Set_Mapper(mapper,1);
 				mapper->Release_Ref();
 			}
@@ -865,7 +816,7 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 
 		case W3DVERTMAT_STAGE1_MAPPING_WS_ENVIRONMENT:
 			{
-				WSEnvironmentMapperClass *mapper = NEW_REF(WSEnvironmentMapperClass,(mapping1_arg_ini, "Args", 1));
+				WSEnvironmentMapperClass *mapper = NEW_REF(WSEnvironmentMapperClass,(1));
 				Set_Mapper(mapper,1);
 				mapper->Release_Ref();
 			}
@@ -907,36 +858,37 @@ void VertexMaterialClass::Parse_Mapping_Args(const W3dVertexMaterialStruct & vma
 			}
 			break;
 
-		case W3DVERTMAT_STAGE1_MAPPING_BUMPENV:
+		case W3DVERTMAT_STAGE0_MAPPING_BUMPENV:
 			{
 				BumpEnvTextureMapperClass *mapper =
-					NEW_REF(BumpEnvTextureMapperClass,(mapping1_arg_ini, "Args", 1));
-				Set_Mapper(mapper,1);
-				mapper->Release_Ref();
-			}
-			break;
-
-	case W3DVERTMAT_STAGE1_MAPPING_GRID_WS_CLASSIC_ENV:
-			{
-				GridWSClassicEnvironmentMapperClass *mapper =
-					NEW_REF(GridWSClassicEnvironmentMapperClass,(mapping1_arg_ini, "Args", 1));
-				Set_Mapper(mapper,1);
-				mapper->Release_Ref();
-			}
-			break;
-
-		case W3DVERTMAT_STAGE1_MAPPING_GRID_WS_ENVIRONMENT:
-			{
-				GridWSEnvironmentMapperClass *mapper =
-					NEW_REF(GridWSEnvironmentMapperClass,(mapping1_arg_ini, "Args", 1));
+					NEW_REF(BumpEnvTextureMapperClass,(mapping1_arg_ini, "Args", 0));
 				Set_Mapper(mapper,1);
 				mapper->Release_Ref();
 			}
 			break;
 
 		default:
+			WWDEBUG_SAY(("Unsupported mapper in %s\n",name));
 			break;
 	}
+
+	Vector3 tmp;
+	W3dUtilityClass::Convert_Color(vmat.Ambient,&tmp);
+	Set_Ambient(tmp);
+	
+	W3dUtilityClass::Convert_Color(vmat.Diffuse,&tmp);
+	Set_Diffuse(tmp);
+	
+	W3dUtilityClass::Convert_Color(vmat.Specular,&tmp);
+	Set_Specular(tmp);
+
+	W3dUtilityClass::Convert_Color(vmat.Emissive,&tmp);
+	Set_Emissive(tmp);
+
+	Set_Shininess(vmat.Shininess);
+	Set_Opacity(vmat.Opacity);
+
+	return WW3D_ERROR_OK;
 }
 
 

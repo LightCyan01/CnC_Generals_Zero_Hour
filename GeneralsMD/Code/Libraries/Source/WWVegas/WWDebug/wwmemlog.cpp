@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,15 @@
  *                                                                                             *
  *                 Project Name : WWDebug                                                      *
  *                                                                                             *
- *                     $Archive:: /Commando/Code/wwdebug/wwmemlog.cpp                         $*
+ *                     $Archive:: /VSS_Sync/wwdebug/wwmemlog.cpp                              $*
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Vss_sync                                                    $*
  *                                                                                             *
- *                     $Modtime:: 11/21/01 2:03p                                              $*
+ *                     $Modtime:: 8/29/01 10:23p                                              $*
  *                                                                                             *
- *                    $Revision:: 27                                                          $*
+ *                    $Revision:: 21                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -38,55 +38,17 @@
  *   WWMemoryLogClass::Release_Memory -- frees memory                                          *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#include "always.h"
+
 #include "wwmemlog.h"
 #include "wwdebug.h"
 #include "vector.h"
-#include "fastallocator.h"
 #include <windows.h>
 
-#define USE_FAST_ALLOCATOR
-
-#ifdef STEVES_NEW_CATCHER
+#if (STEVES_NEW_CATCHER || PARAM_EDITING_ON)
 	#define DISABLE_MEMLOG	1
-#else //STEVES_NEW_CATCHER
-#ifdef PARAM_EDITING_ON
-	#define DISABLE_MEMLOG	1
-#else //PARAM_EDITING_ON
-	#define DISABLE_MEMLOG	1
-#endif //PARAM_EDITING_ON
-#endif //STEVES_NEW_CATCHER*/
-
-#ifdef USE_FAST_ALLOCATOR
-	#define ALLOC_MEMORY(n) FastAllocatorGeneral::Get_Allocator()->Alloc(n)
-	#define FREE_MEMORY(p) FastAllocatorGeneral::Get_Allocator()->Free(p)
 #else
-	#define ALLOC_MEMORY(n) ::malloc(n)
-	#define FREE_MEMORY(p) ::free(p)
-#endif
-
-
-/*
-** Enable one of the following #defines to specify which thread-sychronization
-** method to use.
-*/
-#ifndef _UNIX
-#define MEMLOG_USE_MUTEX					0
-#define MEMLOG_USE_CRITICALSECTION		1
-#define MEMLOG_USE_FASTCRITICALSECTION	0
-#else
-#undef DISABLE_MEMLOG
-#define DISABLE_MEMLOG						1
-#define MEMLOG_USE_MUTEX					0
-#define MEMLOG_USE_CRITICALSECTION		0
-#define MEMLOG_USE_FASTCRITICALSECTION	0
-#endif
-
-#if (DISABLE_MEMLOG == 0)
-bool WWMemoryLogClass::IsMemoryLogEnabled=true;
-#else
-bool WWMemoryLogClass::IsMemoryLogEnabled=false;
-#endif
+#define DISABLE_MEMLOG	1
+#endif //STEVES_NEW_CATCHER
 
 static unsigned AllocateCount;
 static unsigned FreeCount;
@@ -109,11 +71,8 @@ static char * _MemoryCategoryNames[] =
 	"GameData",
 	"PhysicsData",
 	"W3dData",
-	"StaticAllocations",
-	"GameInit",
-	"Renderer",
-	"Network",
-	"BINK",
+	"<undefined>",
+	"<undefined>",
 	"<undefined>",
 	"<undefined>",
 	"<undefined>",
@@ -160,22 +119,20 @@ public:
 		Count(0)
 	{ }
 	
-																				// If object was created but not Init'd, ThreadID will be -1 and Count == 0
-																				// If object was created and Init'd, ThreadID will not be -1.  We expect Count to return to 1 after all Pop's
-	~ActiveCategoryStackClass(void)									{ WWASSERT((ThreadID == -1 && Count == 0) || (ThreadID != -1 && Count == 1)); }
-
+	~ActiveCategoryStackClass(void)									{ WWASSERT(Count == 1); }
+	
 	ActiveCategoryStackClass & operator = (const ActiveCategoryStackClass & that);
 
 	bool		operator == (const ActiveCategoryStackClass &)	{ return false; }
 	bool		operator != (const ActiveCategoryStackClass &)	{ return true; }
 
 	void		Init(int thread_id)										{ ThreadID = thread_id; Count = 0; Push(MEM_UNKNOWN); }
-	void		Set_Thread_ID(int id)									{ WWASSERT(ThreadID != -1); ThreadID = id; }
+	void		Set_Thread_ID(int id)									{ ThreadID = id; }
 	int		Get_Thread_ID(void)										{ return ThreadID; }
 
-	void		Push(int active_category)								{ WWASSERT(ThreadID != -1); (*this)[Count] = active_category; Count++; }
-	void		Pop(void)													{ WWASSERT(ThreadID != -1) ; Count--; }
-	int		Current(void)												{ WWASSERT(ThreadID != -1); return (*this)[Count-1]; }
+	void		Push(int active_category)								{ (*this)[Count] = active_category; Count++; }
+	void		Pop(void)													{ Count--; }
+	int		Current(void)												{ return (*this)[Count-1]; }
 
 protected:
 
@@ -197,7 +154,7 @@ class ActiveCategoryClass : public VectorClass<ActiveCategoryStackClass>
 {
 public:
 
-	ActiveCategoryClass(void) : VectorClass<ActiveCategoryStackClass>(MAX_CATEGORY_STACKS), Count(0) { Get_Active_Stack().Push(MEM_STATICALLOCATION); }
+	ActiveCategoryClass(void) : VectorClass<ActiveCategoryStackClass>(MAX_CATEGORY_STACKS), Count(0) { }
 
 	void		Push(int active_category)	{ Get_Active_Stack().Push(active_category); }
 	void		Pop(void)						{ Get_Active_Stack().Pop(); }
@@ -232,8 +189,6 @@ public:
 	void				Push_Active_Category(int category);
 	void				Pop_Active_Category(void);
 
-	void				Init();
-
 private:
 
 	MemoryCounterClass		_MemoryCounters[MEM_COUNT];
@@ -249,52 +204,25 @@ private:
 ** _MemLogLockCounter - count of the active mutex locks.
 */
 static MemLogClass *				_TheMemLog = NULL;
-static bool							_MemLogAllocated = false;
-
-#if MEMLOG_USE_MUTEX
 static void *						_MemLogMutex = NULL;
 static int							_MemLogLockCounter = 0;
-#endif
+static bool							_MemLogAllocated = false;
 
-#if MEMLOG_USE_CRITICALSECTION
-static bool							_MemLogCriticalSectionAllocated = false;
-static char							_MemLogCriticalSectionHandle[sizeof(CRITICAL_SECTION)];
-#endif
-
-#if MEMLOG_USE_FASTCRITICALSECTION
-volatile unsigned					_MemLogSemaphore = 0;
-#endif
 
 /*
 ** Use this code to get access to the mutex...
 */
-WWINLINE void * Get_Mem_Log_Mutex(void)
+void * Get_Mem_Log_Mutex(void)
 {
-#if MEMLOG_USE_MUTEX
-
 	if (_MemLogMutex == NULL) {
 		_MemLogMutex=CreateMutex(NULL,false,NULL);
 		WWASSERT(_MemLogMutex);
 	}
 	return _MemLogMutex;
-
-#endif
-
-#if MEMLOG_USE_CRITICALSECTION
-
-	if (_MemLogCriticalSectionAllocated == false) {
-		InitializeCriticalSection((CRITICAL_SECTION*)_MemLogCriticalSectionHandle);
-		_MemLogCriticalSectionAllocated = true;
-	}
-	return _MemLogCriticalSectionHandle;
-
-#endif
 }
 
-WWINLINE void Lock_Mem_Log_Mutex(void)
+void Lock_Mem_Log_Mutex(void)
 {
-#if MEMLOG_USE_MUTEX
-
 	void * mutex = Get_Mem_Log_Mutex();
 #ifdef DEBUG_CRASHING
 	int res =
@@ -302,42 +230,10 @@ WWINLINE void Lock_Mem_Log_Mutex(void)
 		WaitForSingleObject(mutex,INFINITE);
 	WWASSERT(res==WAIT_OBJECT_0);
 	_MemLogLockCounter++;
-#endif
-
-#if MEMLOG_USE_CRITICALSECTION
-
-	Get_Mem_Log_Mutex();
-	EnterCriticalSection((CRITICAL_SECTION*)_MemLogCriticalSectionHandle);
-
-#endif
-
-#if MEMLOG_USE_FASTCRITICALSECTION
-
-	volatile unsigned& nFlag=_MemLogSemaphore;
-
-	#define ts_lock _emit 0xF0
-	assert(((unsigned)&nFlag % 4) == 0);
-
-	__asm mov ebx, [nFlag]
-	__asm ts_lock
-	__asm bts dword ptr [ebx], 0
-	__asm jc The_Bit_Was_Previously_Set_So_Try_Again
-	return;
-
-	The_Bit_Was_Previously_Set_So_Try_Again:
-	ThreadClass::Switch_Thread();
-	__asm mov ebx, [nFlag]
-	__asm ts_lock
-	__asm bts dword ptr [ebx], 0
-	__asm jc  The_Bit_Was_Previously_Set_So_Try_Again
-
-#endif
 }
 
-WWINLINE void Unlock_Mem_Log_Mutex(void)
+void Unlock_Mem_Log_Mutex(void)
 {
-#if MEMLOG_USE_MUTEX
-
 	void * mutex = Get_Mem_Log_Mutex();
 	_MemLogLockCounter--;
 #ifdef DEBUG_CRASHING
@@ -345,18 +241,6 @@ WWINLINE void Unlock_Mem_Log_Mutex(void)
 #endif
 		ReleaseMutex(mutex);
 	WWASSERT(res);
-
-#endif
-#if MEMLOG_USE_CRITICALSECTION
-
-	Get_Mem_Log_Mutex();
-	LeaveCriticalSection((CRITICAL_SECTION*)_MemLogCriticalSectionHandle);
-
-#endif
-
-#if MEMLOG_USE_FASTCRITICALSECTION
-	_MemLogSemaphore = 0;
-#endif
 }
 
 class MemLogMutexLockClass
@@ -430,15 +314,6 @@ int MemLogClass::Get_Peak_Allocated_Memory(int category)
 {
 	MemLogMutexLockClass lock;
 	return _MemoryCounters[category].Get_Peak_Allocated_Memory();
-}
-
-void MemLogClass::Init()
-{
-	{
-		MemLogMutexLockClass lock;
-		WWASSERT(_ActiveCategoryTracker.Current()==MEM_STATICALLOCATION);
-	}
-	Pop_Active_Category();	// Remove staticallocation state forever
 }
 
 int MemLogClass::Register_Memory_Allocated(int size)
@@ -524,7 +399,7 @@ void WWMemoryLogClass::Register_Memory_Released(int category,int size)
 }
 
 
-static void _MemLogCleanup(void)
+static void __cdecl _MemLogCleanup(void)
 {
 	delete _TheMemLog;
 }
@@ -571,7 +446,7 @@ MemLogClass * WWMemoryLogClass::Get_Log(void)
  * HISTORY:                                                                                    *
  *   6/13/2001 8:55PM ST : Created                                                             *
  *=============================================================================================*/
-void WWMemoryLogClass::Release_Log(void)
+void __cdecl WWMemoryLogClass::Release_Log(void)
 {
 	MemLogMutexLockClass lock;
 	if (_TheMemLog) {
@@ -641,23 +516,23 @@ struct MemoryLogStruct
  *=============================================================================================*/
 void * WWMemoryLogClass::Allocate_Memory(size_t size)
 {
-	AllocateCount++;
 #if DISABLE_MEMLOG
-	return ALLOC_MEMORY(size);
+	AllocateCount++;
+	return ::malloc(size);
 #else
 
 	__declspec( thread ) static bool reentrancy_test = false;
 	MemLogMutexLockClass lock;
 
 	if (reentrancy_test) {
-		return ALLOC_MEMORY(size);
+		return ::malloc(size);
 	} else {
 		reentrancy_test = true;
 
 		/*
 		** Allocate space for the requested buffer + our logging structure
 		*/
-		void * ptr = ALLOC_MEMORY(size + sizeof(MemoryLogStruct));
+		void * ptr = ::malloc (size + sizeof(MemoryLogStruct));
 
 		if (ptr != NULL) {
 			/*
@@ -704,9 +579,9 @@ void * WWMemoryLogClass::Allocate_Memory(size_t size)
  *=============================================================================================*/
 void WWMemoryLogClass::Release_Memory(void *ptr)
 {
-	FreeCount++;
 #if DISABLE_MEMLOG
-	FREE_MEMORY(ptr);
+	free(ptr);
+	FreeCount++;
 #else
 
 	MemLogMutexLockClass lock;
@@ -723,14 +598,14 @@ void WWMemoryLogClass::Release_Memory(void *ptr)
 			** to the built-in free function.
 			*/
 			WWMemoryLogClass::Register_Memory_Released(memlog->Category,memlog->Size);
-			FREE_MEMORY((void*)memlog);
+			free((void*)memlog);
 
 		} else {
 
 			/*
 			** No valid MemoryLogStruct found, just call free on the memory.
 			*/
-			FREE_MEMORY(ptr);
+			free(ptr);
 		}
 	}
 
@@ -757,7 +632,3 @@ int WWMemoryLogClass::Get_Free_Count()
 	return FreeCount;
 }
 
-void WWMemoryLogClass::Init()
-{
-	Get_Log()->Init();
-}

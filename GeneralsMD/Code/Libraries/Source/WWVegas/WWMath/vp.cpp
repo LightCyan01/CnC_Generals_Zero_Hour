@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/WWMath/vp.cpp                                $*
  *                                                                                             *
- *                    Org Author:: Hector Yee                                                  *
+ *                        Author:: Hector Yee                                                  *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                     $Modtime:: 6/27/01 4:16p                                               $*
  *                                                                                             *
- *                    $Revision:: 12                                                          $*
+ *                    $Revision:: 11                                                          $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*/
 
 #include "vp.h"
@@ -312,7 +309,7 @@ void VectorProcessorClass::Transform (Vector3* dst,const Vector3 *src, const Mat
 	}
 }
 
-void VectorProcessorClass::Transform(Vector4* dst,const Vector3 *src, const Matrix4x4& matrix, const int count)
+void VectorProcessorClass::Transform(Vector4* dst,const Vector3 *src, const Matrix4& matrix, const int count)
 {
 	if (count<=0) return;
 

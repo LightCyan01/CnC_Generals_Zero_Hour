@@ -23,7 +23,6 @@ CFG=ww3d2 - Win32 DebugW3D
 !MESSAGE "ww3d2 - Win32 ProfileE" (based on "Win32 (x86) Static Library")
 !MESSAGE "ww3d2 - Win32 DebugE" (based on "Win32 (x86) Static Library")
 !MESSAGE "ww3d2 - Win32 Internal" (based on "Win32 (x86) Static Library")
-!MESSAGE "ww3d2 - Win32 DebugW3D" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -46,8 +45,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /G6 /MD /W3 /WX /GX /O2 /Ob2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "NDEBUG" /D "WIN32" /D "IG_DEBUG_STACKTRACE" /YX /FD /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /G6 /MD /W3 /WX /GX /O2 /Ob2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "NDEBUG" /D "WIN32" /D "IG_DEBUG_STACKTRACE" /Fr /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -70,8 +68,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /G6 /MDd /W3 /WX /Gi /GX /Zi /O2 /Ob2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "_DEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /YX /FD /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /G6 /MDd /W3 /WX /Gi /GX /Zi /O2 /Ob2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "_DEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /Fr /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -94,7 +91,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Profile"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\srsdk\include" /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /WX /GX /Zi /O2 /Ob2 /I "..\srsdk1x\include" /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "NDEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "_PROFILE" /YX /FD /Gh /c
+# ADD CPP /nologo /MD /W3 /WX /GX /Zi /O2 /Ob2 /I "..\srsdk1x\include" /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "NDEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /YX /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -166,8 +164,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GR /GX /Zi /O2 /Ob2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "NDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /YX /FD /c
 # SUBTRACT BASE CPP /Fr
-# ADD CPP /nologo /G6 /MD /W3 /WX /GX /Zi /O2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "NDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "_INTERNAL" /YX /FD /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /G6 /MD /W3 /WX /GX /Zi /O2 /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "NDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "_INTERNAL" /Fr /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -176,30 +173,6 @@ BSC32=bscmake.exe
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\..\Lib\ww3d2.lib"
 # ADD LIB32 /nologo /out:"..\..\..\Lib\ww3d2Internal.lib"
-
-!ELSEIF  "$(CFG)" == "ww3d2 - Win32 DebugW3D"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "DebugW3D"
-# PROP BASE Intermediate_Dir "DebugW3D"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "DebugW3D"
-# PROP Intermediate_Dir "DebugW3D"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /WX /Gm /Gi /GR /GX /ZI /Od /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "_DEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /Fr /YX /FD /c
-# ADD CPP /nologo /G6 /MDd /W3 /WX /Gm /Gi /GX /ZI /Od /I "..\wwlib" /I "..\wwmath" /I "..\wwdebug" /I "..\wwcpuid" /I "..\wwsaveload" /I "..\wwaudio" /I "..\miles6\include" /D "_DEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /YX /FD /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\Lib\ww3d2Debug.lib"
-# ADD LIB32 /nologo /out:"..\..\..\Lib\ww3d2DebugW3D.lib"
 
 !ENDIF 
 
@@ -211,7 +184,6 @@ LIB32=link.exe -lib
 # Name "ww3d2 - Win32 ProfileE"
 # Name "ww3d2 - Win32 DebugE"
 # Name "ww3d2 - Win32 Internal"
-# Name "ww3d2 - Win32 DebugW3D"
 # Begin Group "Source"
 
 # PROP Default_Filter "cpp;c"
@@ -229,19 +201,11 @@ SOURCE=.\agg_def.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\animatedsoundmgr.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\animobj.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\assetmgr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\assetstatus.cpp
 # End Source File
 # Begin Source File
 
@@ -314,10 +278,6 @@ SOURCE=.\dx8polygonrenderer.cpp
 # Begin Source File
 
 SOURCE=.\dx8renderer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\dx8rendererdebugger.cpp
 # End Source File
 # Begin Source File
 
@@ -406,10 +366,6 @@ SOURCE=.\lightenvironment.cpp
 # Begin Source File
 
 SOURCE=.\line3d.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\linegrp.cpp
 # End Source File
 # Begin Source File
 
@@ -573,10 +529,6 @@ SOURCE=.\sphereobj.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\static_sort_list.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\statistics.cpp
 # End Source File
 # Begin Source File
@@ -606,10 +558,6 @@ SOURCE=.\texproject.cpp
 # Begin Source File
 
 SOURCE=.\texture.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\texturefilter.cpp
 # End Source File
 # Begin Source File
 
@@ -670,19 +618,11 @@ SOURCE=.\agg_def.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\animatedsoundmgr.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\animobj.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\assetmgr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\assetstatus.h
 # End Source File
 # Begin Source File
 
@@ -771,10 +711,6 @@ SOURCE=.\dx8polygonrenderer.h
 # Begin Source File
 
 SOURCE=.\dx8renderer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\dx8rendererdebugger.h
 # End Source File
 # Begin Source File
 
@@ -871,10 +807,6 @@ SOURCE=.\lightenvironment.h
 # Begin Source File
 
 SOURCE=.\line3d.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\linegrp.h
 # End Source File
 # Begin Source File
 
@@ -1030,10 +962,6 @@ SOURCE=.\shattersystem.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\shdlib.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\snapPts.h
 # End Source File
 # Begin Source File
@@ -1047,10 +975,6 @@ SOURCE=.\soundrobj.h
 # Begin Source File
 
 SOURCE=.\sphereobj.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\static_sort_list.h
 # End Source File
 # Begin Source File
 
@@ -1083,10 +1007,6 @@ SOURCE=.\texproject.h
 # Begin Source File
 
 SOURCE=.\texture.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\texturefilter.h
 # End Source File
 # Begin Source File
 

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/bufffile.h                             $* 
  *                                                                                             * 
- *                      $Author:: Ian_l                                                       $*
+ *                      $Author:: Byon_g                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 10/31/01 3:33p                                              $*
+ *                     $Modtime:: 5/02/00 11:09a                                              $*
  *                                                                                             * 
- *                    $Revision:: 3                                                           $*
+ *                    $Revision:: 2                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -70,10 +70,10 @@ class BufferedFileClass : public RawFileClass
 
 	protected:
 
+		void					Reset_Buffer( void );
+
 		static	void		Set_Desired_Buffer_Size( int size ) { _DesiredBufferSize = size; }
 
-		void					Reset_Buffer( void );
-		
 	private:
 		unsigned char *	Buffer;				// The read buffer 
 		unsigned int		BufferSize;			// The allocated size of the read buffer

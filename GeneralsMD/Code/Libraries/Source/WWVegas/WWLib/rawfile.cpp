@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             * 
  *                 Project Name : Command & Conquer                                            * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/wwlib/rawfile.cpp                            $* 
+ *                     $Archive:: /VSS_Sync/wwlib/rawfile.cpp                                 $* 
  *                                                                                             * 
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Vss_sync                                                    $*
  *                                                                                             * 
- *                     $Modtime:: 11/25/01 1:26p                                              $*
+ *                     $Modtime:: 8/29/01 10:24p                                              $*
  *                                                                                             * 
- *                    $Revision:: 13                                                          $*
+ *                    $Revision:: 12                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -150,9 +150,10 @@ RawFileClass::RawFileClass(void) :
 	BiasStart(0),
 	BiasLength(-1),
 	Handle(NULL_HANDLE),
-	Filename(""),
+	Filename(0),
 	Date(0),
-	Time(0)
+	Time(0),
+	Allocated(false)
 {
 }
 
@@ -250,7 +251,8 @@ RawFileClass::RawFileClass(char const * filename) :
 	Handle(NULL_HANDLE),
 	Filename(filename),
 	Date(0),
-	Time(0)
+	Time(0),
+	Allocated(false)
 {
 }
 
@@ -290,43 +292,64 @@ RawFileClass::~RawFileClass(void)
 void RawFileClass::Reset(void)
 {
 	Close();
-	Filename = "";
+	if (Allocated && Filename) {
+		free((char *)Filename);
+		Filename = NULL;
+		Allocated = false;
+	}
 }
 
 /***********************************************************************************************
  * RawFileClass::Set_Name -- Manually sets the name for a file object.                         *
  *                                                                                             *
- *    This routine will set the name for the file object to the name specified. Setting the	  *
- *		name in this fashion doesn't affect the closed or opened state									  *
+ *    This routine will set the name for the file object to the name specified. This name is   *
+ *    duplicated in free store. This allows the supplied name to be a temporarily constructed  *
+ *    text string. Setting the name in this fashion doesn't affect the closed or opened state  *
  *    of the file.                                                                             *
  *                                                                                             *
  * INPUT:   filename -- The filename to assign to this file object.                            *
  *                                                                                             *
- * OUTPUT:  pointer to filename.																					  *
+ * OUTPUT:  Returns with a pointer to the allocated copy of this filename. This pointer is     *
+ *          guaranteed to remain valid for the duration of this file object or until the name  *
+ *          is changed -- whichever is sooner.                                                 *
  *                                                                                             *
+ * WARNINGS:   Because of the allocation this routine must perform, memory could become        *
+ *             fragmented.                                                                     *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   10/17/1994 JLB : Created.                                                                 *
- *	  11/25/2001 Jani : Changed the name storage from strdup to StringClass to benefit from our *
- *							  Fast memory allocation system.
  *=============================================================================================*/
 char const * RawFileClass::Set_Name(char const * filename)
 {
+	if (Filename != NULL && Allocated) {
+		free((char *)Filename);
+		Filename = NULL;
+		Allocated = false;
+	}
+
+	if (filename == NULL) return(NULL);
+
 	Bias(0);
 
-	Filename=filename;
+	char *nameptr = strdup(filename);
+	if (nameptr == NULL) {
+		Error(ENOMEM, false, filename);
+	}
 
 	/*
 	** If this is a UNIX build, fix the filename from the DOS-like name passed in
 	*/
 	#ifdef _UNIX
-		for (int i=0; i<Filename.Get_Length(); i++)
+		for (int i=0; i<strlen(nameptr); i++)
 		{
-			if (Filename[i]=='\\')
-				Filename[i]='/';
-			Filename[i]=tolower(Filename[i]);  // don't preserve case
+			if (nameptr[i]=='\\')
+				nameptr[i]='/';
+			nameptr[i]=tolower(nameptr[i]);  // don't preserve case
 		}
 	#endif
+
+	Filename = nameptr;
+	Allocated = true;
 
 	return(Filename);
 }
@@ -386,7 +409,7 @@ int RawFileClass::Open(int rights)
 	**	Verify that there is a filename associated with this file object. If not, then this is a
 	**	big error condition.
 	*/
-	if (Filename.Get_Length()==0) {
+	if (Filename == NULL) {
 		Error(ENOENT, false);
 	}
 
@@ -488,7 +511,7 @@ int RawFileClass::Open(int rights)
  *=============================================================================================*/
 bool RawFileClass::Is_Available(int forced)
 {
-	if (Filename.Get_Length()==0) return(false);
+	if (Filename == NULL) return(false);
 
 	/*
 	**	If the file is already open, then is must have already passed the availability check.
@@ -1005,6 +1028,7 @@ int RawFileClass::Delete(void)
 	return(true);
 }
 
+
 /***********************************************************************************************
  * RawFileClass::Get_Date_Time -- Gets the date and time the file was last modified.           *
  *                                                                                             *
@@ -1023,50 +1047,21 @@ int RawFileClass::Delete(void)
  *=============================================================================================*/
 unsigned long RawFileClass::Get_Date_Time(void)
 {
-	// Return value
-	unsigned long retval = 0;
-
-	// Ensure we will work properly if the file is not open
-	if (Is_Open()) {
-		// If file is open proceed normally
 #ifdef _UNIX
-		struct stat statbuf;
-		lstat(Filename, &statbuf);
-		retval = statbuf.st_mtime;
+	struct stat statbuf;
+	lstat(Filename, &statbuf);
+	return(statbuf.st_mtime);
 #else
-		BY_HANDLE_FILE_INFORMATION info;
+	BY_HANDLE_FILE_INFORMATION info;
 
-		if (GetFileInformationByHandle(Handle, &info)) {
-			WORD dosdate;
-			WORD dostime;
-			FileTimeToDosDateTime(&info.ftLastWriteTime, &dosdate, &dostime);
-			retval = (dosdate << 16) | dostime;
-		}
-#endif
-	} else {
-		// If file not open open it, if open succeeded proceed normally and then close to put
-		// everything back the way we found it.
-		if (Open()) {
-#ifdef _UNIX
-			struct stat statbuf;
-			lstat(Filename, &statbuf);
-			retval = statbuf.st_mtime;
-#else
-			BY_HANDLE_FILE_INFORMATION info;
-
-			if (GetFileInformationByHandle(Handle, &info)) {
-				WORD dosdate;
-				WORD dostime;
-				FileTimeToDosDateTime(&info.ftLastWriteTime, &dosdate, &dostime);
-				retval = (dosdate << 16) | dostime;
-			}
-#endif
-			Close();
-
-		}
+	if (GetFileInformationByHandle(Handle, &info)) {
+		WORD dosdate;
+		WORD dostime;
+		FileTimeToDosDateTime(&info.ftLastWriteTime, &dosdate, &dostime);
+		return((dosdate << 16) | dostime);
 	}
-
-	return retval;
+	return(0);
+#endif
 }
 
 
@@ -1233,6 +1228,7 @@ void RawFileClass::Attach (void *handle, int rights)
 	BiasLength = -1;
 	Date = 0;
 	Time = 0;
+	Allocated = false;
 
 	#ifdef _UNIX
 	  Handle = (FILE *)handle;
@@ -1260,6 +1256,7 @@ void RawFileClass::Detach (void)
 	BiasLength = -1;
 	Date = 0;
 	Time = 0;
+	Allocated = false;
 	Handle = NULL_HANDLE;	
 }
 

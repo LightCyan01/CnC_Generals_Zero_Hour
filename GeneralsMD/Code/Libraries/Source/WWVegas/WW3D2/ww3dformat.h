@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Nathaniel Hoffman                                            *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                      $Author:: Jani_p                                                      $*
  *                                                                                             *
- *                    $Revision:: 12                                                          $*
+ *                     $Modtime:: 8/20/01 9:41a                                               $*
  *                                                                                             *
- * 06/27/02 KM Z Format support																						*
+ *                    $Revision:: 9                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * Vector4_to_Color - converts a vector4 to the format in format                               *
@@ -45,9 +44,6 @@
 
 #ifndef WW3DFORMAT_H
 #define WW3DFORMAT_H
-
-#include "always.h"
-#include "wwstring.h"
 
 class Vector4;
 class Targa;
@@ -99,26 +95,6 @@ enum WW3DFormat {
 	WW3D_FORMAT_DXT4,
 	WW3D_FORMAT_DXT5,
 	WW3D_FORMAT_COUNT	// Used only to determine number of surface formats
-};
-
-// depth stencil buffer formats
-enum WW3DZFormat
-{
-	WW3D_ZFORMAT_UNKNOWN=0,
-	WW3D_ZFORMAT_D16_LOCKABLE, // 16-bit z-buffer bit depth. This is an application-lockable surface format. 
-	WW3D_ZFORMAT_D32, // 32-bit z-buffer bit depth. 
-	WW3D_ZFORMAT_D15S1, // 16-bit z-buffer bit depth where 15 bits are reserved for the depth channel and 1 bit is reserved for the stencil channel. 
-	WW3D_ZFORMAT_D24S8, // 32-bit z-buffer bit depth using 24 bits for the depth channel and 8 bits for the stencil channel. 
-	WW3D_ZFORMAT_D16, // 16-bit z-buffer bit depth. 
-	WW3D_ZFORMAT_D24X8, // 32-bit z-buffer bit depth using 24 bits for the depth channel. 
-	WW3D_ZFORMAT_D24X4S4, // 32-bit z-buffer bit depth using 24 bits for the depth channel and 4 bits for the stencil channel. 
-#ifdef _XBOX
-	WW3D_ZFORMAT_LIN_D24S8,
-	WW3D_ZFORMAT_LIN_F24S8,
-	WW3D_ZFORMAT_LIN_D16,
-	WW3D_ZFORMAT_LIN_F16,
-#endif
-	WW3D_ZFORMAT_COUNT
 };
 
 // Utility function - not much used otherwise it would use an array.
@@ -189,9 +165,6 @@ void Color_to_Vector4(Vector4* outc,const unsigned int inc,const WW3DFormat form
 // targa - reference to the targa object...
 void Get_WW3D_Format(WW3DFormat& dest_format,WW3DFormat& src_format,unsigned& src_bpp,const Targa& targa);
 
-// The same as above, but doesn't validate the device - only checks the source format.
-void Get_WW3D_Format(WW3DFormat& src_format,unsigned& src_bpp,const Targa& targa);
-
 // Get valid texture format (on current hardware) that is closest to the given format (for instance, 32 bit ARGB8888 would
 // return 16 bit ARGB4444 if the device doesn't support 32 bit textures).
 // Pass false to the second parameter if you don't wish to consider compressed textures on hardware that supports them.
@@ -199,11 +172,5 @@ void Get_WW3D_Format(WW3DFormat& src_format,unsigned& src_bpp,const Targa& targa
 WW3DFormat Get_Valid_Texture_Format(WW3DFormat format,bool is_compression_allowed);
 
 unsigned Get_Bytes_Per_Pixel(WW3DFormat format);
-
-void Get_WW3D_Format_Name(WW3DFormat format, StringClass& name);
-void Get_WW3D_ZFormat_Name(WW3DZFormat format, StringClass& name);
-
-unsigned Get_Num_Depth_Bits(WW3DZFormat zformat);
-unsigned Get_Num_Stencil_Bits(WW3DZFormat zformat);
 
 #endif

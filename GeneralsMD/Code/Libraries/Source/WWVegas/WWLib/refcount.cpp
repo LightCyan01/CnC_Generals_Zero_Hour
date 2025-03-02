@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -154,7 +154,7 @@ bool RefCountClass::Validate_Active_Ref(RefCountClass * obj)
  * HISTORY:                                                                                    *
  *   2/06/99    EHC: Created.                                                                 *
  *=============================================================================================*/
-void	RefCountClass::Inc_Total_Refs(const RefCountClass * obj)
+void	RefCountClass::Inc_Total_Refs(RefCountClass * obj)
 {
 #ifdef PARANOID_REFCOUNTS
 	assert(Validate_Active_Ref(obj));
@@ -168,7 +168,7 @@ void	RefCountClass::Inc_Total_Refs(const RefCountClass * obj)
 RefCountClass* BreakOnReference = 0;
 
 #ifndef NDEBUG
-void RefCountClass::Add_Ref(void) const								
+void RefCountClass::Add_Ref(void)								
 { 
 	NumRefs++;  	  
 
@@ -192,7 +192,7 @@ void RefCountClass::Add_Ref(void) const
  * HISTORY:                                                                                    *
  *   2/06/99    EHC: Created.                                                                 *
  *=============================================================================================*/
-void	RefCountClass::Dec_Total_Refs(const RefCountClass * obj)
+void	RefCountClass::Dec_Total_Refs(RefCountClass * obj)
 {
 #ifdef PARANOID_REFCOUNTS
 	assert(Validate_Active_Ref(obj));

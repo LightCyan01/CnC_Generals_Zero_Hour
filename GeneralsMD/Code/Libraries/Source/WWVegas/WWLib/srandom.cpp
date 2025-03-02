@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -27,15 +27,7 @@
 #include <stdio.h>
 #ifdef _UNIX
 #include "osdep.h"
-#include <linux/kernel.h>
-#include <linux/sys.h>
-
-extern "C" {
-	int sysinfo(struct sysinfo *info);
-}
-
 #else
-
 #include "win.h"
 #include <process.h>
 #endif
@@ -125,6 +117,7 @@ unsigned long SecureRandomClass::Randval(void)
 
 /////////////////////////////// Private Methods ///////////////////////////////////////
 
+
 //
 // Seed the random number generator.
 // The seed is what makes each run of random numbers unique.  If an observer
@@ -145,7 +138,7 @@ void SecureRandomClass::Generate_Seed(void)
 	unsigned int *int_seeds=(unsigned int *)Seeds;
 	int int_seed_length=SeedLength/sizeof(unsigned int);
 
-#ifdef _USE_DEV_RANDOM
+#ifdef _UNIX
 	//
 	// On UNIX we've already got a great random number souce.
 	// This should be used only for a seed since it's slow.
@@ -159,21 +152,6 @@ void SecureRandomClass::Generate_Seed(void)
 	}
 	else
 		assert(0);
-#elif defined(_UNIX)
-	// UNIX without /dev/random (or it's too slow)
-
-	int_seeds[0]^=getuid();
-
-	struct sysinfo info;
-	sysinfo(&info);
-
-	int_seeds[1 % int_seed_length]^=info.loads[0];
-	int_seeds[2 % int_seed_length]^=info.loads[1];
-	int_seeds[3 % int_seed_length]^=info.loads[2];
-	int_seeds[4 % int_seed_length]^=info.freeram;
-	int_seeds[5 % int_seed_length]^=info.freeswap;
-	int_seeds[6 % int_seed_length]^=info.procs;
-	int_seeds[7 % int_seed_length]^=info.bufferram;
 #else
 
 	//

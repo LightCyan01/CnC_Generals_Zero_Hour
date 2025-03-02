@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,9 @@
 #define __SOUNDOBJ_H
 
 #pragma warning (push, 3)
-#include "mss.h"
+// jmarshall - audio
+//#include "mss.h"
+// jmarshall - audio
 #pragma warning (pop)
 
 //#include <malloc.h>

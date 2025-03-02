@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -81,7 +81,7 @@ public:
 		IndexBufferClass* index_buffer;
 		unsigned short* indices;
 	public:
-		WriteLockClass(IndexBufferClass* index_buffer, int flags=0);
+		WriteLockClass(IndexBufferClass* index_buffer);
 		~WriteLockClass();
 
 		unsigned short* Get_Index_Array() { return indices; }
@@ -203,8 +203,6 @@ public:
 protected:
 	unsigned short* index_buffer;
 };
-
-extern int IndexBufferExceptionFunc(void);
 
 #endif //DX8INDEXBUFFER_H
 

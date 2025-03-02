@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                      $Author:: Greg_h                                                      $*
  *                                                                                             *
- *                     $Modtime:: 9/13/01 8:38p                                               $*
+ *                     $Modtime:: 8/28/01 9:23a                                               $*
  *                                                                                             *
- *                    $Revision:: 24                                                          $*
+ *                    $Revision:: 22                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -134,29 +134,29 @@ public:
 	** to this object.
 	*/
 #ifdef NDEBUG
-	WWINLINE void Add_Ref(void) const							{ NumRefs++; }
+	virtual void Add_Ref(void)										{ NumRefs++; }
 #else
-	void Add_Ref(void) const;
+	virtual void Add_Ref(void);
 #endif
 
 	/*
 	** Release_Ref, call this function when you no longer need the pointer
 	** to this object.
 	*/
-	WWINLINE void		Release_Ref(void) const					{ 
+	virtual void		Release_Ref(void)							{ 
 																				#ifndef NDEBUG
 																				Dec_Total_Refs(this);
 																				#endif
 																				NumRefs--; 
 																				assert(NumRefs >= 0); 
-																				if (NumRefs == 0) const_cast<RefCountClass*>(this)->Delete_This(); 
+																				if (NumRefs == 0) Delete_This(); 
 																			}
 
 
 	/*
 	** Check the number of references to this object.  
 	*/
-	int					Num_Refs(void) const						{ return NumRefs; }
+	int					Num_Refs(void)								{ return NumRefs; }
 
 	/*
 	** Delete_This - this function will be called when the object is being
@@ -190,7 +190,7 @@ private:
 	/*
 	** Current reference count of this object
 	*/
-	mutable int			NumRefs;
+	int					NumRefs;
 
 	/*
 	** Sum of all references to RefCountClass's.  Should equal zero after
@@ -201,12 +201,12 @@ private:
 	/*
 	** increments the total reference count
 	*/
-	static void			Inc_Total_Refs(const RefCountClass *);
+	static void			Inc_Total_Refs(RefCountClass *);
 	
 	/*
 	** decrements the total reference count
 	*/
-	static void			Dec_Total_Refs(const RefCountClass *);
+	static void			Dec_Total_Refs(RefCountClass *);
 
 public:
 	

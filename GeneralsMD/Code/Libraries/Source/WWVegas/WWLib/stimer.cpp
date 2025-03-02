@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -16,22 +16,22 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
- ***********************************************************************************************
+/*********************************************************************************************** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ *********************************************************************************************** 
+ *                                                                                             * 
+ *                 Project Name : Command & Conquer                                            * 
+ *                                                                                             * 
+ *                     $Archive:: /Commando/Code/wwlib/STIMER.CPP                             $* 
+ *                                                                                             * 
+ *                      $Author:: Greg_h                                                      $*
+ *                                                                                             * 
+ *                     $Modtime:: 7/09/99 1:46p                                               $*
+ *                                                                                             * 
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
- *                 Project Name : Command & Conquer                                            *
- *                                                                                             *
- *                     $Archive:: /Commando/Code/wwlib/stimer.cpp                             $*
- *                                                                                             *
- *                      $Author:: Steve_t                                                     $*
- *                                                                                             *
- *                     $Modtime:: 12/09/01 6:42p                                              $*
- *                                                                                             *
- *                    $Revision:: 4                                                           $*
- *                                                                                             *
- *---------------------------------------------------------------------------------------------*
- * Functions:                                                                                  *
+ *---------------------------------------------------------------------------------------------* 
+ * Functions:                                                                                  * 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"always.h"
@@ -42,7 +42,7 @@
 #pragma warning (push,3)
 #endif
 
-#include "systimer.h"
+#include <mmsystem.h>
 
 #ifdef _MSC_VER
 #pragma warning (pop)
@@ -51,11 +51,11 @@
 
 long SystemTimerClass::operator () (void) const
 {
-	return TIMEGETTIME()/16;
+	return timeGetTime()/16;
 }
 
 
 SystemTimerClass::operator long (void) const
 {
-	return TIMEGETTIME()/16;
+	return timeGetTime()/16;
 }

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 11/02/01 1:21p                                              $*
+ *                     $Modtime:: 7/09/99 1:37p                                               $*
  *                                                                                             *
- *                    $Revision:: 8                                                           $*
+ *                    $Revision:: 7                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -76,7 +76,6 @@ class ResourceFileClass : public FileClass
 		virtual int Write(void const * /*buffer*/, int /*size*/)	{ return 0; }
 		virtual void Close(void)											{ }
 		virtual void Error(int error, int canretry = false, char const * filename=NULL);
-		virtual void Bias(int start, int length=-1) {}
 
 		virtual unsigned char *Peek_Data(void) const					{ return FileBytes; }
 

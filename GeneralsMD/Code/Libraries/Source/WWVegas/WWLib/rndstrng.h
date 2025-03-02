@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/rndstrng.h                             $* 
  *                                                                                             * 
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Byon_g                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 9/01/01 11:03a                                              $*
+ *                     $Modtime:: 11/03/99 2:26p                                              $*
  *                                                                                             * 
- *                    $Revision:: 3                                                           $*
+ *                    $Revision:: 2                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -51,6 +51,9 @@ class	StringClass;
 class	RandomStringClass {
 
 public:
+	RandomStringClass( void );
+	~RandomStringClass( void );
+
 	// Add a string to the class.  
 	// (future version may have a weight parameter)
 	void Add_String( const char * str );
@@ -59,7 +62,7 @@ public:
 	const char * Get_String( void );
 
 private:
-	DynamicVectorClass<StringClass>	Strings;
+	DynamicVectorClass<StringClass*>	Strings;
 	Random2Class							Randomizer;
 };
 

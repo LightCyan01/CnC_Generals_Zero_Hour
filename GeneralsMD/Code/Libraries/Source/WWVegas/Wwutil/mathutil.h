@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ class cMathUtil
       static double  Get_Normalized_Hat_Pdf_Double();
       static int     Get_Hat_Pdf_Int(int lower, int upper);
 
-		static const double PI_1;
+		static const double PI;
 		static const double PI_2;
 };
 

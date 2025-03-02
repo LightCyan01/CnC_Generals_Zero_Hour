@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             *
- *                     $Modtime:: 11/24/01 6:18p                                              $*
+ *                     $Modtime:: 6/14/01 9:32a                                               $*
  *                                                                                             *
- *                    $Revision:: 7                                                           $*
+ *                    $Revision:: 6                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -53,7 +53,6 @@
 #include "vector4.h"
 #include "shader.h"
 #include "vertmaterial.h"
-#include "meshgeometry.h"
 
 class MeshClass;
 class RenderInfoClass;
@@ -149,7 +148,7 @@ protected:
 	/*
 	** Connectivity
 	*/
-	SimpleDynVecClass<TriIndex>						Polys;
+	SimpleDynVecClass<Vector3i>						Polys;
 
 	/*
 	** Geometry
@@ -214,7 +213,7 @@ protected:
 	/*
 	** Connectivity
 	*/
-	SimpleDynVecClass<TriIndex>						Polys;
+	SimpleDynVecClass<Vector3i>						Polys;
 
 	/*
 	** Indirected vertex indices (for copying dynamically updated mesh geometry)

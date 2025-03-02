@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                      $Author:: Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                      $Author:: Greg_h                                                      $*
+ *                                                                                             *
+ *                     $Modtime:: 2/07/01 2:07p                                               $*
  *                                                                                             *
  *                    $Revision:: 2                                                           $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -71,14 +70,12 @@ public:
 	const OBBoxClass &			Get_Bounding_Volume(void) const { return WorldBoundingVolume; }
 	void								Compute_Texture_Coordinate(const Vector3 & point,Vector3 * set_stq);
 
-	MatrixMapperClass*			Peek_Mapper() const { return Mapper; }
-
 protected:
 
 	virtual void					Update_WS_Bounding_Volume(void);
 
 	Matrix3D							Transform;
-	Matrix4x4						Projection;
+	Matrix4							Projection;
 
 	AABoxClass						LocalBoundingVolume;
 	OBBoxClass						WorldBoundingVolume;

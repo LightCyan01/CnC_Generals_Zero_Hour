@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/vector.cpp                             $* 
  *                                                                                             * 
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Patrick                                                     $*
  *                                                                                             * 
- *                     $Modtime:: 1/16/02 11:40a                                              $*
+ *                     $Modtime:: 8/22/01 1:46p                                               $*
  *                                                                                             * 
- *                    $Revision:: 20                                                          $*
+ *                    $Revision:: 19                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -371,25 +371,4 @@ void BooleanVectorClass::Init(unsigned size, unsigned char * array)
 	LastIndex = -1;
 	BitCount = size;
 	BitArray.Resize(((size + (8-1)) / 8), array);
-}
-
-
-/***********************************************************************************************
- * BooleanVectorClass::Init -- Initializes the bit vector from an user array.                  *
- *                                                                                             *
- * INPUT:   none                                                                               *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   07/18/1995 JLB : Created.                                                                 *
- *=============================================================================================*/
-void BooleanVectorClass::Init(unsigned size)
-{
-	Copy = false;
-	LastIndex = -1;
-	BitCount = size;
-	BitArray.Resize(((size + (8-1)) / 8));
 }

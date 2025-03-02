@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,11 +26,11 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             *
- *                     $Modtime:: 11/24/01 5:42p                                              $*
+ *                     $Modtime:: 5/17/01 10:41a                                              $*
  *                                                                                             *
- *                    $Revision:: 11                                                          $*
+ *                    $Revision:: 9                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -207,8 +207,8 @@ void VisRasterizerClass::Update_MV_Transform(void)
 
 const Matrix3D & VisRasterizerClass::Get_MV_Transform(void)
 {
-	// TODO: optimize this
-	Update_MV_Transform();  // the user can and does mess with the camera directly!
+// TODO: optimize this
+Update_MV_Transform();  // the user can and does mess with the camera directly!
 	return MVTransform;
 }
 
@@ -223,7 +223,7 @@ bool VisRasterizerClass::Render_Triangles
 (
 	const Vector3 * verts,
 	int vcount,
-	const TriIndex * tris, 
+	const Vector3i * tris, 
 	int tcount,const 
 	AABoxClass & bounds
 )
@@ -248,7 +248,7 @@ bool VisRasterizerClass::Render_Triangles_No_Clip
 (
 	const Vector3 * verts,
 	int vcount,
-	const TriIndex * tris, 
+	const Vector3i * tris, 
 	int tcount
 )
 {
@@ -271,7 +271,7 @@ bool VisRasterizerClass::Render_Triangles_No_Clip
 	*/
 	for (int tri_index=0; tri_index<tcount; tri_index++) {
 		
-		const TriIndex & tri = tris[tri_index];
+		const Vector3i & tri = tris[tri_index];
 		pixel_passed |= IDBuffer.Render_Triangle(tverts[tri.I],tverts[tri.J],tverts[tri.K]);
 		if (pixel_passed && (IDBuffer.Get_Render_Mode() == IDBufferClass::NON_OCCLUDER_MODE)) {
 			return true;
@@ -285,7 +285,7 @@ bool VisRasterizerClass::Render_Triangles_Clip
 (
 	const Vector3 * verts,
 	int vcount,
-	const TriIndex * tris, 
+	const Vector3i * tris, 
 	int tcount
 )
 {
@@ -371,7 +371,6 @@ IDBufferClass::IDBufferClass(void) :
 	FrontfaceID(0),
 	CurID(0),
 	RenderMode(OCCLUDER_MODE),
-	TwoSidedRenderingEnabled(false),
 	PixelCounter(0),
 	ResWidth(0),
 	ResHeight(0),
@@ -520,7 +519,7 @@ bool IDBufferClass::Render_Triangle(const Vector3 & p0,const Vector3 & p1,const 
 	int pixels_passed = 0;
 	bool is_backfacing = Is_Backfacing(p0,p1,p2);
 
-	if ((is_backfacing) && (TwoSidedRenderingEnabled == false)) {
+	if (is_backfacing) {
 		if (RenderMode == NON_OCCLUDER_MODE) {
 			return false;
 		}

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -45,8 +45,10 @@ public:
 	StringClass primary_texture_name;
 	StringClass secondary_texture_name;
 	StringClass lensflare_name;
-	float halo_intensity;
+	float halo_size_pow;
 	float halo_intensity_pow;
+	float halo_intensity;
+	float halo_area;
 	float halo_scale_x;
 	float halo_scale_y;
 	float dazzle_size_pow;
@@ -153,7 +155,6 @@ public:
 		float& halo_intensity,
 		const Vector3& camera_dir,
 		const Vector3& dazzle_dir,
-		const Vector3& dir_to_dazzle,
 		float distance) const;
 
 	void Set_Dazzle_Shader(const ShaderClass& s);	// Set shader for the dazzle type
@@ -250,13 +251,10 @@ class DazzleRenderObjClass : public RenderObjClass
 	Vector3 dazzle_color;
 	Vector3 halo_color;
 	float	  lensflare_intensity;
-	float	current_scale;
 	float visibility;
 	bool on_list;	// This is used to avoid insterting a dazzle into a list twice.
 	float radius;	// Used to cast rays against
 	unsigned int creation_time;
-	
-	static bool	_dazzle_rendering_enabled;
 
 //	static void Draw_Debug_Dazzle(int idx);
 	void vis_render_dazzle(SpecialRenderInfoClass & rinfo);
@@ -284,7 +282,7 @@ public:
 	virtual void 					Set_Transform(const Matrix3D &m); 
    virtual void					Get_Obj_Space_Bounding_Sphere(SphereClass & sphere) const;
    virtual void					Get_Obj_Space_Bounding_Box(AABoxClass & box) const;
-	virtual void					Scale(float scale) 															{ current_scale*=scale; };	
+	virtual void					Scale(float scale) 															{ radius*=scale; };	
 
 	void Set_Dazzle_Color(const Vector3& col) { dazzle_color=col; }
 	void Set_Halo_Color(const Vector3& col) { halo_color=col; }
@@ -330,10 +328,6 @@ public:
 	// visibility determination.  The default behavior will ask the scene which
 	// the dazzle is a member of to compute its visibility.
 	static void Install_Dazzle_Visibility_Handler(const DazzleVisibilityClass * visibility_handler);
-
-	// Globally disable/enable dazzle rendering
-	static void Enable_Dazzle_Rendering(bool onoff) { _dazzle_rendering_enabled = onoff; }
-	static bool Is_Dazzle_Rendering_Enabled(void) { return _dazzle_rendering_enabled; }
 };
 
 

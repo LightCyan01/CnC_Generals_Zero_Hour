@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/wwlib/vector.h                               $*
  *                                                                                             *
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Patrick                                                     $*
  *                                                                                             *
- *                     $Modtime:: 1/16/02 11:40a                                              $*
+ *                     $Modtime:: 8/22/01 12:24p                                              $*
  *                                                                                             *
- *                    $Revision:: 49                                                          $*
+ *                    $Revision:: 47                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -61,7 +61,6 @@
 #include	<assert.h>
 #include	<stdlib.h>
 #include <string.h>
-#include <new.h>
 
 #ifdef _MSC_VER
 #pragma warning (disable : 4702) // unreachable code, happens with some uses of these templates
@@ -216,13 +215,13 @@ VectorClass<T>::~VectorClass(void)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-VectorClass<T>::VectorClass(VectorClass<T> const & vec) :
+VectorClass<T>::VectorClass(VectorClass<T> const & vector) :
 	Vector(0),
 	VectorMax(0),
 	IsValid(true),
 	IsAllocated(false)
 {
-	*this = vec;
+	*this = vector;
 }
 
 
@@ -232,7 +231,7 @@ VectorClass<T>::VectorClass(VectorClass<T> const & vec) :
  *    This the the assignment operator for vector objects. It will alter the existing lvalue   *
  *    vector to duplicate the rvalue one.                                                      *
  *                                                                                             *
- * INPUT:   vec   -- The rvalue vector to copy into the lvalue one.                            *
+ * INPUT:   vector   -- The rvalue vector to copy into the lvalue one.                         *
  *                                                                                             *
  * OUTPUT:  Returns with reference to the newly copied vector.                                 *
  *                                                                                             *
@@ -242,17 +241,17 @@ VectorClass<T>::VectorClass(VectorClass<T> const & vec) :
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vec)
+VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)
 {
-	if (this != &vec) {
+	if (this != &vector) {
 		Clear();
-		VectorMax = vec.Length();
+		VectorMax = vector.Length();
 		if (VectorMax) {
 			Vector = W3DNEWARRAY T[VectorMax];
 			if (Vector) {
 				IsAllocated = true;
 				for (int index = 0; index < VectorMax; index++) {
-					Vector[index] = vec[index];
+					Vector[index] = vector[index];
 				}
 			}
 		} else {
@@ -281,11 +280,11 @@ VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vec)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-bool VectorClass<T>::operator == (VectorClass<T> const & vec) const
+bool VectorClass<T>::operator == (VectorClass<T> const & vector) const
 {
-	if (VectorMax == vec.Length()) {
+	if (VectorMax == vector.Length()) {
 		for (int index = 0; index < VectorMax; index++) {
-			if (Vector[index] != vec[index]) {
+			if (Vector[index] != vector[index]) {
 				return(false);
 			}
 		}
@@ -501,7 +500,6 @@ class DynamicVectorClass : public VectorClass<T>
 
 		// retains the memory but zeros the active count
 		void Reset_Active(void) { ActiveCount = 0; }
-		void Set_Active(int count)	{ ActiveCount = count; }
 
 		// Fetch number of "allocated" vector objects.
 		int Count(void) const {return(ActiveCount);};
@@ -516,7 +514,6 @@ class DynamicVectorClass : public VectorClass<T>
 
 		// Delete object at this vector index.
 		bool Delete(int index);
-		bool Delete_Index(int index);		// Added to explictly call delete by index
 
 		// Deletes all objects in the vector.
 		void Delete_All(void);
@@ -867,28 +864,6 @@ bool DynamicVectorClass<T>::Delete(int index)
 
 
 template<class T>
-bool DynamicVectorClass<T>::Delete_Index(int index)
-{
-	if (index < ActiveCount) {
-		ActiveCount--;
-
-		/*
-		**	If there are any objects past the index that was deleted, copy those
-		**	objects down in order to fill the hole. A simple memory copy is
-		**	not sufficient since the vector could contain class objects that
-		**	need to use the assignment operator for movement.
-		*/
-//		(&(*this)[index])->~ T ();
-		for (int i = index; i < ActiveCount; i++) {
-			(*this)[i] = (*this)[i+1];
-		}
-		return(true);
-	}
-	return(false);
-}
-
-
-template<class T>
 void DynamicVectorClass<T>::Delete_All(void) 
 {
 	int len = VectorMax;
@@ -920,8 +895,7 @@ template<class T>
 T * DynamicVectorClass<T>::Uninitialized_Add(void)
 {
 	if (ActiveCount >= Length()) {
-//		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
-		if (GrowthStep > 0) {
+		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
 			if (!Resize(Length() + GrowthStep)) {
 
 				/*
@@ -978,7 +952,6 @@ class BooleanVectorClass
 
 		// Initialization
 		void Init(unsigned size, unsigned char * array);
-		void Init(unsigned size);
 
 		// Fetch number of boolean objects in vector.
 		int Length(void) {return BitCount;};

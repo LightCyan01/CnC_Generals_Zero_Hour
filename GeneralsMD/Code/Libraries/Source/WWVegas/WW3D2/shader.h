@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,6 @@
 
 class DX8Wrapper;
 struct W3dMaterial3Struct;
-class StringClass;
 
 // Re-written shader class
 // Hector Yee 1/24/01
@@ -145,10 +144,6 @@ public:
 		DETAILCOLOR_SUBR,				// 0110	other - local
 		DETAILCOLOR_BLEND,			// 0111	(localAlpha)*local + (~localAlpha)*other
 		DETAILCOLOR_DETAILBLEND,	//	1000	(otherAlpha)*local + (~otherAlpha)*other
-		DETAILCOLOR_ADDSIGNED,		// 1001	(local + other - 0.5)
-		DETAILCOLOR_ADDSIGNED2X,	// 1010	(local + other - 0.5) * 2
-		DETAILCOLOR_SCALE2X,			// 1011	local * other * 2
-		DETAILCOLOR_MODALPHAADDCOLOR,	// 1100 local + localAlpha * other
 
 		DETAILCOLOR_MAX				//			end of enumeration
 	};
@@ -189,13 +184,13 @@ public:
 
  	enum PriGradientType
  	{
- 		GRADIENT_DISABLE=0,				//	000	disable primary gradient (same as OpenGL 'decal' texture blend)
-		GRADIENT_MODULATE,				//	001	modulate fragment ARGB by gradient ARGB (default)
-		GRADIENT_ADD,						//	010	add gradient RGB to fragment RGB, copy gradient A to fragment A
-		GRADIENT_BUMPENVMAP,				// 011	environment-mapped bump mapping
-		GRADIENT_BUMPENVMAPLUMINANCE,	// 100	environment-mapped bump mapping with luminance control
-		GRADIENT_MODULATE2X,				// 101	modulate fragment ARGB by gradient ARGB and multiply RGB by 2
-		GRADIENT_MAX						// end of enumeration
+ 		GRADIENT_DISABLE=0,  //	000	disable primary gradient (same as OpenGL 'decal' texture blend)
+		GRADIENT_MODULATE,   //	001	modulate fragment ARGB by gradient ARGB (default)
+		GRADIENT_ADD,        //	010	add gradient RGB to fragment RGB, copy gradient A to fragment A
+		GRADIENT_BUMPENVMAP,	// 011
+		GRADIENT_BUMPENVMAPLUMINANCE,	// 100
+		GRADIENT_DOTPRODUCT3,	// 101
+		GRADIENT_MAX			// end of enumeration
  	};
 
 	enum SecGradientType
@@ -223,10 +218,9 @@ public:
 
 	enum StaticSortCategoryType
 	{
-		SSCAT_OPAQUE=0,
+		SSCAT_OPAQUE,
 		SSCAT_ALPHA_TEST,
 		SSCAT_ADDITIVE,
-		SSCAT_SCREEN,
 		SSCAT_OTHER
 	};
 
@@ -354,8 +348,6 @@ public:
 	static void				Invert_Backface_Culling(bool onoff);
 	static bool				Is_Backface_Culling_Inverted(void);
 
-	const StringClass& Get_Description(StringClass& str) const;
-
 	// These are a bunch of predefined shaders for common cases. None of them
 	// have fogging since "no fog" is the surrender default and usage of fog
 	// changes from app to app - if you want a fogging shader just grab one of
@@ -379,10 +371,6 @@ public:
 	// Texturing, no zbuffer reading/writing, no gradients, no blending, no
 	// fogging - mostly for opaque 2D objects.
 	static ShaderClass _PresetOpaque2DShader;
-
-	// Texturing, default zbuffer reading, no zbuffer writing, no gradients, no blending, no
-	// fogging - mostly for opaque sprites
-	static ShaderClass _PresetOpaqueSpriteShader;
 
 	// Texturing, no zbuffer reading/writing, no gradients, additive blending,
 	// no fogging - mostly for additive 2D objects.

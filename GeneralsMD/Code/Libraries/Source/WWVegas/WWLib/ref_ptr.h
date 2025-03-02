@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -45,8 +45,6 @@
 #ifndef ALWAYS_H
 #include "always.h"
 #endif
-
-#include "wwdebug.h"
 
 /*
 	RefCountPtr<T> is a smart pointer for reference counted objects.
@@ -256,7 +254,7 @@ class RefCountPtr
 		RefCountPtr(DummyPtrType * dummy)
 			: Referent(0)
 		{
-			WWASSERT(dummy == 0);
+			G_ASSERT(dummy == 0);
 		}
 #endif
 
@@ -360,7 +358,6 @@ class RefCountPtr
 		{
 			if (Referent) {
 				Referent->Release_Ref();
-				Referent = 0;
 			}
 		}
 
@@ -435,10 +432,5 @@ bool operator !=(DummyPtrType * dummy, const RefCountPtr<RHS> & rhs)
 	return 0 != rhs.Peek();	
 }
 
-template <class Derived, class Base>
-RefCountPtr<Derived> Static_Cast(const RefCountPtr<Base> & base) 
-{
-	return Create_Peek((Derived *)base.Peek());
-}
 
 #endif

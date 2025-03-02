@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -41,9 +41,10 @@
 
 #include "DownloadDebug.h"
 
-#ifndef _DEBUG
-#define _DEBUG
-#endif
+// umm... what?? BGC 3/27/03
+//#ifndef _DEBUG
+//#define _DEBUG
+//#endif
 
 /*************************************************************************/
 /*_$                      External References                            */

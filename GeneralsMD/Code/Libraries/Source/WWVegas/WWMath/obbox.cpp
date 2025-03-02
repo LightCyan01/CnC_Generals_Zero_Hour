@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/wwmath/obbox.cpp                             $*
  *                                                                                             *
- *                    Org Author:: Greg_h                                                       *
+ *                       Author:: Greg_h                                                       *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                     $Modtime:: 8/23/99 2:10p                                               $*
  *                                                                                             *
- *                    $Revision:: 24                                                          $*
+ *                    $Revision:: 23                                                          $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   OBBoxClass::OBBoxClass -- Constructor that computes the box for a set of point            *
@@ -239,7 +236,7 @@ void OBBoxClass::Init_From_Box_Points(Vector3 * points,int num)
 #endif
 	Vector3::Cross_Product(axis0,axis1,&axis2);
 
-	Basis = Matrix3x3(axis0,axis1,axis2);
+	Basis = Matrix3(axis0,axis1,axis2);
 
 	/*
 	** Center is the average of all of the points

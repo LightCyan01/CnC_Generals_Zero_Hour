@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 
 #include "bitmaphandler.h"
 #include "wwdebug.h"
-#include "colorspace.h"
 
 void Bitmap_Assert(bool condition)
 {
@@ -59,11 +58,9 @@ void BitmapHandlerClass::Copy_Image_Generate_Mipmap(
 	unsigned src_pitch,
 	WW3DFormat src_format,
 	unsigned char* mip_surface,
-	unsigned mip_pitch,
-	const Vector3& hsv_shift)
+	unsigned mip_pitch)
 {
 	// Optimized loop if source and destination are 32 bit
-	bool has_hsv_shift = hsv_shift[0]!=0.0f || hsv_shift[1]!=0.0f || hsv_shift[2]!=0.0f;
 	if (src_format==dest_format && src_format==WW3D_FORMAT_A8R8G8B8) {
 		dest_pitch/=4;
 		src_pitch/=4;
@@ -90,11 +87,7 @@ void BitmapHandlerClass::Copy_Image_Generate_Mipmap(
 				b8g8r8a8_01=*src_ptr++;
 				*dest_ptr++=b8g8r8a8_01;
 
-				unsigned b8g8r8a8=Combine_A8R8G8B8(b8g8r8a8_00,b8g8r8a8_01,b8g8r8a8_10,b8g8r8a8_11);
-				if (has_hsv_shift) {
-					Recolor(b8g8r8a8,hsv_shift);
-				}
-				*mip_ptr++=b8g8r8a8;
+				*mip_ptr++=Combine_A8R8G8B8(b8g8r8a8_00,b8g8r8a8_01,b8g8r8a8_10,b8g8r8a8_11);
 			}
 		}
 		return;
@@ -126,9 +119,6 @@ void BitmapHandlerClass::Copy_Image_Generate_Mipmap(
 			Write_B8G8R8A8(dest_ptr+dest_bpp+dest_pitch,dest_format,b8g8r8a8_11);
 
 			unsigned b8g8r8a8=Combine_A8R8G8B8(b8g8r8a8_00,b8g8r8a8_01,b8g8r8a8_10,b8g8r8a8_11);
-			if (has_hsv_shift) {
-				Recolor(b8g8r8a8,hsv_shift);
-			}
 
 			Write_B8G8R8A8(mip_ptr,dest_format,b8g8r8a8);
 		}
@@ -157,8 +147,7 @@ void BitmapHandlerClass::Copy_Image(
 	WW3DFormat src_surface_format,
 	const unsigned char* src_palette,
 	unsigned src_palette_bpp,
-	bool generate_mip_level,
-	const Vector3& hsv_shift)
+	bool generate_mip_level)
 {
 	WWASSERT(dest_surface_width);
 	WWASSERT(dest_surface_height);
@@ -252,10 +241,8 @@ void BitmapHandlerClass::Copy_Image(
 				src_ptr_next_line+=src_bpp;
 			}
 		}
-		return;
 	}
 
-	bool has_hsv_shift = hsv_shift[0]!=0.0f || hsv_shift[1]!=0.0f || hsv_shift[2]!=0.0f;
 	if (src_surface_format==dest_surface_format && (src_surface_format==WW3D_FORMAT_A8R8G8B8 || src_surface_format==WW3D_FORMAT_X8R8G8B8)) {
 		// One-to-one copy or scaling?
 		dest_surface_pitch/=4;
@@ -264,9 +251,7 @@ void BitmapHandlerClass::Copy_Image(
 			// Generate the next mip level while copying the current surface?
 			if (generate_mip_level) {
 				if (dest_surface_width==1) {
-					unsigned b8g8r8a8=*(unsigned*)src_surface;
-					if (has_hsv_shift) Recolor(b8g8r8a8,hsv_shift);
-					*(unsigned*)dest_surface=b8g8r8a8;
+					*(unsigned*)dest_surface=*(unsigned*)src_surface;
 				}
 				else {
 					for (unsigned y=0;y<dest_surface_height/2;++y) {
@@ -281,26 +266,16 @@ void BitmapHandlerClass::Copy_Image(
 						unsigned b8g8r8a8_10;
 						unsigned b8g8r8a8_11;
 						for (unsigned x=0;x<dest_surface_width/2;x++) {
-							// Read four pixels from the source
 							b8g8r8a8_10=src_ptr[src_surface_pitch];
-							b8g8r8a8_00=*src_ptr++;
-							b8g8r8a8_11=src_ptr[src_surface_pitch];
-							b8g8r8a8_01=*src_ptr++;
-							// Recolor if necessary
-							if (has_hsv_shift) {
-								Recolor(b8g8r8a8_00,hsv_shift);
-								Recolor(b8g8r8a8_01,hsv_shift);
-								Recolor(b8g8r8a8_10,hsv_shift);
-								Recolor(b8g8r8a8_11,hsv_shift);
-							}
-
-							// Write the four pixels to the destination
 							dest_ptr[dest_surface_pitch]=b8g8r8a8_10;
+							b8g8r8a8_00=*src_ptr++;
 							*dest_ptr++=b8g8r8a8_00;
+
+							b8g8r8a8_11=src_ptr[src_surface_pitch];
 							dest_ptr[dest_surface_pitch]=b8g8r8a8_11;
+							b8g8r8a8_01=*src_ptr++;
 							*dest_ptr++=b8g8r8a8_01;
 
-							// Write combined four pixels to the destination mip map level
 							*mip_ptr++=Combine_A8R8G8B8(b8g8r8a8_00,b8g8r8a8_01,b8g8r8a8_10,b8g8r8a8_11);
 						}
 					}
@@ -312,18 +287,8 @@ void BitmapHandlerClass::Copy_Image(
 					dest_ptr+=y*dest_surface_pitch;
 					const unsigned* src_ptr=(unsigned*)src_surface;
 					src_ptr+=y*src_surface_pitch;
-
-					if (has_hsv_shift) {
-						for (unsigned x=0;x<dest_surface_width;++x) {
-							unsigned b8g8r8a8=*src_ptr++;
-							Recolor(b8g8r8a8,hsv_shift);
-							*dest_ptr++=b8g8r8a8;
-						}
-					}
-					else {
-						for (unsigned x=0;x<dest_surface_width;++x) {
-							*dest_ptr++=*src_ptr++;
-						}
+					for (unsigned x=0;x<dest_surface_width;++x) {
+						*dest_ptr++=*src_ptr++;
 					}
 				}
 			}
@@ -339,11 +304,7 @@ void BitmapHandlerClass::Copy_Image(
 				src_ptr+=src_y*src_surface_pitch;
 				for (unsigned x=0;x<dest_surface_width;++x) {
 					unsigned src_x=x*src_surface_width/dest_surface_width;
-					unsigned b8g8r8a8=src_ptr[src_x];
-					if (has_hsv_shift) {
-						Recolor(b8g8r8a8,hsv_shift);
-					}
-					*dest_ptr++=b8g8r8a8;
+					*dest_ptr++=src_ptr[src_x];
 				}
 			}
 		}
@@ -363,9 +324,6 @@ void BitmapHandlerClass::Copy_Image(
 				unsigned char* src_ptr=src_surface;
 				unsigned b8g8r8a8;
 				Read_B8G8R8A8(b8g8r8a8,src_ptr,src_surface_format,src_palette,src_palette_bpp);
-				if (has_hsv_shift) {
-					Recolor(b8g8r8a8,hsv_shift);
-				}
 				Write_B8G8R8A8(dest_ptr,dest_surface_format,b8g8r8a8);
 			}
 			else {
@@ -378,28 +336,20 @@ void BitmapHandlerClass::Copy_Image(
 					unsigned b8g8r8a8_10;
 					unsigned b8g8r8a8_11;
 					for (unsigned x=0;x<dest_surface_width/2;x++,dest_ptr+=dest_bpp*2,src_ptr+=src_bpp*2,mip_ptr+=src_bpp) {
-						// Read four pixels from the source
 						Read_B8G8R8A8(b8g8r8a8_00,src_ptr,src_surface_format,src_palette,src_palette_bpp);
-						Read_B8G8R8A8(b8g8r8a8_01,src_ptr+src_bpp,src_surface_format,src_palette,src_palette_bpp);
-						Read_B8G8R8A8(b8g8r8a8_10,src_ptr+src_surface_pitch,src_surface_format,src_palette,src_palette_bpp);
-						Read_B8G8R8A8(b8g8r8a8_11,src_ptr+src_bpp+src_surface_pitch,src_surface_format,src_palette,src_palette_bpp);
-
-						// Recolor if necessary
-						if (has_hsv_shift) {
-							Recolor(b8g8r8a8_00,hsv_shift);
-							Recolor(b8g8r8a8_01,hsv_shift);
-							Recolor(b8g8r8a8_10,hsv_shift);
-							Recolor(b8g8r8a8_11,hsv_shift);
-						}
-
-						// Write the four pixels to the destination
 						Write_B8G8R8A8(dest_ptr,dest_surface_format,b8g8r8a8_00);
+
+						Read_B8G8R8A8(b8g8r8a8_01,src_ptr+src_bpp,src_surface_format,src_palette,src_palette_bpp);
 						Write_B8G8R8A8(dest_ptr+dest_bpp,dest_surface_format,b8g8r8a8_01);
+
+						Read_B8G8R8A8(b8g8r8a8_10,src_ptr+src_surface_pitch,src_surface_format,src_palette,src_palette_bpp);
 						Write_B8G8R8A8(dest_ptr+dest_surface_pitch,dest_surface_format,b8g8r8a8_10);
+
+						Read_B8G8R8A8(b8g8r8a8_11,src_ptr+src_bpp+src_surface_pitch,src_surface_format,src_palette,src_palette_bpp);
 						Write_B8G8R8A8(dest_ptr+dest_bpp+dest_surface_pitch,dest_surface_format,b8g8r8a8_11);
 
-						// Write combined four pixels to the destination mip map level
 						unsigned b8g8r8a8=Combine_A8R8G8B8(b8g8r8a8_00,b8g8r8a8_01,b8g8r8a8_10,b8g8r8a8_11);
+
 						Write_B8G8R8A8(mip_ptr,src_surface_format,b8g8r8a8);
 					}
 				}
@@ -409,15 +359,8 @@ void BitmapHandlerClass::Copy_Image(
 			for (unsigned y=0;y<dest_surface_height;++y) {
 				unsigned char* dest_ptr=dest_surface+y*dest_surface_pitch;
 				const unsigned char* src_ptr=src_surface+y*src_surface_pitch;
-				if (has_hsv_shift) {
-					for (unsigned x=0;x<dest_surface_width;++x,dest_ptr+=dest_bpp,src_ptr+=src_bpp) {
-						Copy_Pixel(dest_ptr,dest_surface_format,src_ptr,src_surface_format,src_palette,src_palette_bpp,hsv_shift);
-					}
-				}
-				else {
-					for (unsigned x=0;x<dest_surface_width;++x,dest_ptr+=dest_bpp,src_ptr+=src_bpp) {
-						Copy_Pixel(dest_ptr,dest_surface_format,src_ptr,src_surface_format,src_palette,src_palette_bpp);
-					}
+				for (unsigned x=0;x<dest_surface_width;++x,dest_ptr+=dest_bpp,src_ptr+=src_bpp) {
+					Copy_Pixel(dest_ptr,dest_surface_format,src_ptr,src_surface_format,src_palette,src_palette_bpp);
 				}
 			}
 		}
@@ -429,19 +372,10 @@ void BitmapHandlerClass::Copy_Image(
 			unsigned char* dest_ptr=dest_surface+y*dest_surface_pitch;
 			unsigned src_y=y*src_surface_height/dest_surface_height;
 			const unsigned char* src_ptr=src_surface+src_y*src_surface_pitch;
-			if (has_hsv_shift) {
-				for (unsigned x=0;x<dest_surface_width;++x,dest_ptr+=dest_bpp) {
-					unsigned src_x=x*src_surface_width/dest_surface_width;
-					src_x*=src_bpp;
-					Copy_Pixel(dest_ptr,dest_surface_format,src_ptr+src_x,src_surface_format,src_palette,src_palette_bpp,hsv_shift);
-				}
-			}
-			else {
-				for (unsigned x=0;x<dest_surface_width;++x,dest_ptr+=dest_bpp) {
-					unsigned src_x=x*src_surface_width/dest_surface_width;
-					src_x*=src_bpp;
-					Copy_Pixel(dest_ptr,dest_surface_format,src_ptr+src_x,src_surface_format,src_palette,src_palette_bpp);
-				}
+			for (unsigned x=0;x<dest_surface_width;++x,dest_ptr+=dest_bpp) {
+				unsigned src_x=x*src_surface_width/dest_surface_width;
+				src_x*=src_bpp;
+				Copy_Pixel(dest_ptr,dest_surface_format,src_ptr+src_x,src_surface_format,src_palette,src_palette_bpp);
 			}
 		}
 	}

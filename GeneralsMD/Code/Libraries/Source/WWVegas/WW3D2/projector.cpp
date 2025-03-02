@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                      $Author:: Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             *
- *                    $Revision:: 6                                                           $*
+ *                     $Modtime:: 6/21/01 10:33a                                              $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
+ *                    $Revision:: 5                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   ProjectorClass::ProjectorClass -- Constructor                                             *
@@ -65,7 +64,7 @@ ProjectorClass::ProjectorClass(void) :
 	Transform(1),
 	Projection(1),
 	LocalBoundingVolume(Vector3(0,0,0),Vector3(1,1,1)),
-	WorldBoundingVolume(Vector3(0,0,0),Vector3(1,1,1),Matrix3x3(1))
+	WorldBoundingVolume(Vector3(0,0,0),Vector3(1,1,1),Matrix3(1))
 {
 	Mapper=NEW_REF(MatrixMapperClass,(0));
 }
@@ -230,7 +229,7 @@ void ProjectorClass::Update_WS_Bounding_Volume(void)
 	/*
 	** Recompute our world-space bounding volume
 	*/
-	OBBoxClass localbox(LocalBoundingVolume.Center,LocalBoundingVolume.Extent,Matrix3x3(1));
+	OBBoxClass localbox(LocalBoundingVolume.Center,LocalBoundingVolume.Extent,Matrix3(1));
 	OBBoxClass::Transform(Transform,localbox,&WorldBoundingVolume);	
 }
 

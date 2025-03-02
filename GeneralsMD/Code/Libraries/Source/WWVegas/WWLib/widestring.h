@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Patrick Smith                                                *
  *                                                                                             *
- *                     $Modtime:: 2/06/02 4:59p                                               $*
+ *                     $Modtime:: 8/28/01 10:49a                                              $*
  *                                                                                             *
- *                    $Revision:: 22                                                          $*
+ *                    $Revision:: 11                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -47,7 +47,6 @@
 #include "wwdebug.h"
 #include "win.h"
 #include "wwstring.h"
-#include "trim.h"
 #include <wchar.h>
 #ifdef _UNIX
 #include "osdep.h"
@@ -100,7 +99,6 @@ public:
 	bool operator >= (const WCHAR *string) const;
 
 	WCHAR operator[] (int index) const;
-	WCHAR& operator[] (int index);
 	operator const WCHAR * (void) const;
 
 	////////////////////////////////////////////////////////////
@@ -115,15 +113,9 @@ public:
 	void			Erase (int start_index, int char_count);
 	int _cdecl  Format (const WCHAR *format, ...);
 	int _cdecl  Format_Args (const WCHAR *format, const va_list & arg_list );
-	bool			Convert_From (const char *text);
-	bool			Convert_To (StringClass &string);
-	bool			Convert_To (StringClass &string) const;
-
-	// Trim leading and trailing whitespace (chars <= 32)
-	void Trim(void);
-
-	// Check if the string is composed of ANSI range characters. (0-255)
-	bool Is_ANSI(void);
+	void			Convert_From (const char *text);
+	void			Convert_To (StringClass &string);
+	void			Convert_To (StringClass &string) const;
 
 	WCHAR *		Get_Buffer (int new_length);
 	WCHAR *		Peek_Buffer (void);
@@ -186,7 +178,7 @@ private:
 	static WCHAR *	m_ResTempPtr[MAX_TEMP_STRING];
 
 	static int		m_UsedTempStringCount;
-	static FastCriticalSectionClass m_TempMutex;
+	static CriticalSectionClass m_TempMutex;
 
 	static WCHAR	m_NullChar;
 	static WCHAR *	m_EmptyString;
@@ -290,11 +282,7 @@ WideStringClass::Is_Empty (void) const
 inline int
 WideStringClass::Compare (const WCHAR *string) const
 {
-	if (string) {
-		return wcscmp (m_Buffer, string);
-	}
-
-	return -1;
+	return wcscmp (m_Buffer, string);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -303,11 +291,7 @@ WideStringClass::Compare (const WCHAR *string) const
 inline int
 WideStringClass::Compare_No_Case (const WCHAR *string) const
 {
-	if (string) {
-		return _wcsicmp (m_Buffer, string);
-	}
-
-	return -1;
+	return _wcsicmp (m_Buffer, string);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -315,13 +299,6 @@ WideStringClass::Compare_No_Case (const WCHAR *string) const
 ///////////////////////////////////////////////////////////////////
 inline WCHAR
 WideStringClass::operator[] (int index) const
-{
-	WWASSERT (index >= 0 && index < Get_Length ());
-	return m_Buffer[index];
-}
-
-inline WCHAR&
-WideStringClass::operator[] (int index)
 {
 	WWASSERT (index >= 0 && index < Get_Length ());
 	return m_Buffer[index];
@@ -369,11 +346,7 @@ WideStringClass::operator= (const WideStringClass &string)
 inline bool
 WideStringClass::operator < (const WCHAR *string) const
 {
-	if (string) {
-		return (wcscmp (m_Buffer, string) < 0);
-	}
-
-	return false;
+	return (wcscmp (m_Buffer, string) < 0);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -382,11 +355,7 @@ WideStringClass::operator < (const WCHAR *string) const
 inline bool
 WideStringClass::operator <= (const WCHAR *string) const
 {
-	if (string) {
-		return (wcscmp (m_Buffer, string) <= 0);
-	}
-
-	return false;
+	return (wcscmp (m_Buffer, string) <= 0);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -395,11 +364,7 @@ WideStringClass::operator <= (const WCHAR *string) const
 inline bool
 WideStringClass::operator > (const WCHAR *string) const
 {
-	if (string) {
-		return (wcscmp (m_Buffer, string) > 0);
-	}
-
-	return true;
+	return (wcscmp (m_Buffer, string) > 0);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -408,11 +373,7 @@ WideStringClass::operator > (const WCHAR *string) const
 inline bool
 WideStringClass::operator >= (const WCHAR *string) const
 {
-	if (string) {
-		return (wcscmp (m_Buffer, string) >= 0);
-	}
-
-	return true;
+	return (wcscmp (m_Buffer, string) >= 0);
 }
 
 
@@ -441,23 +402,13 @@ WideStringClass::Erase (int start_index, int char_count)
 }
 
 ///////////////////////////////////////////////////////////////////
-// Trim leading and trailing whitespace (chars <= 32)
-///////////////////////////////////////////////////////////////////
-inline void WideStringClass::Trim(void)
-{
-	wcstrim(m_Buffer);
-	int len = wcslen(m_Buffer);
-	Store_Length(len);
-}
-
-
-///////////////////////////////////////////////////////////////////
 //	operator=
 ///////////////////////////////////////////////////////////////////
 inline const WideStringClass &
 WideStringClass::operator= (const WCHAR *string)
 {
-	if (string) {
+	if (string != 0) {
+
 		int len = wcslen (string);
 		Uninitialised_Grow (len + 1);
 		Store_Length (len);
@@ -474,7 +425,10 @@ WideStringClass::operator= (const WCHAR *string)
 inline const WideStringClass &
 WideStringClass::operator= (const char *string)
 {
-	Convert_From(string);
+	if (string != 0) {
+		Convert_From(string);
+	}
+
 	return (*this);
 }
 
@@ -499,23 +453,22 @@ WideStringClass::operator= (WCHAR ch)
 inline const WideStringClass &
 WideStringClass::operator+= (const WCHAR *string)
 {
-	if (string) {
-		int cur_len = Get_Length ();
-		int src_len = wcslen (string);
-		int new_len = cur_len + src_len;
+	WWASSERT (string != NULL);
 
-		//
-		//	Make sure our buffer is large enough to hold the new string
-		//
-		Resize (new_len + 1);
-		Store_Length (new_len);
+	int cur_len = Get_Length ();
+	int src_len = wcslen (string);
+	int new_len = cur_len + src_len;
 
-		//
-		//	Copy the new string onto our the end of our existing buffer
-		//
-		::memcpy (&m_Buffer[cur_len], string, (src_len + 1) * sizeof (WCHAR));
-	}
+	//
+	//	Make sure our buffer is large enough to hold the new string
+	//
+	Resize (new_len + 1);
+	Store_Length (new_len);
 
+	//
+	//	Copy the new string onto our the end of our existing buffer
+	//
+	::memcpy (&m_Buffer[cur_len], string, (src_len + 1) * sizeof (WCHAR));
 	return (*this);
 }
 
@@ -766,20 +719,75 @@ WideStringClass::Store_Length (int length)
 	return ;
 }
 
+
 ///////////////////////////////////////////////////////////////////
-// Convert_To
+// Convert_From
 ///////////////////////////////////////////////////////////////////
-inline bool	
-WideStringClass::Convert_To (StringClass &string)
+inline void	
+WideStringClass::Convert_From(const char * text)
 {
-	return (string.Copy_Wide (m_Buffer));
+	int len = ::strlen ( text );
+	Uninitialised_Grow ( len + 1 );
+	if ( len != 0 ) {
+		WCHAR * ptr = m_Buffer;
+		while ( *text != 0 ) {
+			*ptr++ = *text++;
+		}
+		*ptr++ = 0;
+	}
+
+	return ;
 }
 
 
-inline bool	
+///////////////////////////////////////////////////////////////////
+// Convert_To
+///////////////////////////////////////////////////////////////////
+inline void	
+WideStringClass::Convert_To (StringClass &string)
+{
+	//
+	//	Resize the destination string
+	//
+	int len				= Get_Length ();
+	char *dest_buffer	= string.Get_Buffer (len + 1);
+		
+	//
+	//	Copy the strings
+	//
+	if (len != 0) {
+		WCHAR *ptr = m_Buffer;
+		while (*ptr != 0) {
+			*dest_buffer++ = *ptr++;
+		}
+		*dest_buffer++ = 0;
+	}
+
+	return ;
+}
+
+
+inline void	
 WideStringClass::Convert_To (StringClass &string) const
 {
-	return (string.Copy_Wide (m_Buffer));
+	//
+	//	Resize the destination string
+	//
+	int len				= Get_Length ();
+	char *dest_buffer	= string.Get_Buffer (len + 1);
+		
+	//
+	//	Copy the strings
+	//
+	if (len != 0) {
+		WCHAR *ptr = m_Buffer;
+		while (*ptr != 0) {
+			*dest_buffer++ = *ptr++;
+		}
+		*dest_buffer++ = 0;
+	}
+
+	return ;
 }
 
 #endif //__WIDESTRING_H

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,15 +26,12 @@
  *                                                                                             *
  *              Original Author:: Jani Penttinen                                               *
  *                                                                                             *
- *                      $Author:: Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 5:06p                                             $*
+ *                      $Author:: Jani_p                                                      $*
  *                                                                                             *
- *                    $Revision:: 7                                                          $*
+ *                     $Modtime:: 3/29/01 12:44a                                              $*
  *                                                                                             *
- * 06/26/02 KM VB Vertex format update for shaders                                       *
- * 07/17/02 KM VB Vertex format update for displacement mapping                               *
- * 08/01/02 KM VB Vertex format update for cube mapping                               *
+ *                    $Revision:: 5                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -48,7 +45,7 @@
 #define DX8_FVF_H
 
 #include "always.h"
-#include <d3d8.h>
+#include "../../../DX90SDK/include/d3d8.h"
 #ifdef WWDEBUG
 #include "wwdebug.h"
 #endif
@@ -65,10 +62,7 @@ enum {
 	DX8_FVF_XYZDUV1		= D3DFVF_XYZ|D3DFVF_TEX1|D3DFVF_DIFFUSE,
 	DX8_FVF_XYZDUV2		= D3DFVF_XYZ|D3DFVF_TEX2|D3DFVF_DIFFUSE,
 	DX8_FVF_XYZUV1			= D3DFVF_XYZ|D3DFVF_TEX1,
-	DX8_FVF_XYZUV2			= D3DFVF_XYZ|D3DFVF_TEX2,
- 	DX8_FVF_XYZNDUV1TG3	= (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE|D3DFVF_TEX4|D3DFVF_TEXCOORDSIZE2(0)|D3DFVF_TEXCOORDSIZE3(1)|D3DFVF_TEXCOORDSIZE3(2)|D3DFVF_TEXCOORDSIZE3(3)),
- 	DX8_FVF_XYZNUV2DMAP	= (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX3 | D3DFVF_TEXCOORDSIZE1(0) | D3DFVF_TEXCOORDSIZE4(1) | D3DFVF_TEXCOORDSIZE2(2) ),
-	DX8_FVF_XYZNDCUBEMAP	= D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE //|D3DFVF_TEX1|D3DFVF_TEXCOORDSIZE3(0)
+	DX8_FVF_XYZUV2			= D3DFVF_XYZ|D3DFVF_TEX2
 };
 
 // ----------------------------------------------------------------------------
@@ -191,62 +185,6 @@ struct VertexFormatXYZUV2
 	float v2;
 };
 
-// todo KJM compress
-struct VertexFormatXYZNDUV1TG3
-{
-	float x;
-	float y;
-	float z;
-	float nx;
-	float ny;
-	float nz;
-	unsigned diffuse;
-	float u1;
-	float v1;
-	float Sx;
-	float Sy;
-	float Sz;
-	float Tx;
-	float Ty;
-	float Tz;
-	float SxTx;
-	float SxTy;
-	float SxTz;
-};
-
-
-// displacement mapping format
-struct VertexFormatXYZNUV2DMAP
-{
-	float x;
-	float y;
-	float z;
-	float nx;
-	float ny;
-	float nz;
-	float T1x;
-	float T1y;
-	float T1z;
-	float T1w;
-	float T2x;
-	float T2y;
-};
-
-// cube map format (texcoords are normally generated)
-struct VertexFormatXYZNDCUBEMAP
-{
-	float x;
-	float y;
-	float z;
-	float nx;
-	float ny;
-	float nz;
-	unsigned diffuse;
-//	float u1;
-//	float v1;
-//	float w1;
-};
-
 // FVF info class can be created for any legal FVF. It constructs information
 // of offsets to various elements in the vertex buffer.
 
@@ -254,8 +192,8 @@ class FVFInfoClass : public W3DMPO
 {
 	W3DMPO_GLUE(FVFInfoClass)
 
-	mutable unsigned						FVF;
-	mutable unsigned						fvf_size;
+	unsigned							FVF;
+	unsigned							fvf_size;
 
 	unsigned							location_offset;
 	unsigned							normal_offset;
@@ -264,7 +202,7 @@ class FVFInfoClass : public W3DMPO
 	unsigned							diffuse_offset;
 	unsigned							specular_offset;
 public:
-	FVFInfoClass(unsigned FVF, unsigned vertex_size=0);
+	FVFInfoClass(unsigned FVF);
 
 	inline unsigned Get_Location_Offset() const { return location_offset; }
 	inline unsigned Get_Normal_Offset() const { return normal_offset; }
@@ -280,10 +218,6 @@ public:
 	inline unsigned Get_FVF_Size() const { return fvf_size; }
 
 	void Get_FVF_Name(StringClass& fvfname) const;	// For debug purposes
-
-	// for enabling vertex shaders
-	inline void Set_FVF(unsigned fvf) const { FVF=fvf; }
-	inline void Set_FVF_Size(unsigned size) const { fvf_size=size; }
 };
 
 

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -70,8 +70,6 @@
 #endif	//STEVES_NEW_CATCHER
 #endif	//_MSC_VER
 #endif	//_DEBUG
-
-#if 1 // (gth) killing the Generals Memory Manager!
 
 #ifndef _OPERATOR_NEW_DEFINED_
 
@@ -155,19 +153,16 @@ public:
 };
 // ----------------------------------------------------------------------------
 
-#else
 
-	#define MSGW3DNEW(MSG)					new
-	#define MSGW3DNEWARRAY(MSG)			new
-	#define W3DNEW									new
-	#define W3DNEWARRAY							new
-
-	#define W3DMPO_GLUE(ARGCLASS)
-
-	class W3DMPO { };
-
-#endif // (gth) removing the generals memory stuff from W3D
-
+// Jani: Intel's C++ compiler issues too many warnings in WW libraries when using warning level 4
+#if defined (__ICL)    // Detect Intel compiler
+#pragma warning (3)
+#pragma warning ( disable: 981 ) // parameters defined in unspecified order
+#pragma warning ( disable: 279 ) // controlling expressaion is constant
+#pragma warning ( disable: 271 ) // trailing comma is nonstandard
+#pragma warning ( disable: 171 ) // invalid type conversion
+#pragma warning ( disable: 1 ) // last line of file ends without a newline
+#endif
 
 // Jani: MSVC doesn't necessarily inline code with inline keyword. Using __forceinline results better inlining
 // and also prints out a warning if inlining wasn't possible. __forceinline is MSVC specific.

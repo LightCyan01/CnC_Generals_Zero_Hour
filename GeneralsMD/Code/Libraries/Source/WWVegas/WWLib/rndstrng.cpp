@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/rndstrng.cpp                           $* 
  *                                                                                             * 
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Byon_g                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 9/01/01 11:05a                                              $*
+ *                     $Modtime:: 2/08/00 10:59a                                              $*
  *                                                                                             * 
- *                    $Revision:: 4                                                           $*
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -39,10 +39,22 @@
 /*
 **
 */
+RandomStringClass::RandomStringClass( void )
+{
+}
+
+RandomStringClass::~RandomStringClass( void )
+{
+	while ( Strings.Count() ) {
+		delete Strings[ 0 ];
+		Strings.Delete( 0 );
+	}
+}
 
 void RandomStringClass::Add_String( const char * str )
 {
-	Strings.Add( str );
+	StringClass	 * string = W3DNEW StringClass( str );
+	Strings.Add( string );
 }
 
 const char * RandomStringClass::Get_String( void )
@@ -52,6 +64,6 @@ const char * RandomStringClass::Get_String( void )
 	}
 	unsigned int index = Randomizer();
 	index %= Strings.Count();
-	return Strings[index];
+	return *Strings[index];
 }
 

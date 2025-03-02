@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/ww3d2/rinfo.cpp                              $*
  *                                                                                             *
- *                   Org Author:: Greg Hjelstrom                                               *
+ *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                     $Modtime:: 8/24/01 3:31p                                               $*
  *                                                                                             *
- *                    $Revision:: 15                                                          $*
+ *                    $Revision:: 13                                                          $*
  *                                                                                             *
- * 06/27/02 KM Render to shadow buffer texture support														*
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -55,9 +52,7 @@ RenderInfoClass::RenderInfoClass(CameraClass & cam) :
 	fog_scale(0.0f),
 	light_environment(0),
 	AdditionalMaterialPassCount(0),
-	RejectedMaterialPasses(0),
 	OverrideFlagLevel(0),
-	Texture_Projector(NULL),
 	alphaOverride(1.0f),
 	materialPassAlphaOverride(1.0f),
 	materialPassEmissiveOverride(1.0f)
@@ -73,29 +68,21 @@ RenderInfoClass::~RenderInfoClass(void)
 void RenderInfoClass::Push_Material_Pass(MaterialPassClass * matpass)
 {
 	// add to the end of the array
-	if (AdditionalMaterialPassCount<MAX_ADDITIONAL_MATERIAL_PASSES-1) {
-
-		if (matpass) {
-			matpass->Add_Ref();
-		}
-		AdditionalMaterialPassArray[AdditionalMaterialPassCount++]=matpass;
-	} else {
-		RejectedMaterialPasses++;
+	if (matpass) {
+		matpass->Add_Ref();
 	}
+	WWASSERT(AdditionalMaterialPassCount<MAX_ADDITIONAL_MATERIAL_PASSES);
+	AdditionalMaterialPassArray[AdditionalMaterialPassCount++]=matpass;
 }
 
 void RenderInfoClass::Pop_Material_Pass(void)
 {
-	if (RejectedMaterialPasses == 0) {
-		// remove from the end of the array
-		WWASSERT(AdditionalMaterialPassCount>0);
-		AdditionalMaterialPassCount--;
-		MaterialPassClass * mpass = AdditionalMaterialPassArray[AdditionalMaterialPassCount];
-		if (mpass != NULL) {
-			mpass->Release_Ref();
-		}
-	} else {
-		RejectedMaterialPasses--;
+	// remove from the end of the array
+	WWASSERT(AdditionalMaterialPassCount>0);
+	AdditionalMaterialPassCount--;
+	MaterialPassClass * mpass = AdditionalMaterialPassArray[AdditionalMaterialPassCount];
+	if (mpass != NULL) {
+		mpass->Release_Ref();
 	}
 }
 

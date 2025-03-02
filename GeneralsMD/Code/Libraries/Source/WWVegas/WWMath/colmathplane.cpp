@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/wwmath/colmathplane.cpp                      $*
  *                                                                                             *
- *                    Org Author:: Greg Hjelstrom                                               *
+ *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                     $Modtime:: 3/29/00 4:41p                                               $*
  *                                                                                             *
- *                    $Revision:: 10                                                           $*
+ *                    $Revision:: 9                                                           $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -176,12 +173,12 @@ CollisionMath::Overlap_Test(const PlaneClass & plane,const OBBoxClass & box)
 	Vector3 local_normal;
 	Vector3 posfarpt;
 	Vector3 negfarpt;
-	Matrix3x3::Transpose_Rotate_Vector(box.Basis,plane.N,&local_normal);
+	Matrix3::Transpose_Rotate_Vector(box.Basis,plane.N,&local_normal);
 
 	get_far_extent(local_normal,box.Extent,&posfarpt);
 
 	// transform the two extreme box coordinates into world space
-	Matrix3x3::Rotate_Vector(box.Basis,posfarpt,&posfarpt);
+	Matrix3::Rotate_Vector(box.Basis,posfarpt,&posfarpt);
 	negfarpt = -posfarpt;
 	posfarpt += box.Center;
 	negfarpt += box.Center;

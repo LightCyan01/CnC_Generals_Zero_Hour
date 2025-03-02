@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -16,22 +16,22 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/***********************************************************************************************
- ***                            Confidential - Westwood Studios                              ***
- ***********************************************************************************************
- *                                                                                             *
- *                 Project Name : Commando                                                     *
- *                                                                                             *
- *                     $Archive:: /Commando/Code/wwlib/mixfile.h                              $*
- *                                                                                             *
- *                      $Author:: Steve_t                                                     $*
- *                                                                                             *
- *                     $Modtime:: 9/07/01 5:29p                                               $*
- *                                                                                             *
- *                    $Revision:: 4                                                           $*
- *                                                                                             *
- *---------------------------------------------------------------------------------------------*
- * Functions:                                                                                  *
+/*********************************************************************************************** 
+ ***                            Confidential - Westwood Studios                              *** 
+ *********************************************************************************************** 
+ *                                                                                             * 
+ *                 Project Name : Commando                                                     * 
+ *                                                                                             * 
+ *                     $Archive:: /Commando/Code/wwlib/mixfile.h                              $* 
+ *                                                                                             * 
+ *                      $Author:: Patrick                                                     $* 
+ *                                                                                             * 
+ *                     $Modtime:: 8/06/01 3:14p                                               $* 
+ *                                                                                             * 
+ *                    $Revision:: 3                                                           $* 
+ *                                                                                             * 
+ *---------------------------------------------------------------------------------------------* 
+ * Functions:                                                                                  * 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef	MIXFILE_H
@@ -60,7 +60,7 @@ class	MixFileFactoryClass : public FileFactoryClass {
 
 public:
 	MixFileFactoryClass( const char * mix_filename, FileFactoryClass * factory );
-	virtual ~MixFileFactoryClass( void );
+	~MixFileFactoryClass( void );
 
 	//
 	//	Inherited
@@ -72,7 +72,6 @@ public:
 	//	Filename access
 	//
 	bool		Build_Filename_List (DynamicVectorClass<StringClass> &list);
-	bool		Build_Ordered_Filename_List (DynamicVectorClass<StringClass> &list);		// ordered by offset in mixfile
 	bool		Build_Internal_Filename_List (void)									{ return Build_Filename_List (FilenameList); }
 	void		Get_Filename_List (DynamicVectorClass<StringClass> **list)	{ *list = &FilenameList; }
 	void		Get_Filename_List (DynamicVectorClass<StringClass> &list)	{ list = FilenameList; }
@@ -94,8 +93,7 @@ private:
 	//
 	//	Utility functions
 	//
-	bool			Get_Temp_Filename (const char *path, StringClass &full_path);
-	static int	File_Offset_Compare(const void * a, const void * b);
+	bool		Get_Temp_Filename (const char *path, StringClass &full_path);
 
 	struct FileInfoStruct {
 		bool operator== (const FileInfoStruct &src)	{ return false; }

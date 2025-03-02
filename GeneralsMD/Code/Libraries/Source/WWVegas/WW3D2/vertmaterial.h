@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             *
  *                 Project Name : WW3D                                                         *
  *                                                                                             *
- *                     $Archive:: /Commando/Code/ww3d2/vertmaterial.h                         $*
+ *                     $Archive:: /VSS_Sync/ww3d2/vertmaterial.h                              $*
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 4/27/01 2:22p                                               $*
+ *                     $Modtime:: 8/29/01 7:29p                                               $*
  *                                                                                             *
- *                    $Revision:: 25                                                          $*
+ *                    $Revision:: 26                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -207,8 +207,6 @@ public:
 	WW3DErrorType		Load_W3D(ChunkLoadClass & cload);
 	WW3DErrorType		Save_W3D(ChunkSaveClass & csave);
 
-	void					Parse_W3dVertexMaterialStruct(const W3dVertexMaterialStruct & vmat);
-	void					Parse_Mapping_Args(const W3dVertexMaterialStruct & vmat,char * mapping0_arg_buffer,char * mapping1_arg_buffer);
 	void					Init_From_Material3(const W3dMaterial3Struct & mat3);
 
 	/*

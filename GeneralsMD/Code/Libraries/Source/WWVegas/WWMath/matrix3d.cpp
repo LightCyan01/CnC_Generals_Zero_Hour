@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -25,15 +25,12 @@
  *                                                                                             * 
  *                    File Name : MATRIX3D.CPP                                                 * 
  *                                                                                             * 
- *                Org Programmer : Greg Hjelstrom                                               * 
- *                                                                                             * 
- *                   Programmer : Kenny Mitchell                          * 
+ *                   Programmer : Greg Hjelstrom                                               * 
  *                                                                                             * 
  *                   Start Date : 02/24/97                                                     * 
- *                                                                         * 
- *                  Last Update : June 6, 2002 [KM]                                            * 
  *                                                                                             * 
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
+ *                  Last Update : February 28, 1997 [GH]                                       * 
+ *                                                                                             * 
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
  *   Matrix3D::Set_Rotation -- Sets the rotation part of the matrix                            *
@@ -150,7 +147,7 @@ const Matrix3D	Matrix3D::RotateZ270
  *                                                                                             *
  * HISTORY:                                                                                    *
  *=============================================================================================*/
-void Matrix3D::Set(const Matrix3x3 & rot,const Vector3 & pos)
+void Matrix3D::Set(const Matrix3 & rot,const Vector3 & pos)
 {
 	Row[0].Set( rot[0][0], rot[0][1], rot[0][2], pos[0]);
 	Row[1].Set( rot[1][0], rot[1][1], rot[1][2], pos[1]);
@@ -188,7 +185,7 @@ void Matrix3D::Set(const Quaternion & rot,const Vector3 & pos)
  * HISTORY:                                                                                    *
  *   5/11/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-void Matrix3D::Set_Rotation(const Matrix3x3 & m)
+void Matrix3D::Set_Rotation(const Matrix3 & m)
 {
 	Row[0][0] = m[0][0];
 	Row[0][1] = m[0][1];
@@ -516,8 +513,8 @@ void Matrix3D::Get_Inverse(Matrix3D & inv) const
 	// TODO: Implement the general purpose inverse function here (once we need it :-)
 	//Get_Orthogonal_Inverse(inv);
 
-	Matrix4x4	mat4(*this);
-	Matrix4x4	mat4Inv;
+	Matrix4	mat4(*this);
+	Matrix4	mat4Inv;
 
 	float det;
 	D3DXMatrixInverse((D3DXMATRIX *)&mat4Inv, &det, (D3DXMATRIX*)&mat4);

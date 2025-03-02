@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -181,9 +181,6 @@ public:
 
 	void				First(GenericMultiListClass *list)		{ List = list; CurNode = List->Head.Next; }
 	void				First(void)										{ CurNode = List->Head.Next; }
-	void				Last(GenericMultiListClass *list)		{ List = list; CurNode = List->Head.Prev; }
-	void				Last(void)										{ CurNode = List->Head.Prev; }
-
 	void				Next(void)										{ CurNode = CurNode->Next; }
 	void				Prev(void)										{ CurNode = CurNode->Prev; }
 	bool				Is_Done(void)									{ return (CurNode == &(List->Head)); }

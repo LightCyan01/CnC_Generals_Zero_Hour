@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             * 
  *                 Project Name : Command & Conquer                                            * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/wwlib/rawfile.h                              $* 
+ *                     $Archive:: /G/wwlib/rawfile.h                                          $* 
  *                                                                                             * 
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Neal_k                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 11/25/01 11:52a                                             $*
+ *                     $Modtime:: 10/04/99 10:25a                                             $*
  *                                                                                             * 
- *                    $Revision:: 10                                                          $*
+ *                    $Revision:: 8                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -59,7 +59,6 @@
 #endif
 
 #include	"wwfile.h"
-#include "wwstring.h"
 
 
 #ifndef WWERROR
@@ -111,7 +110,9 @@ class RawFileClass : public FileClass
 		virtual unsigned long Get_Date_Time(void);
 		virtual bool Set_Date_Time(unsigned long datetime);
 		virtual void Error(int error, int canretry = false, char const * filename=NULL);
-		virtual void Bias(int start, int length=-1);
+
+		void Bias(int start, int length=-1);
+
 		virtual void * Get_File_Handle(void) { return Handle; } 
 
 		virtual void	Attach (void *handle, int rights=READ);
@@ -147,7 +148,11 @@ class RawFileClass : public FileClass
 			void * Handle;
 		#endif
 
-		StringClass Filename;
+		/*
+		**	This points to the filename as a NULL terminated string. It may point to either a
+		**	constant or an allocated string as indicated by the "Allocated" flag.
+		*/
+		char const * Filename;
 
 		//
 		// file date and time are in the following formats:
@@ -162,6 +167,15 @@ class RawFileClass : public FileClass
 		//
 		unsigned short Date;
 		unsigned short Time;
+
+		/*
+		**	Filenames that were assigned as part of the construction process
+		**	are not allocated. It is assumed that the filename string is a
+		**	constant in that case and thus making duplication unnecessary.
+		**	This value will be non-zero if the filename has be allocated
+		**	(using strdup()).
+		*/
+		bool Allocated;
 };
 
 
@@ -180,8 +194,6 @@ class RawFileClass : public FileClass
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   10/18/1994 JLB : Created.                                                                 *
- *   11/25/2001 Jani: Note that this is virtual function and thus can't be inlined. Is there a *
- *					 reason for it to be virtual?																	  *
  *=============================================================================================*/
 inline char const * RawFileClass::File_Name(void) const
 {

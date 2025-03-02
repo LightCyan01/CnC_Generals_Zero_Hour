@@ -21,7 +21,6 @@ CFG=wwlib - Win32 DebugW3D
 !MESSAGE "wwlib - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "wwlib - Win32 Profile" (based on "Win32 (x86) Static Library")
 !MESSAGE "wwlib - Win32 Internal" (based on "Win32 (x86) Static Library")
-!MESSAGE "wwlib - Win32 DebugW3D" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -44,8 +43,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /G6 /MD /W3 /WX /Gi /GX /O2 /Ob2 /I "..\wwdebug" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "REGEX_MALLOC" /D "STDC_HEADERS" /D "NDEBUG" /D "WIN32" /D "IG_DEBUG_STACKTRACE" /YX /FD /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /G6 /MD /W3 /WX /Gi /GX /O2 /Ob2 /I "..\wwdebug" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "REGEX_MALLOC" /D "STDC_HEADERS" /D "NDEBUG" /D "WIN32" /D "IG_DEBUG_STACKTRACE" /Fr /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -68,8 +66,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /G6 /MDd /W3 /WX /Gi /GX /Zi /O2 /Ob2 /I "..\wwdebug" /D "_DEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /YX /FD /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /G6 /MDd /W3 /WX /Gi /GX /Zi /O2 /Ob2 /I "..\wwdebug" /D "_DEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /Fr /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -92,7 +89,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "Profile"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /WX /GX /Zi /O2 /Op /Ob2 /I "..\wwdebug" /D "NDEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /D "_PROFILE" /YX /FD /Gh /c
+# ADD CPP /nologo /MD /W3 /WX /GX /Zi /O2 /Op /Ob2 /I "..\wwdebug" /D "NDEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /YX /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -116,8 +114,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W4 /Gi /GX /O2 /Ob2 /I "..\wwdebug" /D "NDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /YX /FD /c
 # SUBTRACT BASE CPP /Fr
-# ADD CPP /nologo /G6 /MD /W3 /WX /Gi /GX /Zi /O2 /I "..\wwdebug" /D "NDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /D "_INTERNAL" /YX /FD /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /G6 /MD /W3 /WX /Gi /GX /Zi /O2 /I "..\wwdebug" /D "NDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /D "_INTERNAL" /Fr /YX /FD /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -127,30 +124,6 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\..\Lib\WWLib.lib"
 # ADD LIB32 /nologo /out:"..\..\..\Lib\WWLibInternal.lib"
 
-!ELSEIF  "$(CFG)" == "wwlib - Win32 DebugW3D"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "DebugW3D"
-# PROP BASE Intermediate_Dir "DebugW3D"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "DebugW3D"
-# PROP Intermediate_Dir "DebugW3D"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /WX /Gm /Gi /GR /GX /ZI /Od /I "..\wwdebug" /D "_DEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /Fr /YX /FD /c
-# ADD CPP /nologo /G6 /MDd /W3 /WX /Gm /Gi /GX /ZI /Od /I "..\wwdebug" /D "_DEBUG" /D "WWDEBUG" /D WINVER=0x400 /D "_WINDOWS" /D "WIN32_LEAN_AND_MEAN" /D "WIN32" /D "REGEX_MALLOC" /D "STDC_HEADERS" /YX /FD /c
-# SUBTRACT CPP /Fr
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\Lib\WWLibdebug.lib"
-# ADD LIB32 /nologo /out:"..\..\..\Lib\WWLibdebugW3D.lib"
-
 !ENDIF 
 
 # Begin Target
@@ -159,7 +132,6 @@ LIB32=link.exe -lib
 # Name "wwlib - Win32 Debug"
 # Name "wwlib - Win32 Profile"
 # Name "wwlib - Win32 Internal"
-# Name "wwlib - Win32 DebugW3D"
 # Begin Group "Source"
 
 # PROP Default_Filter "cpp"
@@ -170,10 +142,6 @@ SOURCE=.\_convert.cpp
 # Begin Source File
 
 SOURCE=.\_mono.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\argv.cpp
 # End Source File
 # Begin Source File
 
@@ -237,14 +205,6 @@ SOURCE=.\dsurface.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Except.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\FastAllocator.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ffactory.cpp
 # End Source File
 # Begin Source File
@@ -286,10 +246,6 @@ SOURCE=.\lcw.cpp
 # Begin Source File
 
 SOURCE=.\load.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\mixfile.cpp
 # End Source File
 # Begin Source File
 
@@ -429,10 +385,6 @@ SOURCE=.\textfile.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tgatodxt.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\thread.cpp
 # End Source File
 # Begin Source File
@@ -442,10 +394,6 @@ SOURCE=.\trim.cpp
 # Begin Source File
 
 SOURCE=.\vector.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\verchk.cpp
 # End Source File
 # Begin Source File
 
@@ -589,10 +537,6 @@ SOURCE=.\dsurface.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FastAllocator.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ffactory.h
 # End Source File
 # Begin Source File
@@ -701,7 +645,7 @@ SOURCE=.\mutex.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\notifier.h
+SOURCE=.\Notify.h
 # End Source File
 # Begin Source File
 
@@ -866,10 +810,6 @@ SOURCE=.\TARGA.H
 # Begin Source File
 
 SOURCE=.\textfile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\tgatodxt.h
 # End Source File
 # Begin Source File
 

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Jani Penttinen                                               *
  *                                                                                             *
- *                      $Author:: Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 5:06p                                             $*
+ *                      $Author:: Jani_p                                                      $*
  *                                                                                             *
- *                    $Revision:: 39                                                          $*
+ *                     $Modtime:: 7/10/01 1:33p                                               $*
  *                                                                                             *
- * 06/26/02 KM VB Vertex format size update for shaders                                       *
+ *                    $Revision:: 34                                                          $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -44,7 +43,6 @@
 #include "dx8fvf.h"
 #include "dx8caps.h"
 #include "thread.h"
-#include "wwmemlog.h"
 #include <D3dx8core.h>
 
 #define DEFAULT_VB_SIZE 5000
@@ -74,17 +72,15 @@ static int _VertexBufferTotalSize;
 //
 // ----------------------------------------------------------------------------
 
-VertexBufferClass::VertexBufferClass(unsigned type_, unsigned FVF, unsigned short vertex_count_, unsigned vertex_size)
+VertexBufferClass::VertexBufferClass(unsigned type_, unsigned FVF, unsigned short vertex_count_)
 	:
 	VertexCount(vertex_count_),
 	type(type_),
 	engine_refs(0)
 {
-	WWMEMLOG(MEM_RENDERER);
 	WWASSERT(VertexCount);
 	WWASSERT(type==BUFFER_TYPE_DX8 || type==BUFFER_TYPE_SORTING);
-	WWASSERT((FVF!=0 && vertex_size==0) || (FVF==0 && vertex_size!=0));
-	fvf_info=W3DNEW FVFInfoClass(FVF,vertex_size);
+	fvf_info=W3DNEW FVFInfoClass(FVF);
 
 	_VertexBufferCount++;
 	_VertexBufferTotalVertices+=VertexCount;
@@ -153,7 +149,7 @@ void VertexBufferClass::Release_Engine_Ref() const
 //
 // ----------------------------------------------------------------------------
 
-VertexBufferClass::WriteLockClass::WriteLockClass(VertexBufferClass* VertexBuffer, int flags)
+VertexBufferClass::WriteLockClass::WriteLockClass(VertexBufferClass* VertexBuffer)
 	:
 	VertexBufferLockClass(VertexBuffer)
 {
@@ -178,7 +174,7 @@ VertexBufferClass::WriteLockClass::WriteLockClass(VertexBufferClass* VertexBuffe
 			0,
 			0,
 			(unsigned char**)&Vertices,
-			flags));	//flags
+			0));	// Default (no) flags
 		break;
 	case BUFFER_TYPE_SORTING:
 		Vertices=static_cast<SortingVertexBufferClass*>(VertexBuffer)->VertexBuffer;
@@ -287,7 +283,6 @@ SortingVertexBufferClass::SortingVertexBufferClass(unsigned short VertexCount)
 	:
 	VertexBufferClass(BUFFER_TYPE_SORTING, dynamic_fvf_type, VertexCount)
 {
-	WWMEMLOG(MEM_RENDERER);
 	VertexBuffer=W3DNEWARRAY VertexFormatXYZNDUV2[VertexCount];
 }
 
@@ -307,9 +302,9 @@ SortingVertexBufferClass::~SortingVertexBufferClass()
 
 //	bool dynamic=false,bool softwarevp=false);
 
-DX8VertexBufferClass::DX8VertexBufferClass(unsigned FVF, unsigned short vertex_count_, UsageType usage, unsigned vertex_size)
+DX8VertexBufferClass::DX8VertexBufferClass(unsigned FVF, unsigned short vertex_count_, UsageType usage)
 	:
-	VertexBufferClass(BUFFER_TYPE_DX8, FVF, vertex_count_, vertex_size),
+	VertexBufferClass(BUFFER_TYPE_DX8, FVF, vertex_count_),
 	VertexBuffer(NULL)
 {
 	Create_Vertex_Buffer(usage);
@@ -424,10 +419,10 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 	WWDEBUG_SAY(("CreateVertexBuffer(fvfsize=%d, vertex_count=%d, D3DUSAGE_WRITEONLY|%s|%s, fvf: %s, %s)\n",
 		FVF_Info().Get_FVF_Size(),
 		VertexCount,
-		(usage&USAGE_DYNAMIC) ? "D3DUSAGE_DYNAMIC" : "-",
-		(usage&USAGE_SOFTWAREPROCESSING) ? "D3DUSAGE_SOFTWAREPROCESSING" : "-",
+		usage&USAGE_DYNAMIC ? "D3DUSAGE_DYNAMIC" : "-",
+		usage&USAGE_SOFTWAREPROCESSING ? "D3DUSAGE_SOFTWAREPROCESSING" : "-",
 		fvf_name,
-		(usage&USAGE_DYNAMIC) ? "D3DPOOL_DEFAULT" : "D3DPOOL_MANAGED"));
+		dynamic ? "D3DPOOL_DEFAULT" : "D3DPOOL_MANAGED"));
 	_DX8VertexBufferCount++;
 	WWDEBUG_SAY(("Current vertex buffer count: %d\n",_DX8VertexBufferCount));
 #endif
@@ -437,12 +432,9 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 		((usage&USAGE_DYNAMIC) ? D3DUSAGE_DYNAMIC : 0)|
 		((usage&USAGE_NPATCHES) ? D3DUSAGE_NPATCHES : 0)|
 		((usage&USAGE_SOFTWAREPROCESSING) ? D3DUSAGE_SOFTWAREPROCESSING : 0);
-	if (!DX8Wrapper::Get_Current_Caps()->Support_TnL()) {
-		usage_flags|=D3DUSAGE_SOFTWAREPROCESSING;
-	}
 
 	// New Code
-	if (!DX8Wrapper::Get_Current_Caps()->Support_TnL()) {
+	if (!DX8Caps::Use_TnL()) {
 		usage_flags|=D3DUSAGE_SOFTWAREPROCESSING;
 	}
 
@@ -458,10 +450,8 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 
 	WWDEBUG_SAY(("Vertex buffer creation failed, trying to release assets...\n"));
 
-	// Vertex buffer creation failed, so try releasing least used textures and flushing the mesh cache.
-
-	// Free all textures that haven't been used in the last 5 seconds
-	TextureClass::Invalidate_Old_Unused_Textures(5000);
+	// Vertex buffer creation failed.  Must be out of memory. Try releasing all our D3D assets and re-creating
+	// them.
 
 	// Invalidate the mesh cache
 	WW3D::_Invalidate_Mesh_Cache();
@@ -768,7 +758,6 @@ void DynamicVBAccessClass::_Deinit()
 
 void DynamicVBAccessClass::Allocate_DX8_Dynamic_Buffer()
 {
-	WWMEMLOG(MEM_RENDERER);
 	WWASSERT(!_DynamicDX8VertexBufferInUse);
 	_DynamicDX8VertexBufferInUse=true;
 
@@ -783,7 +772,7 @@ void DynamicVBAccessClass::Allocate_DX8_Dynamic_Buffer()
 	// Create a new vb if one doesn't exist currently
 	if (!_DynamicDX8VertexBuffer) {
 		unsigned usage=DX8VertexBufferClass::USAGE_DYNAMIC;
-		if (DX8Wrapper::Get_Current_Caps()->Support_NPatches()) {
+		if (DX8Caps::Support_NPatches()) {
 			usage|=DX8VertexBufferClass::USAGE_NPATCHES;
 		}
 
@@ -805,7 +794,6 @@ void DynamicVBAccessClass::Allocate_DX8_Dynamic_Buffer()
 
 void DynamicVBAccessClass::Allocate_Sorting_Dynamic_Buffer()
 {
-	WWMEMLOG(MEM_RENDERER);
 	WWASSERT(!_DynamicSortingVertexArrayInUse);
 	_DynamicSortingVertexArrayInUse=true;
 
@@ -836,7 +824,7 @@ DynamicVBAccessClass::WriteLockClass::WriteLockClass(DynamicVBAccessClass* dynam
 	switch (DynamicVBAccess->Get_Type()) {
 	case BUFFER_TYPE_DYNAMIC_DX8:
 #ifdef VERTEX_BUFFER_LOG
-/*		{
+		{
 		WWASSERT(!dx8_lock);
 		dx8_lock++;
 		StringClass fvf_name;
@@ -847,7 +835,6 @@ DynamicVBAccessClass::WriteLockClass::WriteLockClass(DynamicVBAccessClass* dynam
 			DynamicVBAccess->VertexBuffer->FVF_Info().Get_FVF_Size(),
 			fvf_name));
 		}
-*/
 #endif
 		WWASSERT(_DynamicDX8VertexBuffer);
 //		WWASSERT(!_DynamicDX8VertexBuffer->Engine_Refs());
@@ -879,10 +866,9 @@ DynamicVBAccessClass::WriteLockClass::~WriteLockClass()
 	switch (DynamicVBAccess->Get_Type()) {
 	case BUFFER_TYPE_DYNAMIC_DX8:
 #ifdef VERTEX_BUFFER_LOG
-/*		dx8_lock--;
+		dx8_lock--;
 		WWASSERT(!dx8_lock);
 		WWDEBUG_SAY(("DynamicVertexBuffer->Unlock()\n"));
-*/
 #endif
 		DX8_Assert();
 		DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(DynamicVBAccess->VertexBuffer)->Get_DX8_Vertex_Buffer()->Unlock());

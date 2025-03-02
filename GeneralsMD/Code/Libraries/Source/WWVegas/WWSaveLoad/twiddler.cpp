@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Patrick Smith                                                *
  *                                                                                             *
- *                     $Modtime:: 12/10/01 12:40p                                             $*
+ *                     $Modtime:: 6/27/00 2:34p                                               $*
  *                                                                                             *
- *                    $Revision:: 3                                                           $*
+ *                    $Revision:: 2                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -42,7 +42,6 @@
 #include "persistfactory.h"
 #include "win.h"
 #include "wwhack.h"
-#include "systimer.h"
 
 
 DECLARE_FORCE_LINK( Twiddler )
@@ -79,7 +78,7 @@ SimplePersistFactoryClass<TwiddlerClass, CHUNKID_TWIDDLER>						_TwiddlerPersist
 //////////////////////////////////////////////////////////////////////////////////
 TwiddlerClass::TwiddlerClass (void)
 	:	m_IndirectClassID (0)
-
+	
 {
 	CLASSID_DEFIDLIST_PARAM (TwiddlerClass, m_DefinitionList, 0, m_IndirectClassID, "Preset List");
 	return ;
@@ -108,11 +107,11 @@ TwiddlerClass::Twiddle (void) const
 	DefinitionClass *definition = NULL;
 
 	if (m_DefinitionList.Count () > 0) {
-
+		
 		//
 		//	Get a random index into our definition list
 		//
-		RandomClass randomizer (TIMEGETTIME ());
+		RandomClass randomizer (::GetTickCount ());
 		int index = randomizer (0, m_DefinitionList.Count () - 1);
 
 		//
@@ -199,7 +198,7 @@ TwiddlerClass::Load (ChunkLoadClass &cload)
 
 	while (cload.Open_Chunk ()) {
 		switch (cload.Cur_Chunk_ID ()) {
-
+			
 			case CHUNKID_VARIABLES:
 				retval &= Load_Variables (cload);
 				break;
@@ -227,14 +226,14 @@ TwiddlerClass::Save_Variables (ChunkSaveClass &csave)
 	WRITE_MICRO_CHUNK (csave, VARID_INDIRECT_CLASSID, m_IndirectClassID)
 
 	for (int index = 0; index < m_DefinitionList.Count (); index ++) {
-
+		
 		//
 		//	Save this definition ID to the chunk
 		//
 		int def_id = m_DefinitionList[index];
 		WRITE_MICRO_CHUNK (csave, VARID_DEFINTION_ID, def_id)
-	}
-
+	}	
+	
 	return true;
 }
 
@@ -259,7 +258,7 @@ TwiddlerClass::Load_Variables (ChunkLoadClass &cload)
 		switch (cload.Cur_Micro_Chunk_ID ()) {
 
 			READ_MICRO_CHUNK (cload, VARID_INDIRECT_CLASSID, m_IndirectClassID)
-
+			
 			case VARID_DEFINTION_ID:
 			{
 				//

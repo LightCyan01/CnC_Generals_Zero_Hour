@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 1/15/02 2:46p                                               $*
+ *                     $Modtime:: 5/08/01 9:52a                                               $*
  *                                                                                             *
- *                    $Revision:: 19                                                          $*
+ *                    $Revision:: 17                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -503,11 +503,10 @@ static inline void aabtri_compute_contact_normal
 	switch(CollisionContext.AxisId) 
 	{
 		case INTERSECTION:
-			set_norm = CollisionContext.N;
-			set_norm.Normalize();
+			set_norm = *CollisionContext.Tri->N;
 			break;
 		case AXIS_N:
-			set_norm = -CollisionContext.Side * CollisionContext.N;
+			set_norm = -CollisionContext.Side * *CollisionContext.Tri->N;
 			set_norm.Normalize();
 			break;
 		case AXIS_A0:
@@ -560,8 +559,7 @@ static inline void aabtri_compute_contact_normal
 	WWASSERT(set_norm.Length2() > 0.0f);
 
 #else
-	set_norm = *CollisionContext.N;
-	set_norm.Normalize();
+	set_norm = *CollisionContext.Tri.N;
 	if (Vector3::Dot_Product(set_norm,CollisionContext.Move) > 0.0f) {
 		set_norm = -(set_norm);
 	}
@@ -834,7 +832,8 @@ exit:
 				(Vector3::Dot_Product(tmp_norm,move) < Vector3::Dot_Product(result->Normal,move)))
 		{
 			result->Normal = tmp_norm;
-			WWASSERT(WWMath::Fabs(result->Normal.Length() - 1.0f) < WWMATH_EPSILON);
+#pragma message("fatal assert disabled for demo")
+			//WWASSERT(WWMath::Fabs(result->Normal.Length() - 1.0f) < WWMATH_EPSILON);
 		}
 				
 		result->Fraction = CollisionContext.MaxFrac;

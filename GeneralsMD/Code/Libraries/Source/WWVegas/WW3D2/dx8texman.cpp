@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Hector Yee                                                   *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                      $Author:: Hector_y                                                    $*
  *                                                                                             *
- *                    $Revision:: 4                                                           $*
+ *                     $Modtime:: 4/26/01 1:41p                                               $*
  *                                                                                             *
- * 06/27/02 KM Texture class abstraction																			*
+ *                    $Revision:: 3                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   DX8TextureManagerClass::Shutdown -- Shuts down the texture manager                        *
@@ -52,7 +51,7 @@
 
 #include "dx8texman.h"
 
-TextureTrackerList DX8TextureManagerClass::Managed_Textures;
+DX8TextureTrackerList DX8TextureManagerClass::Managed_Textures;
 
 
 /***********************************************************************************************
@@ -69,13 +68,12 @@ TextureTrackerList DX8TextureManagerClass::Managed_Textures;
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   4/25/2001  hy : Created.                                                                  *
- *   5/16/2002  km : Added depth stencil texture tracking and abstraction                      *
  *=============================================================================================*/
 void DX8TextureManagerClass::Shutdown()
 {
 	while (!Managed_Textures.Is_Empty())
 	{
-		TextureTrackerClass *track=Managed_Textures.Remove_Head();
+		DX8TextureTrackerClass *track=Managed_Textures.Remove_Head();
 		delete track;
 		track=NULL;
 	}
@@ -95,9 +93,8 @@ void DX8TextureManagerClass::Shutdown()
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   4/25/2001  hy : Created.                                                                  *
- *   5/16/2002  km : Added depth stencil texture tracking and abstraction                      *
  *=============================================================================================*/
-void DX8TextureManagerClass::Add(TextureTrackerClass *track)
+void DX8TextureManagerClass::Add(DX8TextureTrackerClass *track)
 {
 	// this function should only be called by the texture constructor
 	Managed_Textures.Add(track);
@@ -118,17 +115,16 @@ void DX8TextureManagerClass::Add(TextureTrackerClass *track)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   4/25/2001  hy : Created.                                                                  *
- *   5/16/2002  km : Added depth stencil texture tracking and abstraction                      *
  *=============================================================================================*/
-void DX8TextureManagerClass::Remove(TextureBaseClass *tex)
+void DX8TextureManagerClass::Remove(TextureClass *tex)
 {
 	// this function should only be called by the texture destructor
-	TextureTrackerListIterator it(&Managed_Textures);
+	DX8TextureTrackerListIterator it(&Managed_Textures);
 
 	while (!it.Is_Done())
 	{
-		TextureTrackerClass *track=it.Peek_Obj();		
-		if (track->Get_Texture()==tex)
+		DX8TextureTrackerClass *track=it.Peek_Obj();		
+		if (track->Texture==tex)
 		{			
 			it.Remove_Current_Object();
 			delete track;
@@ -153,16 +149,17 @@ void DX8TextureManagerClass::Remove(TextureBaseClass *tex)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   4/25/2001  hy : Created.                                                                  *
- *   5/16/2002  km : Added depth stencil texture tracking and abstraction                      *
  *=============================================================================================*/
 void DX8TextureManagerClass::Release_Textures()
 {
-	TextureTrackerListIterator it(&Managed_Textures);
+	DX8TextureTrackerListIterator it(&Managed_Textures);
 
 	while (!it.Is_Done())
 	{
-		TextureTrackerClass *track=it.Peek_Obj();		
-		track->Release();
+		DX8TextureTrackerClass *track=it.Peek_Obj();		
+		WWASSERT(track->Texture->D3DTexture);
+		track->Texture->D3DTexture->Release();
+		track->Texture->D3DTexture=NULL;
 		it.Next();
 	}
 }
@@ -182,18 +179,18 @@ void DX8TextureManagerClass::Release_Textures()
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   4/25/2001  hy : Created.                                                                  *
- *   5/16/2002  km : Added depth stencil texture tracking and abstraction                      *
  *=============================================================================================*/
 void DX8TextureManagerClass::Recreate_Textures()
 {
-	TextureTrackerListIterator it(&Managed_Textures);
+	DX8TextureTrackerListIterator it(&Managed_Textures);
 
 	while (!it.Is_Done())
 	{
-		TextureTrackerClass *track=it.Peek_Obj();
-		track->Recreate();
-		track->Get_Texture()->Set_Dirty();
+		DX8TextureTrackerClass *track=it.Peek_Obj();
+		WWASSERT(track->Texture->D3DTexture==NULL);
+		track->Texture->D3DTexture=DX8Wrapper::_Create_DX8_Texture(track->Width,track->Height,
+			track->Format,track->Mip_level_count,D3DPOOL_DEFAULT,track->RenderTarget);
+		track->Texture->Dirty=true;
 		it.Next();
 	}
 }
-

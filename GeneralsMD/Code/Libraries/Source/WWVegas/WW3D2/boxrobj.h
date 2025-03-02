@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 10/11/01 2:24p                                              $*
+ *                     $Modtime:: 2/19/01 1:11p                                               $*
  *                                                                                             *
- *                    $Revision:: 6                                                           $*
+ *                    $Revision:: 5                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -86,7 +86,6 @@ public:
 	virtual const char *				Get_Name(void) const;
 	virtual void						Set_Name(const char * name);
 	void									Set_Color(const Vector3 & color);
-	void									Set_Opacity(float opacity) { Opacity = opacity; }
 
 	static void							Init(void);
 	static void							Shutdown(void);
@@ -110,7 +109,6 @@ protected:
 	Vector3								Color;
 	Vector3								ObjSpaceCenter;
 	Vector3								ObjSpaceExtent;
-	float									Opacity;
 
 	static bool							IsInitted;
 	static int							DisplayMask;

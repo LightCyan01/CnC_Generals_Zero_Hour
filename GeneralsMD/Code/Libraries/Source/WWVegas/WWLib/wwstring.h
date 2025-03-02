@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Patrick Smith                                                *
  *                                                                                             *
- *                     $Modtime:: 12/13/01 5:11p                                              $*
+ *                     $Modtime:: 8/28/01 11:43a                                              $*
  *                                                                                             *
- *                    $Revision:: 37                                                          $*
+ *                    $Revision:: 30                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -43,12 +43,10 @@
 
 #include "always.h"
 #include "mutex.h"
-#include "win.h"
 #include <string.h>
 #include <stdarg.h>
 #include <tchar.h>
-#include "trim.h"
-#include "wwdebug.h"
+#include <wwdebug.h>
 #ifdef _UNIX
 #include "osdep.h"
 #endif
@@ -80,7 +78,6 @@ public:
 	StringClass (const StringClass &string, bool hint_temporary = false);
 	StringClass (const TCHAR *string, bool hint_temporary = false);
 	StringClass (TCHAR ch, bool hint_temporary = false);
-	StringClass (const WCHAR *string, bool hint_temporary = false);
 	~StringClass (void);
 
 	////////////////////////////////////////////////////////////
@@ -92,7 +89,6 @@ public:
 	inline const StringClass &operator= (const StringClass &string);
 	inline const StringClass &operator= (const TCHAR *string);
 	inline const StringClass &operator= (TCHAR ch);
-	inline const StringClass &operator= (const WCHAR *string);
 
 	const StringClass &operator+= (const StringClass &string);
 	const StringClass &operator+= (const TCHAR *string);
@@ -124,14 +120,9 @@ public:
 	int _cdecl  Format (const TCHAR *format, ...);
 	int _cdecl  Format_Args (const TCHAR *format, const va_list & arg_list );
 
-	// Trim leading and trailing whitespace characters (values <= 32)
-	void Trim(void);
-
 	TCHAR *		Get_Buffer (int new_length);
 	TCHAR *		Peek_Buffer (void);
 	const TCHAR * Peek_Buffer (void) const;
-
-	bool Copy_Wide (const WCHAR *source);
 
 	////////////////////////////////////////////////////////////
 	//	Static methods
@@ -188,7 +179,7 @@ private:
 	static unsigned ReservedMask;
 	static char m_TempStrings[];
 
-	static FastCriticalSectionClass m_Mutex;
+	static CriticalSectionClass m_Mutex;
 
 	static TCHAR	m_NullChar;
 	static TCHAR *	m_EmptyString;
@@ -200,6 +191,8 @@ private:
 inline const StringClass &
 StringClass::operator= (const StringClass &string)
 {	
+//	return operator= ((const TCHAR *)string);
+
 	int len = string.Get_Length();
 	Uninitialised_Grow(len+1);
 	Store_Length(len);
@@ -226,21 +219,6 @@ StringClass::operator= (const TCHAR *string)
 
 	return (*this);
 }
-
-
-///////////////////////////////////////////////////////////////////
-//	operator=
-///////////////////////////////////////////////////////////////////
-inline const StringClass &
-StringClass::operator= (const WCHAR *string)
-{
-	if (string != 0) {
-		Copy_Wide (string);
-	}
-
-	return (*this);
-}
-
 
 ///////////////////////////////////////////////////////////////////
 //	operator=
@@ -320,22 +298,6 @@ StringClass::StringClass (const TCHAR *string, bool hint_temporary)
 	int len=string ? _tcsclen(string) : 0;
 	if (hint_temporary || len>0) {
 		Get_String (len+1, hint_temporary);
-	}
-
-	(*this) = string;
-	return ;
-}
-
-///////////////////////////////////////////////////////////////////
-//	StringClass
-///////////////////////////////////////////////////////////////////
-inline
-StringClass::StringClass (const WCHAR *string, bool hint_temporary)
-	:	m_Buffer (m_EmptyString)
-{
-	int len = string ? wcslen (string) : 0;
-	if (hint_temporary || len > 0) {
-		Get_String (len + 1, hint_temporary);
 	}
 
 	(*this) = string;
@@ -488,16 +450,6 @@ StringClass::Erase (int start_index, int char_count)
 	return ;
 }
 
-
-///////////////////////////////////////////////////////////////////
-// Trim leading and trailing whitespace characters (values <= 32)
-///////////////////////////////////////////////////////////////////
-inline void StringClass::Trim(void)
-{
-	strtrim(m_Buffer);
-}
-
-
 ///////////////////////////////////////////////////////////////////
 //	operator+=
 ///////////////////////////////////////////////////////////////////
@@ -626,8 +578,7 @@ inline StringClass
 operator+ (const StringClass &string1, const TCHAR *string2)
 {
 	StringClass new_string(string1, true);
-	StringClass new_string2(string2, true);
-	new_string += new_string2;
+	new_string += string2;
 	return new_string;
 }
 

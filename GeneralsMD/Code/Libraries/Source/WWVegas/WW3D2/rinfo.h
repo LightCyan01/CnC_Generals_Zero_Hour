@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/ww3d2/rinfo.h                                $*
  *                                                                                             *
- *                   Org Author:: Greg Hjelstrom                                               *
+ *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                     $Modtime:: 8/24/01 3:33p                                               $*
  *                                                                                             *
- *                    $Revision:: 16                                                          $*
+ *                    $Revision:: 13                                                          $*
  *                                                                                             *
- * 06/27/02 KM Render to shadow buffer texture support														*
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -60,7 +57,6 @@ class MaterialPassClass;
 class LightEnvironmentClass;
 class VisRasterizerClass;
 class BWRenderClass;
-class TexProjectClass;
 
 const unsigned MAX_ADDITIONAL_MATERIAL_PASSES=32;
 const unsigned MAX_OVERRIDE_FLAG_LEVEL=32;
@@ -80,11 +76,10 @@ public:
 	~RenderInfoClass(void);
 
 	enum RINFO_OVERRIDE_FLAGS {
-		RINFO_OVERRIDE_DEFAULT						= 0x0000,	// No overrides
-		RINFO_OVERRIDE_FORCE_TWO_SIDED			= 0x0001,	// Override mesh settings to force no backface culling
-		RINFO_OVERRIDE_FORCE_SORTING				= 0x0002,	// Override mesh settings to force sorting
-		RINFO_OVERRIDE_ADDITIONAL_PASSES_ONLY	= 0x0004,	// Do not render base passes (only additional passes)
-		RINFO_OVERRIDE_SHADOW_RENDERING			= 0x0008		// Hint: we are rendering a shadow
+		RINFO_OVERRIDE_DEFAULT						= 0x0,	// No overrides
+		RINFO_OVERRIDE_FORCE_TWO_SIDED			= 0x1,	// Override mesh settings to force no backface culling
+		RINFO_OVERRIDE_FORCE_SORTING				= 0x2,	// Override mesh settings to force sorting
+		RINFO_OVERRIDE_ADDITIONAL_PASSES_ONLY	= 0x4		// Do not render base passes (only additional passes)
 	};
 
 	void								Push_Material_Pass(MaterialPassClass * matpass);
@@ -108,12 +103,9 @@ public:
 
 	LightEnvironmentClass*		light_environment;
 
-	TexProjectClass*				Texture_Projector;
-
 protected:
 	MaterialPassClass*			AdditionalMaterialPassArray[MAX_ADDITIONAL_MATERIAL_PASSES];
 	unsigned							AdditionalMaterialPassCount;
-	unsigned							RejectedMaterialPasses;
 	RINFO_OVERRIDE_FLAGS			OverrideFlag[MAX_OVERRIDE_FLAG_LEVEL];
 	unsigned							OverrideFlagLevel;
 

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/wwmath/colmathobbox.cpp                      $*
  *                                                                                             *
- *                   Org Author:: Greg Hjelstrom                                               *
+ *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
+ *                     $Modtime:: 11/14/00 2:46p                                              $*
  *                                                                                             *
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                    $Revision:: 8                                                           $*
  *                                                                                             *
- *                    $Revision:: 9                                                           $*
- *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -56,7 +53,7 @@ CollisionMath::Overlap_Test(const OBBoxClass & box,const Vector3 & point)
 {
 	// transform point into box coordinate system
 	Vector3 localpoint;
-	Matrix3x3::Transpose_Rotate_Vector(box.Basis,(point - box.Center),&localpoint);
+	Matrix3::Transpose_Rotate_Vector(box.Basis,(point - box.Center),&localpoint);
 
 	// if the point is outside any of the extents, it is outside the box
 	if (WWMath::Fabs(localpoint.X) > box.Extent.X) {

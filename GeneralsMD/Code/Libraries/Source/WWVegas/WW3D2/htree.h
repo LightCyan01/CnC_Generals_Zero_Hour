@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,20 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* $Header: /Commando/Code/ww3d2/htree.h 6     10/01/01 5:55p Patrick $ */
+/* $Header: /VSS_Sync/ww3d2/htree.h 4     8/29/01 9:49p Vss_sync $ */
 /*********************************************************************************************** 
  ***                            Confidential - Westwood Studios                              *** 
  *********************************************************************************************** 
  *                                                                                             * 
  *                 Project Name : Commando / G 3D Library                                      * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/ww3d2/htree.h                                $* 
+ *                     $Archive:: /VSS_Sync/ww3d2/htree.h                                     $* 
  *                                                                                             * 
  *                       Author:: Greg_h                                                       * 
  *                                                                                             * 
- *                     $Modtime:: 9/28/01 3:05p                                               $* 
+ *                     $Modtime:: 8/29/01 7:29p                                               $* 
  *                                                                                             * 
- *                    $Revision:: 6                                                           $* 
+ *                    $Revision:: 4                                                           $* 
  *                                                                                             * 
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -123,7 +123,6 @@ public:
 	void					Release_Bone(int boneindex);
 	bool					Is_Bone_Captured(int boneindex) const;
 	void					Control_Bone(int boneindex,const Matrix3D & relative_tm,bool world_space_translation = false);
-	void					Get_Bone_Control(int boneindex, Matrix3D & relative_tm) const;
 
 
 
@@ -133,13 +132,9 @@ public:
 	// a pivot at a given frame.
 	//
 	bool					Simple_Evaluate_Pivot (HAnimClass *motion, int pivot_index, float frame, const Matrix3D &obj_tm, Matrix3D *end_tm) const;
-	bool					Simple_Evaluate_Pivot (int pivot_index, const Matrix3D &obj_tm, Matrix3D *end_tm) const;
 
 	// Scale this HTree by a constant factor:
 	void					Scale(float factor);
-
-	// Morph the bones on the HTree based on the scale passed in
-	static HTreeClass *	Alter_Avatar_HTree( const HTreeClass *tree, Vector3 &scale );
 
 	// Morph the bones on the HTree using weights from a number of other HTrees
 	static HTreeClass *	Create_Morphed( int num_morph_sources,

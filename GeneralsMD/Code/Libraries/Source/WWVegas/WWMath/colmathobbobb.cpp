@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 1/04/02 6:29p                                               $*
+ *                     $Modtime:: 5/04/01 8:37p                                               $*
  *                                                                                             *
- *                    $Revision:: 15                                                          $*
+ *                    $Revision:: 14                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -593,7 +593,7 @@ static inline bool obb_separation_test
 		if ( u1 > rsum ) { 
 			context.MaxFrac = 1.0f; 
 			return true;
-		} else if (WWMath::Fabs(u1-u0) > 0.0f) {
+		} else { 
 			tmp = (rsum-u0)/(u1-u0);
 			if ( tmp > context.MaxFrac ) {
 				context.MaxFrac = tmp; 
@@ -606,7 +606,7 @@ static inline bool obb_separation_test
 		if ( u1 < -rsum ) {
 			context.MaxFrac = 1.0f; 
 			return true;
-		} else if (WWMath::Fabs(u1-u0) > 0.0f) {
+		} else {
 			tmp = (-rsum-u0)/(u1-u0);
 			if ( tmp > context.MaxFrac ) {
 				context.MaxFrac = tmp;

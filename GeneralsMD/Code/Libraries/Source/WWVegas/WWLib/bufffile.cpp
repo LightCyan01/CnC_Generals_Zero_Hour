@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/bufffile.cpp                           $* 
  *                                                                                             * 
- *                      $Author:: Jani_p                                                      $*
+ *                      $Author:: Naty_h                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 9/13/01 7:15p                                               $*
+ *                     $Modtime:: 4/20/01 4:23p                                               $*
  *                                                                                             * 
- *                    $Revision:: 4                                                           $*
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -39,7 +39,7 @@
 #include	"wwdebug.h"
 #include	<string.h>
 
-int		BufferedFileClass::_DesiredBufferSize	=	1024*16;	
+int		BufferedFileClass::_DesiredBufferSize	=	1024;	
 
 /***********************************************************************************************
  * BufferedFileClass::BufferedFileClass -- Default constructor for a file object.              *

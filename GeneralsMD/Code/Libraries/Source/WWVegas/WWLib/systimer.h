@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,6 @@
 #include "mmsys.h"
 
 #define TIMEGETTIME SystemTime.Get
-#define MS_TIMER_SECOND 1000
 
 /*
 ** Class that just wraps around timeGetTime()

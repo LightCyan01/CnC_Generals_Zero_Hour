@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
  *                                                                                             *
- *                     $Archive:: /Commando/Code/wwlib/listnode.h                             $*
+ *                     $Archive:: /G/wwlib/listnode.h                                         $*
  *                                                                                             *
- *                      $Author:: Ian_l                                                       $*
+ *                      $Author:: David_m                                                     $*
  *                                                                                             *
- *                     $Modtime:: 9/20/01 9:46p                                               $*
+ *                     $Modtime:: 4/05/00 12:34p                                              $*
  *                                                                                             *
- *                    $Revision:: 4                                                           $*
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -213,7 +213,6 @@ class List : public GenericList {
 		List(List<T> const & rvalue);
 		List<T> operator = (List<T> const & rvalue);
 };
-
 
 /*
 

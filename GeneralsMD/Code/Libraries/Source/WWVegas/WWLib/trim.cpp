@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             * 
  *                 Project Name : Command & Conquer                                            * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/wwlib/trim.cpp                               $* 
+ *                     $Archive:: /VSS_Sync/wwlib/trim.cpp                                    $* 
  *                                                                                             * 
- *                      $Author:: Denzil_l                                                    $*
+ *                      $Author:: Vss_sync                                                    $*
  *                                                                                             * 
- *                     $Modtime:: 11/08/01 11:35a                                             $*
+ *                     $Modtime:: 8/29/01 10:24p                                              $*
  *                                                                                             * 
- *                    $Revision:: 4                                                           $*
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -36,6 +36,8 @@
 
 #include	"always.h"
 #include	"trim.h"
+#include	<ctype.h>
+#include	<stddef.h>
 #include	<string.h>
 
 #ifdef _UNIX
@@ -57,57 +59,63 @@
  * HISTORY:                                                                                    * 
  *   02/06/1997 JLB : Created.                                                                 * 
  *=============================================================================================*/
-char* strtrim(char* buffer)
+char * strtrim(char * buffer)
 {
-	if (buffer) {
-		/* Strip leading white space from the string. */
-		char* source = buffer;
+	if (buffer != NULL) {
 
-		while ((*source != 0) && ((unsigned char)*source <= 32)) {
-			++source;
+		/*
+		**	Strip leading white space from the string.
+		*/
+		char * source = buffer;
+		while (isspace(*source)) {
+			source++;
 		}
-
 		if (source != buffer) {
 			strcpy(buffer, source);
 		}
 
-		/* Clip trailing white space from the string. */
-		for (int index = strlen(buffer) - 1; index >= 0; --index) {
-			if ((*source != 0) && ((unsigned char)buffer[index] <= 32)) {
+		/*
+		**	Clip trailing white space from the string.
+		*/
+		for (int index = strlen(buffer)-1; index >= 0; index--) {
+			if (isspace(buffer[index])) {
 				buffer[index] = '\0';
 			} else {
 				break;
 			}
 		}
 	}
-
-	return buffer;
+	return(buffer);
 }
 
-
-wchar_t* wcstrim(wchar_t* buffer)
+wchar_t * wcstrim(wchar_t * buffer)
 {
-	if (buffer) {
-		/* Strip leading white space from the string. */
-		wchar_t* source = buffer;
+	if (buffer != NULL) {
 
-		while ((*source != 0) && ((unsigned int)*source <= 32)) {
-			++source;
+		/*
+		**	Strip leading white space from the string.
+		*/
+		wchar_t * source = buffer;
+		while (iswspace(*source)) {
+			source++;
 		}
-		
 		if (source != buffer) {
 			wcscpy(buffer, source);
 		}
 
-		/* Clip trailing white space from the string. */
-		for (int index = wcslen(buffer) - 1; index >= 0; --index) {
-			if ((*source != 0) && ((unsigned int)buffer[index] <= 32)) {
+		/*
+		**	Clip trailing white space from the string.
+		*/
+		for (int index = wcslen(buffer)-1; index >= 0; index--) {
+			if (iswspace(buffer[index])) {
 				buffer[index] = L'\0';
 			} else {
 				break;
 			}
 		}
 	}
-
-	return buffer;
+	return(buffer);
 }
+
+
+

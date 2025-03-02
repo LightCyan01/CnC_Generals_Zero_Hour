@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/wwfile.h                               $* 
  *                                                                                             * 
- *                      $Author:: Ian_l                                                       $*
+ *                      $Author:: Jani_p                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 10/31/01 2:00p                                              $*
+ *                     $Modtime:: 5/04/01 7:43p                                               $*
  *                                                                                             * 
- *                    $Revision:: 9                                                           $*
+ *                    $Revision:: 8                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -76,8 +76,8 @@ class FileClass
 		virtual ~FileClass(void) {};
 		virtual char const * File_Name(void) const = 0;
 		virtual char const * Set_Name(char const *filename) = 0;
-		virtual int Create(void) = 0;
-		virtual int Delete(void) = 0;
+		//virtual int Create(void) = 0;
+		//virtual int Delete(void) = 0;
 		virtual bool Is_Available(int forced=false) = 0;
 		virtual bool Is_Open(void) const = 0;
 		virtual int Open(char const *filename, int rights=READ) = 0;
@@ -88,11 +88,10 @@ class FileClass
 		virtual int Size(void) = 0;
 		virtual int Write(void const *buffer, int size) = 0;
 		virtual void Close(void) = 0;
-		virtual unsigned long Get_Date_Time(void) {return(0);}
-		virtual bool Set_Date_Time(unsigned long ) {return(false);}
-//		virtual void Error(int error, int canretry = false, char const * filename=NULL) = 0;
-		virtual void * Get_File_Handle(void) { return reinterpret_cast<void *>(-1); } 
-//		virtual void Bias(int start, int length=-1) = 0;
+		//virtual unsigned long Get_Date_Time(void) {return(0);}
+		//virtual bool Set_Date_Time(unsigned long ) {return(false);}
+		//virtual void Error(int error, int canretry = false, char const * filename=NULL) = 0;
+		// virtual void * Get_File_Handle(void) { return reinterpret_cast<void *>(-1); } 
 
 		operator char const * ()
 		{

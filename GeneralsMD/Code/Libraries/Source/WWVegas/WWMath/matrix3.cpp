@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /Commando/Code/wwmath/matrix3.cpp                           $*
  *                                                                                             *
- *                   Org Author:: Greg_h                                                       *
+ *                       Author:: Greg_h                                                       *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
+ *                     $Modtime:: 5/11/01 10:10a                                              $*
  *                                                                                             *
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                    $Revision:: 16                                                          $*
  *                                                                                             *
- *                    $Revision:: 17                                                          $*
- *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -45,72 +42,72 @@
 
 
 /*
-** Some pre-initialized Matrix3x3's
+** Some pre-initialized Matrix3's
 */
-const Matrix3x3 Matrix3x3::Identity
+const Matrix3 Matrix3::Identity
 (
 	1.0,	0.0,	0.0,
 	0.0,	1.0,	0.0,
 	0.0,	0.0,	1.0
 );
 
-const Matrix3x3 Matrix3x3::RotateX90
+const Matrix3 Matrix3::RotateX90
 (
 	1.0,	0.0,	0.0,
 	0.0,	0.0, -1.0,
 	0.0,	1.0,	0.0
 );
 
-const Matrix3x3 Matrix3x3::RotateX180
+const Matrix3 Matrix3::RotateX180
 (
 	1.0,	0.0,	0.0,
 	0.0, -1.0,	0.0,
 	0.0,	0.0, -1.0
 );
 
-const Matrix3x3 Matrix3x3::RotateX270
+const Matrix3 Matrix3::RotateX270
 (
 	1.0,	0.0,	0.0,
 	0.0,	0.0,	1.0,
 	0.0, -1.0,	0.0
 );
 
-const Matrix3x3 Matrix3x3::RotateY90
+const Matrix3 Matrix3::RotateY90
 (
 	0.0,	0.0,	1.0,
 	0.0,	1.0,	0.0,
   -1.0,	0.0,	0.0
 );
 
-const Matrix3x3 Matrix3x3::RotateY180
+const Matrix3 Matrix3::RotateY180
 (
   -1.0,	0.0,	0.0,
 	0.0,	1.0,	0.0,
 	0.0,	0.0, -1.0
 );
 
-const Matrix3x3 Matrix3x3::RotateY270
+const Matrix3 Matrix3::RotateY270
 (
 	0.0,	0.0, -1.0,
 	0.0,	1.0,	0.0,
 	1.0,	0.0,	0.0
 );
 
-const Matrix3x3 Matrix3x3::RotateZ90
+const Matrix3 Matrix3::RotateZ90
 (
 	0.0, -1.0,	0.0,
 	1.0,	0.0,	0.0,
 	0.0,	0.0,	1.0
 );
 
-const Matrix3x3 Matrix3x3::RotateZ180
+const Matrix3 Matrix3::RotateZ180
 (
   -1.0,	0.0,	0.0,
 	0.0, -1.0,	0.0,
 	0.0,	0.0,	1.0
 );
 
-const Matrix3x3 Matrix3x3::RotateZ270
+const Matrix3 Matrix3::RotateZ270
 (
 	0.0,	1.0,	0.0,
   -1.0,	0.0,	0.0,
@@ -120,7 +117,7 @@ const Matrix3x3 Matrix3x3::RotateZ270
 
 
 /*********************************************************************************************** 
- * Matrix3x3::Matrix3x3 -- Convert a Matrix3D (fake 4x4) to a Matrix3x3                              * 
+ * Matrix3::Matrix3 -- Convert a Matrix3D (fake 4x4) to a Matrix3                              * 
  *                                                                                             * 
  * INPUT:                                                                                      * 
  *                                                                                             * 
@@ -131,35 +128,35 @@ const Matrix3x3 Matrix3x3::RotateZ270
  * HISTORY:                                                                                    * 
  *   06/02/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-Matrix3x3::Matrix3x3(const Matrix3D & m)
+Matrix3::Matrix3(const Matrix3D & m)
 {
 	Row[0].Set(m[0][0],m[0][1],m[0][2]);
 	Row[1].Set(m[1][0],m[1][1],m[1][2]);
 	Row[2].Set(m[2][0],m[2][1],m[2][2]);
 }
 
-Matrix3x3::Matrix3x3(const Matrix4x4 & m)
+Matrix3::Matrix3(const Matrix4 & m)
 {
 	Row[0].Set(m[0][0],m[0][1],m[0][2]);
 	Row[1].Set(m[1][0],m[1][1],m[1][2]);
 	Row[2].Set(m[2][0],m[2][1],m[2][2]);
 }
 
-void Matrix3x3::Set(const Matrix3D & m)
+void Matrix3::Set(const Matrix3D & m)
 {
 	Row[0].Set(m[0][0],m[0][1],m[0][2]);
 	Row[1].Set(m[1][0],m[1][1],m[1][2]);
 	Row[2].Set(m[2][0],m[2][1],m[2][2]);
 }
 
-void Matrix3x3::Set(const Matrix4x4 & m)
+void Matrix3::Set(const Matrix4 & m)
 {
 	Row[0].Set(m[0][0],m[0][1],m[0][2]);
 	Row[1].Set(m[1][0],m[1][1],m[1][2]);
 	Row[2].Set(m[2][0],m[2][1],m[2][2]);
 }
 
-void Matrix3x3::Set(const Quaternion & q)
+void Matrix3::Set(const Quaternion & q)
 {
 	Row[0][0] = (float)(1.0 - 2.0 * (q[1] * q[1] + q[2] * q[2]));
 	Row[0][1] = (float)(2.0 * (q[0] * q[1] - q[2] * q[3]));
@@ -175,7 +172,7 @@ void Matrix3x3::Set(const Quaternion & q)
 }
 
 
-Matrix3x3 & Matrix3x3::operator = (const Matrix3D & m)
+Matrix3 & Matrix3::operator = (const Matrix3D & m)
 {
 	Row[0].Set(m[0][0],m[0][1],m[0][2]);
 	Row[1].Set(m[1][0],m[1][1],m[1][2]);
@@ -183,7 +180,7 @@ Matrix3x3 & Matrix3x3::operator = (const Matrix3D & m)
 	return *this; 
 }
 
-Matrix3x3 & Matrix3x3::operator = (const Matrix4x4 & m)
+Matrix3 & Matrix3::operator = (const Matrix4 & m)
 {
 	Row[0].Set(m[0][0],m[0][1],m[0][2]);
 	Row[1].Set(m[1][0],m[1][1],m[1][2]);
@@ -191,7 +188,7 @@ Matrix3x3 & Matrix3x3::operator = (const Matrix4x4 & m)
 	return *this; 
 }
 
-void Matrix3x3::Multiply(const Matrix3D & a, const Matrix3x3 & b,Matrix3x3 * res)
+void Matrix3::Multiply(const Matrix3D & a, const Matrix3 & b,Matrix3 * res)
 {
 	#define ROWCOL(i,j) a[i][0]*b[0][j] + a[i][1]*b[1][j] + a[i][2]*b[2][j]
     
@@ -210,7 +207,7 @@ void Matrix3x3::Multiply(const Matrix3D & a, const Matrix3x3 & b,Matrix3x3 * res
 	#undef ROWCOL
 }
 
-void Matrix3x3::Multiply(const Matrix3x3 & a, const Matrix3D & b,Matrix3x3 * res)
+void Matrix3::Multiply(const Matrix3 & a, const Matrix3D & b,Matrix3 * res)
 {
 	#define ROWCOL(i,j) a[i][0]*b[0][j] + a[i][1]*b[1][j] + a[i][2]*b[2][j]
     
@@ -229,11 +226,11 @@ void Matrix3x3::Multiply(const Matrix3x3 & a, const Matrix3D & b,Matrix3x3 * res
 	#undef ROWCOL
 }
 
-Matrix3x3 operator * (const Matrix3D & a, const Matrix3x3 & b)
+Matrix3 operator * (const Matrix3D & a, const Matrix3 & b)
 {
 	#define ROWCOL(i,j) a[i][0]*b[0][j] + a[i][1]*b[1][j] + a[i][2]*b[2][j]
     
-	return Matrix3x3(
+	return Matrix3(
 			Vector3(ROWCOL(0,0), ROWCOL(0,1), ROWCOL(0,2) ),
 			Vector3(ROWCOL(1,0), ROWCOL(1,1), ROWCOL(1,2) ),
 			Vector3(ROWCOL(2,0), ROWCOL(2,1), ROWCOL(2,2) )
@@ -242,11 +239,11 @@ Matrix3x3 operator * (const Matrix3D & a, const Matrix3x3 & b)
 	#undef ROWCOL
 }
 
-Matrix3x3 operator * (const Matrix3x3 & a, const Matrix3D & b)
+Matrix3 operator * (const Matrix3 & a, const Matrix3D & b)
 {
 	#define ROWCOL(i,j) a[i][0]*b[0][j] + a[i][1]*b[1][j] + a[i][2]*b[2][j]
     
-	return Matrix3x3(
+	return Matrix3(
 			Vector3(ROWCOL(0,0), ROWCOL(0,1), ROWCOL(0,2) ),
 			Vector3(ROWCOL(1,0), ROWCOL(1,1), ROWCOL(1,2) ),
 			Vector3(ROWCOL(2,0), ROWCOL(2,1), ROWCOL(2,2) )
@@ -258,17 +255,17 @@ Matrix3x3 operator * (const Matrix3x3 & a, const Matrix3D & b)
 
 #if 0
 
-void Matrix3x3::Compute_Jacobi_Rotation(int i,int j,Matrix3x3 * r,Matrix3x3 * rinv)
+void Matrix3::Compute_Jacobi_Rotation(int i,int j,Matrix3 * r,Matrix3 * rinv)
 {
 
 }
 
-void Matrix3x3::Symmetric_Eigen_Solve(void)
+void Matrix3::Symmetric_Eigen_Solve(void)
 {
-	Matrix3x3 eigen_vals = *this;
-	Matrix3x3 eigen_vecs(1);
+	Matrix3 eigen_vals = *this;
+	Matrix3 eigen_vecs(1);
 
-	Matrix3x3 jr,jrinv;
+	Matrix3 jr,jrinv;
 
 	while (!done) {
 		eigen_vals.Compute_Jacobi_Rotation(i,j,&jr,&jrinv);
@@ -287,10 +284,10 @@ void Matrix3x3::Symmetric_Eigen_Solve(void)
 #endif
 
 
-void Matrix3x3::Multiply(const Matrix3x3 & A,const Matrix3x3 & B,Matrix3x3 * set_res)
+void Matrix3::Multiply(const Matrix3 & A,const Matrix3 & B,Matrix3 * set_res)
 {
-	Matrix3x3 tmp;
-	Matrix3x3 * Aptr;
+	Matrix3 tmp;
+	Matrix3 * Aptr;
 	float tmp1,tmp2,tmp3;
 
 	// Check for aliased parameters, copy the 'A' matrix into a temporary if the 
@@ -300,7 +297,7 @@ void Matrix3x3::Multiply(const Matrix3x3 & A,const Matrix3x3 & B,Matrix3x3 * set
 		tmp = A;
 		Aptr = &tmp;
 	} else {
-		Aptr = (Matrix3x3 *)&A;	
+		Aptr = (Matrix3 *)&A;	
 	}
 
 	tmp1 = B[0][0];
@@ -328,7 +325,7 @@ void Matrix3x3::Multiply(const Matrix3x3 & A,const Matrix3x3 & B,Matrix3x3 * set
 	(*set_res)[2][2] = (float)((*Aptr)[2][0]*tmp1 + (*Aptr)[2][1]*tmp2 + (*Aptr)[2][2]*tmp3);
 }
 
-int Matrix3x3::Is_Orthogonal(void) const
+int Matrix3::Is_Orthogonal(void) const
 {
 	Vector3 x(Row[0].X,Row[0].Y,Row[0].Z);
 	Vector3 y(Row[1].X,Row[1].Y,Row[1].Z);
@@ -345,7 +342,7 @@ int Matrix3x3::Is_Orthogonal(void) const
 	return 1;
 }
 
-void Matrix3x3::Re_Orthogonalize(void)
+void Matrix3::Re_Orthogonalize(void)
 {
 	Vector3 x(Row[0][0],Row[0][1],Row[0][2]);
 	Vector3 y(Row[1][0],Row[1][1],Row[1][2]);

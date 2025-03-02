@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                      $Author:: Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             *
- *                    $Revision:: 8                                                           $*
+ *                     $Modtime:: 6/29/01 11:23a                                              $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
+ *                    $Revision:: 6                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   DecalSystemClass::DecalSystemClass -- Constructor                                         *
@@ -265,11 +264,11 @@ void DecalGeneratorClass::Set_Mesh_Transform(const Matrix3D & mesh_transform)
 	*/
 	Matrix3D world_to_texture;
 	Matrix3D tmp;
-	Matrix4x4  mesh_to_texture;
+	Matrix4  mesh_to_texture;
 
 	Transform.Get_Orthogonal_Inverse(world_to_texture);
 	Matrix3D::Multiply(world_to_texture,mesh_transform,&tmp);
-	Matrix4x4::Multiply(Projection,tmp,&mesh_to_texture);
+	Matrix4::Multiply(Projection,tmp,&mesh_to_texture);
 
 	/*
 	** Plug the matrix and texture size into the mapper
@@ -279,10 +278,9 @@ void DecalGeneratorClass::Set_Mesh_Transform(const Matrix3D & mesh_transform)
 		TextureClass * tex = Material->Peek_Texture();
 		WWASSERT(tex != NULL);
 		if (tex) {
-//			SurfaceClass::SurfaceDescription surface_desc;
-//			tex->Get_Level_Description(surface_desc);
-//			texsize = surface_desc.Width;
-			texsize = tex->Get_Width();
+			SurfaceClass::SurfaceDescription surface_desc;
+			tex->Get_Level_Description(surface_desc);
+			texsize = surface_desc.Width;
 		}
 
 		Mapper->Set_Texture_Transform(mesh_to_texture,texsize);

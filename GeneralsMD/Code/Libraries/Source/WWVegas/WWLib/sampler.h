@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -125,7 +125,6 @@ public:
 	QMCSamplingClass(unsigned int dimensions, unsigned char divisions=0);
 	virtual void Reset() {index=0;};
 	virtual void Sample(float *target);
-	void Set_Offset(unsigned int offset) { index=offset; }
 protected:
 	unsigned int index;
 };

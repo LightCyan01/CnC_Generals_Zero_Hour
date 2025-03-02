@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                     $Modtime:: 9/19/01 4:13p                                               $*
+ *                     $Modtime:: 4/16/01 4:35p                                               $*
  *                                                                                             *
- *                    $Revision:: 12                                                          $*
+ *                    $Revision:: 11                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -148,7 +148,8 @@ public:
 	*/
 	static bool		Save (ChunkSaveClass &csave, SaveLoadSubSystemClass & subsystem);
 	static bool		Load (ChunkLoadClass &cload,bool auto_post_load = true);	
-	static bool		Post_Load_Processing (void(*network_callback)(void));
+	static bool		Post_Load_Processing (void);
+
 	/*
 	** Look up the persist factory for a given chunk id
 	*/

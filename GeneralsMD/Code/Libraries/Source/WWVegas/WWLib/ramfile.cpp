@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
  *                                                                                             * 
  *                 Project Name : Command & Conquer                                            * 
  *                                                                                             * 
- *                     $Archive:: /Commando/Code/wwlib/ramfile.cpp                            $* 
+ *                     $Archive:: /Commando/Library/RAMFILE.CPP                               $* 
  *                                                                                             * 
- *                      $Author:: Ian_l                                                       $*
+ *                      $Author:: Greg_h                                                      $*
  *                                                                                             * 
- *                     $Modtime:: 10/31/01 2:36p                                              $*
+ *                     $Modtime:: 7/22/97 11:37a                                              $*
  *                                                                                             * 
- *                    $Revision:: 2                                                           $*
+ *                    $Revision:: 1                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 
@@ -471,29 +471,4 @@ int RAMFileClass::Write(void const * buffer, int size)
 void RAMFileClass::Close(void)
 {
 	IsOpen = false;
-}
-
-
-/***********************************************************************************************
- * RAMFileClass::Bias --																							  *	
- *                                                                                             *
- *                                                                                             *
- * INPUT:   none                                                                               *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   10/31/2001 IML : Created.                                                                 *
- *=============================================================================================*/
-void RAMFileClass::Bias (int start, int length)
-{
-	Buffer	 = Buffer + start;
-	Length	 = MIN (Length, start + length) - start;
-	MaxLength =	MIN (MaxLength, start + length) - start;
-
-	if (Is_Open()) {
-		Seek (0, SEEK_SET);
-	}
 }

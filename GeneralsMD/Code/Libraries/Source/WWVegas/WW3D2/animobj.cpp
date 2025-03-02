@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
  *                                                                                             *
  *                       Author:: Greg_h                                                       *
  *                                                                                             *
- *                     $Modtime:: 12/13/01 6:56p                                              $*
+ *                     $Modtime:: 8/28/01 12:12p                                              $*
  *                                                                                             *
- *                    $Revision:: 10                                                          $*
+ *                    $Revision:: 7                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
@@ -65,7 +65,6 @@
 #include "hcanim.h"
 #include "ww3d.h"
 #include "wwmemlog.h"
-#include "animatedsoundmgr.h"
 
 
 /***********************************************************************************************
@@ -88,15 +87,12 @@ Animatable3DObjClass::Animatable3DObjClass(const char * htree_name) :
 	// Inline struct members can't be initialized in init list for some reason...
   ModeAnim.Motion=NULL;
 	ModeAnim.Frame=0.0f;
-	ModeAnim.PrevFrame=0.0f;
 	ModeAnim.LastSyncTime=WW3D::Get_Sync_Time();
 	ModeAnim.frameRateMultiplier=1.0;	// 020607 srj -- added
 	ModeAnim.animDirection=1.0;	// 020607 srj -- added
 	ModeInterp.Motion0=NULL;
 	ModeInterp.Motion1=NULL;
 	ModeInterp.Frame0=0.0f;
-	ModeInterp.PrevFrame0=0.0f;
-	ModeInterp.PrevFrame1=0.0f;
 	ModeInterp.Frame1=0.0f;
 	ModeInterp.Percentage=0.0f;
 	ModeCombo.AnimCombo=NULL;
@@ -144,15 +140,12 @@ Animatable3DObjClass::Animatable3DObjClass(const Animatable3DObjClass & src) :
    // Inline struct members can't be initialized in init list for some reason...
 	ModeAnim.Motion=NULL;
 	ModeAnim.Frame=0.0f;
-	ModeAnim.PrevFrame=0.0f;
 	ModeAnim.LastSyncTime=WW3D::Get_Sync_Time();
 	ModeAnim.frameRateMultiplier=1.0;	// 020607 srj -- added
 	ModeAnim.animDirection=1.0;	// 020607 srj -- added
 	ModeInterp.Motion0=NULL;
 	ModeInterp.Motion1=NULL;
 	ModeInterp.Frame0=0.0f;
-	ModeInterp.PrevFrame0=0.0f;
-	ModeInterp.PrevFrame1=0.0f;
 	ModeInterp.Frame1=0.0f;
 	ModeInterp.Percentage=0.0f;
 	ModeCombo.AnimCombo=NULL;
@@ -209,15 +202,12 @@ Animatable3DObjClass & Animatable3DObjClass::operator = (const Animatable3DObjCl
 		CurMotionMode = BASE_POSE;
 		ModeAnim.Motion = NULL;
 		ModeAnim.Frame = 0.0f;
-		ModeAnim.PrevFrame = 0.0f;
 		ModeAnim.LastSyncTime = WW3D::Get_Sync_Time();
 		ModeAnim.frameRateMultiplier=1.0;	// 020607 srj -- added
 		ModeAnim.animDirection=1.0;	// 020607 srj -- added
 		ModeInterp.Motion0 = NULL;
 		ModeInterp.Motion1 = NULL;
 		ModeInterp.Frame0 = 0.0f;
-		ModeInterp.PrevFrame0 = 0.0f;
-		ModeInterp.PrevFrame1 = 0.0f;
 		ModeInterp.Frame1 = 0.0f;
 		ModeInterp.Percentage = 0.0f;
 		ModeCombo.AnimCombo = NULL;
@@ -478,24 +468,15 @@ void Animatable3DObjClass::Set_Animation(HAnimClass * motion, float frame, int m
 		Release();
 		CurMotionMode = SINGLE_ANIM;
 		ModeAnim.Motion = motion;
-		ModeAnim.PrevFrame = ModeAnim.Frame;
-		ModeAnim.Frame = frame;		
+		ModeAnim.Frame = frame;
 		ModeAnim.LastSyncTime = WW3D::Get_Sync_Time();
 		ModeAnim.frameRateMultiplier=1.0;	// 020607 srj -- added
 		ModeAnim.animDirection=1.0;	// 020607 srj -- added
-
 		ModeAnim.AnimMode = mode;
-
 		if (mode < ANIM_MODE_LOOP_BACKWARDS)
 			ModeAnim.animDirection = 1.0f;	//assume playing forwards
 		else
 			ModeAnim.animDirection = -1.0f;	//reverse animation playback
- 
-		const char* sound_name = AnimatedSoundMgrClass::Get_Embedded_Sound_Name(motion);
-		if (sound_name) {
-			int bone_index = Get_Bone_Index(sound_name);
-			motion->Set_Embedded_Sound_Bone_Index(bone_index);
-		}
 	} else {
 		CurMotionMode = BASE_POSE;
 		Release();
@@ -503,6 +484,7 @@ void Animatable3DObjClass::Set_Animation(HAnimClass * motion, float frame, int m
 
 	Set_Hierarchy_Valid(false);
 }	
+
 
 /***********************************************************************************************
  * Animatable3DObjClass::Set_Animation -- set the animation state to a blend of two anims      *
@@ -530,8 +512,6 @@ void Animatable3DObjClass::Set_Animation
 	CurMotionMode = DOUBLE_ANIM;
 	ModeInterp.Motion0 = motion0;
 	ModeInterp.Motion1 = motion1;
-	ModeInterp.PrevFrame0 = ModeInterp.Frame0;
-	ModeInterp.PrevFrame1 = ModeInterp.Frame1;
 	ModeInterp.Frame0 = frame0;
 	ModeInterp.Frame1 = frame1;
 	ModeInterp.Percentage = percentage;
@@ -539,20 +519,10 @@ void Animatable3DObjClass::Set_Animation
 
 	if ( ModeInterp.Motion0 != NULL ) {
 		ModeInterp.Motion0->Add_Ref();
-		const char* sound_name = AnimatedSoundMgrClass::Get_Embedded_Sound_Name(motion0);
-		if (sound_name) {
-			int bone_index = Get_Bone_Index(sound_name);
-			motion0->Set_Embedded_Sound_Bone_Index(bone_index);
-		}
 	}
 
 	if ( ModeInterp.Motion1 != NULL ) {
 		ModeInterp.Motion1->Add_Ref();
-		const char* sound_name = AnimatedSoundMgrClass::Get_Embedded_Sound_Name(motion1);
-		if (sound_name) {
-			int bone_index = Get_Bone_Index(sound_name);
-			motion1->Set_Embedded_Sound_Bone_Index(bone_index);
-		}
 	}
 }
 
@@ -579,19 +549,6 @@ void Animatable3DObjClass::Set_Animation
 	CurMotionMode = MULTIPLE_ANIM;
 	ModeCombo.AnimCombo = anim_combo;
 	Set_Hierarchy_Valid(false);
-
-	if (anim_combo) {
-		int count = anim_combo->Get_Num_Anims();
-		for (int index = 0; index < count; index ++) {				
-			HAnimClass *motion = anim_combo->Peek_Motion(index);
-
-			const char* sound_name = AnimatedSoundMgrClass::Get_Embedded_Sound_Name(motion);
-			if (sound_name) {
-				int bone_index = Get_Bone_Index(sound_name);
-				motion->Set_Embedded_Sound_Bone_Index(bone_index);
-			}
-		}
-	}
 }						 
 
 
@@ -795,57 +752,20 @@ void Animatable3DObjClass::Update_Sub_Object_Transforms(void)
 			break;
 
 		case SINGLE_ANIM:
-			
 			if ( ModeAnim.AnimMode != ANIM_MODE_MANUAL ) {
 				Single_Anim_Progress();
 			}
 			Anim_Update(Transform,ModeAnim.Motion,ModeAnim.Frame);
-			
-			/*
-			**	Play any sounds that are triggered by this frame of animation
-			*/
-			if ( ModeAnim.Motion->Has_Embedded_Sounds() ) {
-				ModeAnim.PrevFrame = AnimatedSoundMgrClass::Trigger_Sound(ModeAnim.Motion, ModeAnim.PrevFrame, ModeAnim.Frame, HTree->Get_Transform(ModeAnim.Motion->Get_Embedded_Sound_Bone_Index()));
-			}
 			break;
 
 		case DOUBLE_ANIM:
 			Blend_Update(Transform,ModeInterp.Motion0,ModeInterp.Frame0,
 				ModeInterp.Motion1,ModeInterp.Frame1,ModeInterp.Percentage);
-
-			/*
-			**	Play any sounds that are triggered by this frame of animation
-			*/
-			if ( ModeInterp.Motion0->Has_Embedded_Sounds() ) {
-				ModeInterp.PrevFrame0 = AnimatedSoundMgrClass::Trigger_Sound(ModeInterp.Motion0, ModeInterp.PrevFrame0, ModeInterp.Frame0, HTree->Get_Transform(ModeInterp.Motion0->Get_Embedded_Sound_Bone_Index()));
-			}
-
-			if ( ModeInterp.Motion1->Has_Embedded_Sounds() ) {
-				ModeInterp.PrevFrame1 = AnimatedSoundMgrClass::Trigger_Sound(ModeInterp.Motion1, ModeInterp.PrevFrame1, ModeInterp.Frame1, HTree->Get_Transform(ModeInterp.Motion1->Get_Embedded_Sound_Bone_Index()));
-			}
-
   			break;
 
 		case MULTIPLE_ANIM:
-		{
 			Combo_Update(Transform,ModeCombo.AnimCombo);
-
-			/*
-			**	Play any sounds that are triggered by this frame of animation
-			*/
-			int count = ModeCombo.AnimCombo->Get_Num_Anims();
-			for (int index = 0; index < count; index ++) {				
-				HAnimClass *motion = ModeCombo.AnimCombo->Peek_Motion(index);
-
-				if ( motion != NULL && motion->Has_Embedded_Sounds() ) {
-					float prev_frame = AnimatedSoundMgrClass::Trigger_Sound(motion, ModeCombo.AnimCombo->Get_Prev_Frame(index),
-																				ModeCombo.AnimCombo->Get_Frame(index), HTree->Get_Transform(motion->Get_Embedded_Sound_Bone_Index()));
-					ModeCombo.AnimCombo->Set_Prev_Frame(index, prev_frame);
-				}
-				
-			}
 			break;
-		}
 
 		default:
 			break;
@@ -874,10 +794,8 @@ bool Animatable3DObjClass::Simple_Evaluate_Bone(int boneindex, Matrix3D *tm) con
 	//
 	//	Only do this for simple animations
 	//
-	if (	CurMotionMode == NONE ||
-			CurMotionMode == BASE_POSE ||
-			CurMotionMode == SINGLE_ANIM)
-	{		
+	if (CurMotionMode == SINGLE_ANIM) {
+		
 		//
 		//	Determine which frame we should be on, then use this
 		// information to determine the bone's transform.
@@ -886,9 +804,8 @@ bool Animatable3DObjClass::Simple_Evaluate_Bone(int boneindex, Matrix3D *tm) con
 		retval = Simple_Evaluate_Bone (boneindex, curr_frame, tm);
 	
 	} else {
-		
-		const_cast <Animatable3DObjClass *>(this)->Update_Sub_Object_Transforms();
-		*tm = HTree->Get_Transform(boneindex);
+
+		*tm = Transform;
 
 	}
 
@@ -917,15 +834,9 @@ bool Animatable3DObjClass::Simple_Evaluate_Bone(int boneindex, float frame, Matr
 	//	Only do this for simple animations
 	//
 	if (HTree != NULL) {
-		
 		if (CurMotionMode == SINGLE_ANIM) {
 			retval = HTree->Simple_Evaluate_Pivot (ModeAnim.Motion, boneindex, frame, Get_Transform (), tm);
-		} else if (CurMotionMode == NONE || CurMotionMode == BASE_POSE) {
-			retval = HTree->Simple_Evaluate_Pivot (boneindex, Get_Transform (), tm);
-		} else {
-			*tm = Transform;
-		}
-
+		} 
 	} else {
 		*tm = Transform;
 	}
@@ -1055,17 +966,9 @@ void Animatable3DObjClass::Single_Anim_Progress (void)
 		// 
 		// Update the frame number and sync time
 		//
-		float oldprev = ModeAnim.PrevFrame;
-		ModeAnim.PrevFrame		= ModeAnim.Frame;
-		ModeAnim.Frame				= Compute_Current_Frame(&ModeAnim.animDirection);
-		ModeAnim.LastSyncTime	= WW3D::Get_Sync_Time();
+		ModeAnim.Frame = Compute_Current_Frame(&ModeAnim.animDirection);
+		ModeAnim.LastSyncTime = WW3D::Get_Sync_Time();
 	
-		if (ModeAnim.Frame == ModeAnim.PrevFrame) {
-			// This function was somehow called twice per frame.
-			// Since ModeAnim.Frame hasn't changed, reset the ModeAnim.PrevFrame.
-			// If you don't do this sounds won't be triggered properly because Frame and PrevFrame will be the same.
-			ModeAnim.PrevFrame = oldprev;
-		}
 		//
 		// Force the heirarchy to be recalculated
 		//

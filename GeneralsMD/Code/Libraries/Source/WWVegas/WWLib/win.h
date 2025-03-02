@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@
  *                                                                                             * 
  *                     $Archive:: /Commando/Code/wwlib/win.h                                  $* 
  *                                                                                             * 
- *                      $Author:: Ian_l                                                       $*
+ *                      $Author:: Denzil_l                                                    $*
  *                                                                                             * 
- *                     $Modtime:: 10/16/01 2:42p                                              $*
+ *                     $Modtime:: 6/26/01 1:59p                                               $*
  *                                                                                             * 
- *                    $Revision:: 11                                                          $*
+ *                    $Revision:: 10                                                          $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------* 
  * Functions:                                                                                  * 

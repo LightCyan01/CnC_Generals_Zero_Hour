@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,12 @@
  *                                                                                             *
  *                     $Archive:: /VSS_Sync/ww3d2/coltest.h                                   $*
  *                                                                                             *
- *                   Org Author:: Greg Hjelstrom                                               *
+ *                       Author:: Greg Hjelstrom                                               *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 07/01/02 12:45p                                              $*
+ *                     $Modtime:: 8/29/01 7:29p                                               $*
  *                                                                                             *
- *                    $Revision:: 5                                                           $*
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
- * 07/01/02 KM Coltype enum change to avoid MAX conflicts									   *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -127,7 +124,7 @@ class RayCollisionTestClass : public CollisionTestClass
 {
 public:
 	
-	RayCollisionTestClass(const LineSegClass & ray,CastResultStruct * res,int collision_type = COLL_TYPE_0,bool check_translucent=false, bool check_hidden=false);
+	RayCollisionTestClass(const LineSegClass & ray,CastResultStruct * res,int collision_type = COLLISION_TYPE_0,bool check_translucent=false, bool check_hidden=false);
 	RayCollisionTestClass(const RayCollisionTestClass & raytest,const Matrix3D & tm);
 		
 	bool Cull(const Vector3 & min,const Vector3 & max);
@@ -193,7 +190,7 @@ class AABoxCollisionTestClass : public CollisionTestClass
 {
 public:
 	
-	AABoxCollisionTestClass(const AABoxClass & aabox,const Vector3 & move,CastResultStruct * res,int collision_type = COLL_TYPE_0);
+	AABoxCollisionTestClass(const AABoxClass & aabox,const Vector3 & move,CastResultStruct * res,int collision_type = COLLISION_TYPE_0);
 	AABoxCollisionTestClass(const AABoxCollisionTestClass & that);
 
 	enum ROTATION_TYPE 
@@ -270,7 +267,7 @@ class OBBoxCollisionTestClass : public CollisionTestClass
 {
 public:
 
-	OBBoxCollisionTestClass(const OBBoxClass & obbox,const Vector3 & move,CastResultStruct * res,int type = COLL_TYPE_0);
+	OBBoxCollisionTestClass(const OBBoxClass & obbox,const Vector3 & move,CastResultStruct * res,int type = COLLISION_TYPE_0);
 	OBBoxCollisionTestClass(const OBBoxCollisionTestClass & that);
 	OBBoxCollisionTestClass(const OBBoxCollisionTestClass & that,const Matrix3D & tm);
 	OBBoxCollisionTestClass(const AABoxCollisionTestClass & that,const Matrix3D & tm);

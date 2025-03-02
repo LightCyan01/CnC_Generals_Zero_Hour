@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,15 +26,14 @@
  *                                                                                             *
  *                       Author:: Patrick Smith                                                *
  *                                                                                             *
- *                     $Modtime:: 1/16/02 10:21a                                              $*
+ *                     $Modtime:: 5/14/01 10:57a                                              $*
  *                                                                                             *
- *                    $Revision:: 4                                                           $*
+ *                    $Revision:: 3                                                           $*
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#if noWWAUDIO //(gth) removing dependency on wwaudio
 
 #include "soundrobj.h"
 #include "audiblesound.h"
@@ -752,20 +751,18 @@ SoundRenderObjLoaderClass::Load_W3D (ChunkLoadClass &cload)
 		//
 		// Ask the definition object to load the sound data
 		//
-		if (definition->Load_W3D (cload) == WW3D_ERROR_OK) {
+		if (definition->Load_W3D (cload) != WW3D_ERROR_OK) {			
+			REF_PTR_RELEASE (definition);
+		} else {
 
 			//
 			// Success!  Create a prototype from the definition
 			//
 			prototype = W3DNEW SoundRenderObjPrototypeClass (definition);
 		}
-
-		REF_PTR_RELEASE (definition);
 	}
 
 	return prototype;
 }
-
-#endif // noWWAUDIO
 
 

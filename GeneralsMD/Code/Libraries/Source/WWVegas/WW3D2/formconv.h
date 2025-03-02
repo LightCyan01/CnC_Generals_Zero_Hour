@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,12 @@
  *                                                                                             *
  *              Original Author:: Nathaniel Hoffman                                            *
  *                                                                                             *
- *                       Author : Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/27/02 1:27p                                              $*
+ *                      $Author:: Jani_p                                                      $*
  *                                                                                             *
- *                    $Revision:: 3                                                           $*
+ *                     $Modtime:: 7/16/01 1:33p                                               $*
  *                                                                                             *
- * 06/27/02 KM Z Format support																						*
+ *                    $Revision:: 2                                                           $*
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -53,9 +52,6 @@
 
 D3DFORMAT WW3DFormat_To_D3DFormat(WW3DFormat ww3d_format);
 WW3DFormat D3DFormat_To_WW3DFormat(D3DFORMAT d3d_format);
-
-D3DFORMAT WW3DZFormat_To_D3DFormat(WW3DZFormat ww3d_zformat);
-WW3DZFormat D3DFormat_To_WW3DZFormat(D3DFORMAT d3d_format);
 
 void Init_D3D_To_WW3_Conversion();
 

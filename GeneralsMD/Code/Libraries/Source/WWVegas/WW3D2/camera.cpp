@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Generals Zero Hour(tm)
+**	Command & Conquer Generals(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -22,17 +22,14 @@
  *                                                                                             *
  *                 Project Name : WW3D                                                         *
  *                                                                                             *
- *                     $Archive:: /Commando/Code/ww3d2/camera.cpp                             $*
+ *                     $Archive:: /VSS_Sync/ww3d2/camera.cpp                                  $*
  *                                                                                             *
- *                    Org Author:: Greg_h                                                       *
+ *                       Author:: Greg_h                                                       *
  *                                                                                             *
- *                       $Author:: Kenny Mitchell                                               * 
- *                                                                                             * 
- *                     $Modtime:: 06/26/02 4:04p                                             $*
+ *                     $Modtime:: 8/29/01 7:29p                                               $*
  *                                                                                             *
- *                    $Revision:: 24                                                          $*
+ *                    $Revision:: 22                                                          $*
  *                                                                                             *
- * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   CameraClass::CameraClass -- constructor                                                   *
@@ -733,9 +730,9 @@ void CameraClass::Apply(void)
 	vp.MaxZ = ZBufferMax;
 	DX8Wrapper::Set_Viewport(&vp);
 
-	Matrix4x4 d3dprojection;
+	Matrix4 d3dprojection;
 	Get_D3D_Projection_Matrix(&d3dprojection);
-	DX8Wrapper::Set_Projection_Transform_With_Z_Bias(d3dprojection,ZNear,ZFar);
+	DX8Wrapper::Set_Transform(D3DTS_PROJECTION,d3dprojection);
 	DX8Wrapper::Set_Transform(D3DTS_VIEW,CameraInvTransform);
 }
 
@@ -769,7 +766,7 @@ float CameraClass::Get_Aspect_Ratio(void) const
 	return AspectRatio;
 }
 
-void CameraClass::Get_Projection_Matrix(Matrix4x4 * set_tm)
+void CameraClass::Get_Projection_Matrix(Matrix4 * set_tm)
 {
 	WWASSERT(set_tm != NULL);
 	
@@ -777,7 +774,7 @@ void CameraClass::Get_Projection_Matrix(Matrix4x4 * set_tm)
 	*set_tm = ProjectionTransform;
 }
 
-void CameraClass::Get_D3D_Projection_Matrix(Matrix4x4 * set_tm)
+void CameraClass::Get_D3D_Projection_Matrix(Matrix4 * set_tm)
 {
 	WWASSERT(set_tm != NULL);
 	Update_Frustum();
@@ -795,7 +792,6 @@ void CameraClass::Get_D3D_Projection_Matrix(Matrix4x4 * set_tm)
 		(*set_tm)[2][2] = -oozdiff;
 		(*set_tm)[2][3] = -ZNear * oozdiff;
 	}
-
 }
 
 void CameraClass::Get_View_Matrix(Matrix3D * set_tm)
@@ -805,7 +801,7 @@ void CameraClass::Get_View_Matrix(Matrix3D * set_tm)
 	*set_tm = CameraInvTransform;
 }
 
-const Matrix4x4 & CameraClass::Get_Projection_Matrix(void)
+const Matrix4 & CameraClass::Get_Projection_Matrix(void)
 {
 	Update_Frustum();
 	return ProjectionTransform;
